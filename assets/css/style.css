@@ -508,8 +508,8 @@ footer .main-footer .subscribe .btn-subscribe:hover {
           flex-direction: column;
   width: 100%;
   margin-left: 300px;
-  padding: 10px;
   overflow-x: auto;
+  padding: 10px;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {
@@ -517,21 +517,77 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   margin: 0 auto;
 }
 
-.admin-body .admin-main #dtHorizontalVerticalExample th, .admin-body .admin-main td {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample th {
   white-space: nowrap;
+  min-width: 130px;
 }
 
-.admin-body .admin-main table.dataTable thead .sorting:after,
-.admin-body .admin-main table.dataTable thead .sorting:before,
-.admin-body .admin-main table.dataTable thead .sorting_asc:after,
-.admin-body .admin-main table.dataTable thead .sorting_asc:before,
-.admin-body .admin-main table.dataTable thead .sorting_asc_disabled:after,
-.admin-body .admin-main table.dataTable thead .sorting_asc_disabled:before,
-.admin-body .admin-main table.dataTable thead .sorting_desc:after,
-.admin-body .admin-main table.dataTable thead .sorting_desc:before,
-.admin-body .admin-main table.dataTable thead .sorting_desc_disabled:after,
-.admin-body .admin-main table.dataTable thead .sorting_desc_disabled:before {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td {
+  white-space: nowrap;
+  padding: 15px !important;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting:after, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting:before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_asc:after,
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_asc:before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_asc_disabled:after,
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_asc_disabled:before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_desc:after,
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_desc:before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_desc_disabled:after,
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_desc_disabled:before {
   bottom: .5em;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .no-sort {
+  cursor: auto;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .no-sort:after, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .no-sort:before {
+  display: none;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .custom-control-input:checked ~ .custom-control-label::before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .custom-control-input:indeterminate ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #292929;
+  background-color: #292929;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .custom-control-input:focus ~ .custom-control-label::before {
+  -webkit-box-shadow: 0 0 0 0;
+          box-shadow: 0 0 0 0;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 3px 6px !important;
+  margin: 0 !important;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .btn i {
+  margin-right: 5px;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .form-control:focus {
+  border-color: #292929;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0;
+          box-shadow: 0 0 0 0;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .page-item.active .page-link {
+  background-color: #292929 !important;
+  border-color: #292929 !important;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete {
+  font-size: 15px;
+  color: #646464;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
 @media only screen and (max-width: 1300px) {

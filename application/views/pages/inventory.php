@@ -1,21 +1,62 @@
 <div class="dtHorizontalVerticalExampleWrapper">
-  <table id="dtHorizontalVerticalExample" class="table table-striped table-bordered table-sm " cellspacing="0"
+  <table id="dtHorizontalVerticalExample" class="table  table-bordered table-sm " cellspacing="0"
     width="100%">
     <thead>
       <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Position</th>
-        <th>Office</th>
-        <th>Age</th>
-        <th>Start date</th>
-        <th>Salary</th>
-        <th>Extn.</th>
-        <th>E-mail</th>
+        <th class="no-sort">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
+            <label class="custom-control-label" for="tableDefaultCheck1">Sellect All</label>
+          </div>
+        </th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>For Genders</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Sale Percentage</th>
+        <th>Net Price</th>
+        <th>Stock</th>
+        <th>Color</th>
+        <th>Made In</th>
+        <th>Materials</th>
+        <th>Sizes</th>
+        <th>Date</th>
+        <th>Image</th>
+        <th class="no-sort"><button type="button" class="btn btn-danger"><i class="fas fa-trash"></i>Delete All</button></th>
       </tr>
     </thead>
     <tbody>
+    <?php $rowCount = 2; ?>
+    <?php foreach($items as $item) : ?>
       <tr>
+        <th scope="row">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="tableDefaultCheck<?php echo $rowCount ?>">
+            <label class="custom-control-label" for="tableDefaultCheck<?php echo $rowCount ?>">Select</label>
+          </div>
+        </th>
+        <td><?php echo $item['itemID']; ?></td>
+        <td><?php echo $item['name']; ?></td>
+        <td><?php echo $item['brand']; ?></td>
+        <td><?php echo $item['forGenders']; ?></td>
+        <td><?php echo $item['category']; ?></td>
+        <td><?php echo $item['price']; ?></td>
+        <td><?php echo $item['salePercentage']; ?></td>
+        <td><?php echo $item['netPrice']; ?></td>
+        <td><?php echo $item['stock']; ?></td>
+        <td><?php echo $item['color']; ?></td>
+        <td><?php echo $item['madeIn']; ?></td>
+        <td><?php echo $item['materials']; ?></td>
+        <td><?php echo $item['sizes']; ?></td>
+        <td><?php echo $item['date']; ?></td>
+        <td><?php echo $item['image']; ?></td>
+        <td><button type="button" class="btn btn-danger"><i class="fas fa-trash"></i>Delete</button></td>
+      </tr>
+      <?php $rowCount++; ?>
+    <?php endforeach; ?>
+      <!-- <tr>
         <td>Tiger</td>
         <td>Nixon</td>
         <td>System Architect</td>
@@ -25,8 +66,8 @@
         <td>$320,800</td>
         <td>5421</td>
         <td>t.nixon@datatables.net</td>
-      </tr>
-      <tr>
+      </tr> -->
+      <!-- <tr>
         <td>Garrett</td>
         <td>Winters</td>
         <td>Accountant</td>
@@ -157,7 +198,7 @@
         <td>$372,000</td>
         <td>4804</td>
         <td>b.williamson@datatables.net</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table> 
 </div>

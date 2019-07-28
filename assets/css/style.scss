@@ -338,27 +338,80 @@ footer{
         @include flexCenterCenter(column);
         width: 100%;
         margin-left: $navWidth;
-        padding: 10px;
         overflow-x: auto;
+        padding: 10px;
+        //DataTable Custom Styling
         .dtHorizontalVerticalExampleWrapper {
             max-width: 900px;
             margin: 0 auto;
+            #dtHorizontalVerticalExample{
+                th{
+                    white-space: nowrap;
+                    min-width: 130px;
+                }
+                td{
+                    white-space: nowrap;
+                    padding: 15px !important;
+                }
             }
-            #dtHorizontalVerticalExample th, td {
-            white-space: nowrap;
+            table.dataTable{
+                thead{
+                    .sorting:after, .sorting:before, .sorting_asc:after,
+                    .sorting_asc:before, .sorting_asc_disabled:after,
+                    .sorting_asc_disabled:before, .sorting_desc:after,
+                    .sorting_desc:before, .sorting_desc_disabled:after,
+                    .sorting_desc_disabled:before {
+                        bottom: .5em;
+                    }
+                    .no-sort{
+                        cursor: auto;
+                        // padding-left: 10px !important;
+                    }
+                    .no-sort:after, .no-sort:before {
+                        display: none;
+                    }
+                }
             }
-            table.dataTable thead .sorting:after,
-            table.dataTable thead .sorting:before,
-            table.dataTable thead .sorting_asc:after,
-            table.dataTable thead .sorting_asc:before,
-            table.dataTable thead .sorting_asc_disabled:after,
-            table.dataTable thead .sorting_asc_disabled:before,
-            table.dataTable thead .sorting_desc:after,
-            table.dataTable thead .sorting_desc:before,
-            table.dataTable thead .sorting_desc_disabled:after,
-            table.dataTable thead .sorting_desc_disabled:before {
-            bottom: .5em;
+            .custom-control-input:checked~.custom-control-label::before, .custom-control-input:indeterminate~.custom-control-label::before{
+                color:#fff;
+                border-color:$primaryColor;
+                background-color: $primaryColor;
             }
+            .custom-control-input:focus~.custom-control-label::before{
+                box-shadow:0 0 0 0;
+            }
+            .custom-control-input:focus:not(:checked)~.custom-control-label::before{
+                border-color: $shadowColor;
+            }
+            .btn{
+                display: flex;
+                padding: 3px 6px !important;
+                margin: 0 !important;
+                i{
+                    margin-right: 5px;
+                }
+            }
+            .form-control{
+                &:focus{
+                    border-color: $primaryColor;
+                    outline:0;
+                    box-shadow:0 0 0 0;
+                }
+            }
+            .page-item.active .page-link{
+                background-color:$primaryColor !important;
+                border-color:$primaryColor !important;
+            }
+            .delete {
+                // padding: 5px;
+                font-size: 15px;
+                color: $otherColor2;
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+        }
+        
     }
 }
 

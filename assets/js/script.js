@@ -1,7 +1,13 @@
 $(document).ready(function () {
     $('#dtHorizontalVerticalExample').DataTable({
-    "scrollX": true,
-    "scrollY": 350,
+        columnDefs: [{
+            orderable: false,
+            targets: "no-sort",
+            bSort: false,
+            order: []
+        }],
+        scrollX: true,
+        scrollY: 400,
     });
     $('.dataTables_length').addClass('bs-select');
-    });
+});
