@@ -168,11 +168,10 @@ nav .navigation .active {
 }
 
 .showcase .title {
-  text-align: center;
   width: 100%;
   font-size: 28px;
   font-weight: bolder;
-  border-bottom: 2px solid #292929;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 15px;
 }
 
@@ -246,7 +245,11 @@ nav .navigation .active {
   width: 100%;
 }
 
-.latest-products .items .item, .sale-items .items .item {
+.latest-products .items a, .sale-items .items a {
+  color: #292929;
+}
+
+.latest-products .items a .item, .sale-items .items a .item {
   width: 300px;
   height: 450px;
   padding: 10px;
@@ -254,12 +257,12 @@ nav .navigation .active {
   cursor: pointer;
 }
 
-.latest-products .items .item img, .sale-items .items .item img {
+.latest-products .items a .item img, .sale-items .items a .item img {
   width: 100%;
   height: 80%;
 }
 
-.latest-products .items .item .details, .sale-items .items .item .details {
+.latest-products .items a .item .details, .sale-items .items a .item .details {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -276,15 +279,15 @@ nav .navigation .active {
   height: 20%;
 }
 
-.latest-products .items .item .details p:nth-child(1), .sale-items .items .item .details p:nth-child(1) {
+.latest-products .items a .item .details p:nth-child(1), .sale-items .items a .item .details p:nth-child(1) {
   font-size: 18px;
 }
 
-.latest-products .items .item .details p:nth-child(2), .sale-items .items .item .details p:nth-child(2) {
+.latest-products .items a .item .details p:nth-child(2), .sale-items .items a .item .details p:nth-child(2) {
   color: #646464;
 }
 
-.latest-products .items .item .details .cart-fav, .sale-items .items .item .details .cart-fav {
+.latest-products .items a .item .details .cart-fav, .sale-items .items a .item .details .cart-fav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -296,17 +299,44 @@ nav .navigation .active {
   right: 10px;
 }
 
-.latest-products .items .item .details .cart-fav i, .sale-items .items .item .details .cart-fav i {
-  color: #292929;
+.latest-products .items a .item .details .cart-fav i, .sale-items .items a .item .details .cart-fav i {
   font-size: 17px;
   margin: 2px;
 }
 
-.latest-products .items .item:hover, .sale-items .items .item:hover {
+.latest-products .items a .item:hover, .sale-items .items a .item:hover {
   -webkit-transform: scale(1.05, 1.05);
           transform: scale(1.05, 1.05);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.view-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 80%;
+  min-height: 500px;
+  margin: 50px;
+  color: #292929;
+}
+
+.view-item > div {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 500px;
+  margin: 10px 20px;
 }
 
 footer {
@@ -519,12 +549,23 @@ footer .main-footer .subscribe .btn-subscribe:hover {
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample th {
   white-space: nowrap;
-  min-width: 130px;
+  min-width: 80px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(:last-child) {
   white-space: nowrap;
   padding: 15px !important;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample .insert td {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample .insert td:not(:last-child) {
+  padding: 0px !important;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting:after, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting:before, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .sorting_asc:after,
@@ -558,16 +599,18 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 3px 6px !important;
-  margin: 0 !important;
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .custom-checkbox {
+  position: relative;
+  left: 25px;
+  z-index: 1;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .btn i {
-  margin-right: 5px;
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .btn {
+  position: relative;
+  left: 20px;
+  z-index: 1;
+  padding: 6px !important;
+  margin: 0 !important;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .form-control:focus {
@@ -582,12 +625,24 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   border-color: #292929 !important;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete {
-  font-size: 15px;
-  color: #646464;
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete-all {
+  position: relative;
+  left: 20px;
+  z-index: 1;
+  margin: 0 !important;
+  font-size: 17px;
+  color: #292929;
   background-color: transparent;
   border: none;
   outline: none;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .editable {
+  padding: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  border: none;
+  outline-color: #292929;
 }
 
 @media only screen and (max-width: 1300px) {

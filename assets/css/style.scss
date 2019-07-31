@@ -116,11 +116,11 @@ nav{
     margin: 50px;
     color: $primaryColor;
     .title{
-        text-align: center;
+        // text-align: center;
         width: 100%;
         font-size: 28px;
         font-weight: bolder;
-        border-bottom: 2px solid $primaryColor;
+        border-bottom: 1px solid $shadowColor;
         margin-bottom: 15px;
     }
     .path{
@@ -177,47 +177,72 @@ nav{
         justify-content: center;
         flex-wrap: wrap;
         width: 100%;
-        .item{
-            width: 300px;
-            height: 450px;
-            padding: 10px;
-            margin: 10px;
-            cursor: pointer;
-            img {
-                width: 100%;
-                height: 80%;
-            }
-            .details {
-                position: relative;
-                @include flexCenter();
-                flex-direction: column;
-                padding-left: 10px;
-                width: 100%;
-                height: 20%;
-                p:nth-child(1) {
-                    font-size: 18px;
+        a{
+            color: $primaryColor;
+            .item{
+                width: 300px;
+                height: 450px;
+                padding: 10px;
+                margin: 10px;
+                cursor: pointer;
+                img {
+                    width: 100%;
+                    height: 80%;
                 }
-                
-                p:nth-child(2) {
-                    color: $otherColor2;
-                }
-                .cart-fav {
-                    display: flex;
+                .details {
+                    position: relative;
+                    @include flexCenter();
                     flex-direction: column;
-                    position: absolute;
-                    right: 10px;
-                    i {
-                        color: $primaryColor;
-                        font-size: 17px;
-                        margin: 2px;
+                    padding-left: 10px;
+                    width: 100%;
+                    height: 20%;
+                    p:nth-child(1) {
+                        font-size: 18px;
+                    }
+                    
+                    p:nth-child(2) {
+                        color: $otherColor2;
+                    }
+                    .cart-fav {
+                        display: flex;
+                        flex-direction: column;
+                        position: absolute;
+                        right: 10px;
+                        i {
+                            font-size: 17px;
+                            margin: 2px;
+                        }
                     }
                 }
-            }
-            &:hover {
-                transform: scale(1.05, 1.05);
-                box-shadow: 0 4px 8px 0 $shadowColor;
+                &:hover {
+                    transform: scale(1.05, 1.05);
+                    box-shadow: 0 4px 8px 0 $shadowColor;
+                }
             }
         }
+    }
+}
+
+.view-item{
+    @include flexCenterCenter(row);
+    width: 80%;
+    min-height: 500px;
+    margin: 50px;
+    color: $primaryColor;
+    & > div{
+        flex: 1;
+        height: 500px;
+        margin: 10px 20px;
+        // background: $primaryColor;
+    }
+    .view-item-details{
+        
+    }
+    .view-item-image{
+
+    }
+    .view-item-tools{
+        
     }
 }
 
@@ -347,11 +372,19 @@ footer{
             #dtHorizontalVerticalExample{
                 th{
                     white-space: nowrap;
-                    min-width: 130px;
+                    min-width: 80px;
                 }
-                td{
+                td:not(.insert td):not(.insert td:last-child):not(:last-child){
                     white-space: nowrap;
                     padding: 15px !important;
+                }
+                .insert td{
+                    position: sticky;
+                    top: 0px;
+                    z-index: 1;
+                    &:not(:last-child){
+                        padding: 0px !important;
+                    }
                 }
             }
             table.dataTable{
@@ -365,7 +398,6 @@ footer{
                     }
                     .no-sort{
                         cursor: auto;
-                        // padding-left: 10px !important;
                     }
                     .no-sort:after, .no-sort:before {
                         display: none;
@@ -383,13 +415,17 @@ footer{
             .custom-control-input:focus:not(:checked)~.custom-control-label::before{
                 border-color: $shadowColor;
             }
+            .custom-checkbox{
+                position: relative;
+                left: 25px;
+                z-index: 1;
+            }
             .btn{
-                display: flex;
-                padding: 3px 6px !important;
+                position: relative;
+                left: 20px;
+                z-index: 1;
+                padding: 6px !important;
                 margin: 0 !important;
-                i{
-                    margin-right: 5px;
-                }
             }
             .form-control{
                 &:focus{
@@ -402,13 +438,23 @@ footer{
                 background-color:$primaryColor !important;
                 border-color:$primaryColor !important;
             }
-            .delete {
-                // padding: 5px;
-                font-size: 15px;
-                color: $otherColor2;
+            .delete, .delete-all {
+                position: relative;
+                left: 20px;
+                z-index: 1;
+                margin: 0 !important;
+                font-size: 17px;
+                color: $primaryColor;
                 background-color: transparent;
                 border: none;
                 outline: none;
+            }
+            .editable {
+                padding: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                border: none;
+                outline-color: $primaryColor;
             }
         }
         

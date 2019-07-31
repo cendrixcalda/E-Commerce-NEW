@@ -11,6 +11,7 @@ $route['shop/women'] = 'shop/women';
 $route['shop/men'] = 'shop/men';
 $route['shop/all'] = 'shop/all';
 $route['shop'] = 'shop/all';
+$route['shop/(:any)'] = 'shop/view/$1';
 
 $route['default_controller'] = 'home';
 // $route['(:any)'] = 'home/$1';

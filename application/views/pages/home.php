@@ -40,7 +40,7 @@
         <?php $name = $item["name"];  
         $name = strlen($name) > 25 ? substr($name, 0, 25)."..." : $name;
         ?>
-        <div class="item">
+        <a href="<?php echo base_url(); ?>shop/<?php echo $item['slug']; ?>"><div class="item">
             <img src="<?php echo base_url(); ?>assets/<?php echo $item["image"]; ?>.jpg">
             <div class="details">
                 <p><?php echo $name ?></p>
@@ -51,13 +51,12 @@
                     <i class="fas fa-cart-plus"></i>
                 </div>
             </div>
-        </div>
+        </div></a>
     <?php endforeach; ?>
     </div>
     <a href="<?php echo base_url(); ?>shop/men">
         <div class="view-more">VIEW LATEST ITEMS &gt;</div>
     </a>
-    
 </section>
 <section class="showcase sale-items">
     <p class="title">Sale Items</p>
@@ -66,7 +65,7 @@
         <?php $name = $item["name"];  
         $name = strlen($name) > 25 ? substr($name, 0, 25)."..." : $name;
         ?>
-        <div class="item">
+        <a href="<?php echo base_url(); ?>shop/<?php echo $item['slug']; ?>"><div class="item">
             <img src="<?php echo base_url(); ?>assets/<?php echo $item["image"]; ?>.jpg">
             <div class="details">
                 <p><?php echo $name ?></p>
@@ -77,7 +76,7 @@
                     <i class="fas fa-cart-plus"></i>
                 </div>
             </div>
-        </div>
+        </div></a>
     <?php endforeach; ?>
     </div>
     <div class="view-more">

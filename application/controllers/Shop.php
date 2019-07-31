@@ -26,4 +26,18 @@
             $this->load->view('pages/shop', $data);
             $this->load->view('templates/footer');
         }
+
+        public function view( $slug = NULL){
+            $data['item'] = $this->items_model->get_all_items($slug);
+
+            if(empty($data['item'])){
+                show_404();
+            }
+
+            $data['paths'] = ['Shop', $data['item']['slug'] ];
+
+            $this->load->view('templates/header');
+            $this->load->view('pages/view', $data);
+            $this->load->view('templates/footer');
+        }
     }
