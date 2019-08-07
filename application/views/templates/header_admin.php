@@ -11,11 +11,15 @@
     <link href="<?php echo base_url(); ?>assets/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <link href="<?php echo base_url(); ?>assets/css/addons/datatables.min.css" rel="stylesheet">
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
     <div class="admin-body">
+        <button class="fa fa-bars hamburger"></button>
         <nav class="admin-nav">
             <div class="navigation-admin">
+                <a class="hide"><i class="fas fa-arrow-left"></i></a>
                 <a href="<?php echo base_url(); ?>admin/dashboard" <?php if($this->uri->segment(2)==""){echo ' class="active"';}?><?php if($this->uri->segment(2)=="dashboard"){echo ' class="active"';}?> >Dashboard</a>
                 <a href="<?php echo base_url(); ?>admin/inventory" <?php if($this->uri->segment(2)=="inventory"){echo ' class="active"';}?> >Inventory</a>
                 <a href="<?php echo base_url(); ?>admin/usermanagement" <?php if($this->uri->segment(2)=="usermanagement"){echo ' class="active"';}?> >User Management</a>

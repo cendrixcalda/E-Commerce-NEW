@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$route['admin/additem'] = 'admin/additem';
 $route['admin/editfeatured'] = 'admin/editfeatured';
 $route['admin/usermanagement'] = 'admin/usermanagement';
 $route['admin/inventory'] = 'admin/inventory';

@@ -2,7 +2,7 @@
     class Shop extends CI_Controller{
         public function all(){
             $data['paths'] = ['Shop', 'All', 'latest'];
-            $data['items'] = $this->items_model->get_all_items();
+            $data['items'] = $this->items_model->get_items();
 
             $this->load->view('templates/header');
             $this->load->view('pages/shop', $data);
@@ -28,7 +28,7 @@
         }
 
         public function view( $slug = NULL){
-            $data['item'] = $this->items_model->get_all_items($slug);
+            $data['item'] = $this->items_model->get_items($slug);
 
             if(empty($data['item'])){
                 show_404();
