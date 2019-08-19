@@ -55,4 +55,30 @@
              $this->db->where("accountID", $id);  
              $this->db->update("users", $data);
          }
+
+         public function login($username, $password){
+			$this->db->where('username', $username);
+			// $this->db->where('password', $password);
+			$result = $this->db->get('users');
+			if($result->num_rows() == 1){
+                // return $result->row_array();
+                $this->db->where('username', $username);
+                $this->db->where('password', $password);
+                $result = $this->db->get('users');
+                if($result->num_rows() == 1){
+                    return $result->row_array();
+                } else {
+                    $data = array(
+                        'invalid' => 'password'
+                    );
+                    return $data;
+                }
+			} else {
+                $data = array(
+                    'invalid' => 'username'
+                );
+				return $data;
+			}
+		}
+
     }

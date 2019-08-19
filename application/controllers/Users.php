@@ -113,4 +113,43 @@
                 redirect('/admin');
             }
         }
+
+        public function login(){
+            if(isset($_POST["submit"])){
+                $username = $this->input->post('username');
+                $password = $this->input->post('password');
+
+                $this->form_validation->set_rules('username', 'Username', 'required');
+                $this->form_validation->set_rules('password', 'Password', 'required');
+
+                if($this->form_validation->run() === FALSE){
+                    if(isset($this->session->userdata['logged_in'])){
+                        // redirect('admin/login');
+                    }
+                } else {
+                    $username = $this->input->post('username');
+                    $password = $this->input->post('password');
+
+                    $user = $this->users_model->login($username, $password);
+
+                    if($user['accountID']){
+                        $user_data = array(
+                            'user_id' => $user['accountID'],
+                            'username' => $username,
+                            'account_type' => $user['accountType'],
+                            'logged_in' => true
+                        );
+                        $this->session->set_userdata($user_data);
+                        $this->session->set_flashdata('user_loggedin', 'You are now logged in');
+                        redirect('admin');
+                    } else {
+                        $this->session->set_flashdata('login_failed', 'Invalid username/password');
+                        redirect('admin/login');
+                    }		
+                }
+                // redirect('/admin/usermanagement');
+            } else{
+
+            }
+        }
     }

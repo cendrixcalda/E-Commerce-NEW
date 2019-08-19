@@ -591,9 +591,10 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   margin: 10px;
 }
 
-.admin-body .admin-main .login-form .password-container {
+.admin-body .admin-main .login-form .input-container {
   width: 100%;
   height: 40px;
+  position: relative;
 }
 
 .admin-body .admin-main .login-form input[type=text], .admin-body .admin-main .login-form input[type=password] {
@@ -618,6 +619,40 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   right: 10px;
   top: -29px;
   z-index: 2;
+}
+
+.admin-body .admin-main .login-form .invalid-username, .admin-body .admin-main .login-form .invalid-password {
+  border-bottom: 1px solid #fc0606 !important;
+}
+
+.admin-body .admin-main .login-form .invalid-username:focus, .admin-body .admin-main .login-form .invalid-password:focus {
+  border-bottom: 1px solid #292929 !important;
+}
+
+.admin-body .admin-main .login-form .tooltip-username, .admin-body .admin-main .login-form .tooltip-password {
+  visibility: hidden;
+  width: 150px;
+  background-color: #f51111;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  left: 105%;
+}
+
+.admin-body .admin-main .login-form .tooltip-username::after, .admin-body .admin-main .login-form .tooltip-password::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #f51111 transparent transparent;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {
