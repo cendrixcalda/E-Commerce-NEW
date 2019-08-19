@@ -393,17 +393,17 @@ footer{
                     white-space: nowrap;
                     min-width: 80px;
                 }
-                td:not(.editable):not(.insert td):not(.insert td:last-child):not(:last-child){
+                th:nth-child(16){
                     white-space: nowrap;
-                    padding: 0px !important;
+                    min-width: 230px;
                 }
-                .insert td{
-                    position: sticky;
-                    top: 0px;
-                    z-index: 1;
-                    &:not(:last-child){
-                        padding: 0px !important;
-                    }
+                td:not(:first-child):not(:nth-child(2)):not(:last-child){
+                    white-space: nowrap;
+                    min-width: 130px;
+                }
+                td:not(.editable):not(:last-child){
+                    white-space: nowrap;
+                    padding: 1px !important;
                 }
             }
             table.dataTable{
@@ -445,10 +445,6 @@ footer{
                 border-color: $shadowColor;
             }
             .my-checkbox{
-                // position: relative;
-                // left: 30px;
-                // top: 15px;
-                // z-index: 1;
                 @include flexCenterCenter(row);
             }
             .btn{
@@ -460,7 +456,7 @@ footer{
             }
             .form-control{
                 &:focus{
-                    border-color: $primaryColor;
+                    border-color: $otherColor2;
                     outline:0;
                     box-shadow:0 0 0 0;
                 }
@@ -489,9 +485,8 @@ footer{
                 white-space: nowrap;
                 overflow: hidden;
                 border: none;
-                // outline-color: $primaryColor;
                 &:focus{
-                    border: 1px solid $primaryColor;
+                    border: 1px solid $shadowColor;
                     outline: none; 
                 }
             }
@@ -499,11 +494,73 @@ footer{
             .dropdown {
                 width: 100%;
                 padding: 15px;
+                white-space: nowrap;
+                min-width: 180px;
                 border: none;
                 outline: none;
                 background: transparent;
+                transition: none;
                 &:focus{
-                    border: 1px solid $primaryColor;
+                    border: 1px solid $shadowColor;
+                    padding: 14px 30px 15px 14px;
+                }
+            }
+            select.dropdown{
+                padding: 15px 30px 15px 15px;
+                appearance: none;
+                &:hover, &:focus{
+                    background: transparent url("http://cdn.onlinewebfonts.com/svg/img_295694.svg") no-repeat 155px;
+                    background-size: 10px;
+                }
+            }
+            .date{
+                &::-webkit-inner-spin-button {
+                    appearance: none;
+                    display: none;
+                }
+                &::-webkit-calendar-picker-indicator {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: auto;
+                    width: auto;
+                    color: transparent;
+                    background: transparent;
+                }
+                &:hover, &:focus{
+                    background: transparent url("http://cdn.onlinewebfonts.com/svg/img_295694.svg") no-repeat 155px;
+                    background-size: 10px;
+                }        
+            }
+            .image{
+                width: 100%;
+                height: 100%;
+                padding: 13px;
+                margin: 0px;
+                white-space: nowrap;
+                border: none;
+                &:focus{
+                    border: 1px solid $shadowColor;
+                    outline: none; 
+                }
+            }
+            .imageUpdate{
+                display: none;
+            }
+            .imageLabel {
+                width: 100%;
+                height: 100%;
+                padding: 16px 14px;
+                margin: 0px;
+                white-space: nowrap;
+                border: none;
+                transition: none;
+                &:hover{
+                    border: 1px solid $shadowColor;
+                    padding: 15px 13px;
+                    outline: none; 
                 }
             }
         }

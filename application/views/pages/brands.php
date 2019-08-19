@@ -1,35 +1,28 @@
 <div class="dtHorizontalVerticalExampleWrapper">
-<?php echo form_open('', array('id' => 'add_user')); ?>
-<table id="dtHorizontalVerticalExample" class="table table-hover table-bordered table-sm " cellspacing="0"
-width="100%">
-<thead>
-<tr>
-<th class="no-sort">
-<div class="custom-control custom-checkbox">
-<input type="checkbox" class="custom-control-input checkbox-all" id="tableDefaultCheck1">
-<label class="custom-control-label" for="tableDefaultCheck1"></label>
-</div>
-</th>
-<th>ID</th>
-<th>Username</th>
-<th>Password</th>
-<th>Account Type</th>
-<th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
-</tr>
-</thead>
-<tr class="insert no-sort">
-<td></td>
-<td></td>
-<td><div contenteditable spellcheck="false" class="editable" id="data1" name="username"></div></td>
-<td><div contenteditable spellcheck="false" class="editable" id="data2" name="password"></div></td>
-<td><select name="accountType" id="data3" class="dropdown">
-    <option value="User">User</option>
-    <option value="Administrator">Administrator</option>
-</select></td>
-<td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
-</tr>
-</table>
-</form>
+    <?php echo form_open_multipart('', array('id' => 'add_brand')); ?>
+        <table id="dtHorizontalVerticalExample" class="table table-hover table-bordered table-sm " cellspacing="0"
+        width="100%">
+            <thead>
+                <tr>
+                    <th class="no-sort">
+                    <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input checkbox-all" id="tableDefaultCheck1">
+                    <label class="custom-control-label" for="tableDefaultCheck1"></label>
+                    </div>
+                    </th>
+                    <th>ID</th>
+                    <th>Brand</th>
+                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
+                </tr>
+            </thead>
+                <tr class="insert no-sort">
+                    <td></td>
+                    <td></td>
+                    <td><div contenteditable spellcheck="false" class="editable" id="data1" name="brand"></div></td>
+                    <td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
+                </tr>
+        </table>
+    </form>
 </div>
 
 <script>
@@ -43,31 +36,17 @@ $(document).ready(function () {
 
   var dataTable = $('#dtHorizontalVerticalExample').DataTable({
     scrollX: true,
-    scrollY: 400,
+    scrollY: 380,
     order: [[ 1, "asc" ]],
     ajax: {
-      url: '<?php echo base_url(); ?>users/showAllUsers',
+      url: '<?php echo base_url(); ?>brands/showAllBrands',
 
       type: 'POST',
-      data: { checker: "check" },
-      // success: function(data){
-        //   console.log(data);
-        // }
+      data: { checker: "check" }
       },
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
-      },
-      {
-        targets: [4],
-        render: function(data, type, full, meta){
-          if(type === 'filter' || type === 'sort'){
-            var api = new $.fn.dataTable.Api(meta.settings);
-            var td = api.cell({row: meta.row, column: meta.col}).node();
-            data = $('select, input', td).val();
-          }
-          return data;
-        }
       }]
     });
     $('.dataTables_length').addClass('bs-select');
@@ -78,29 +57,20 @@ $(document).ready(function () {
       }
     });
 
-    $('#add_user').on('submit', function(e){
+    $('#add_brand').on('submit', function(e){
       e.preventDefault();
 
-      var username = $('#data1').text();
-      var password = $('#data2').text();
-      var accountType = $('#data3 option:selected').val();
+      var brand = $('#data1').text();
 
-      // if(username)
-      if(username != '' && password != '' && accountType != ''){
+      if(brand != ''){
         $.ajax({
-          url: "<?php echo base_url(); ?>users/register",
+          url: "<?php echo base_url(); ?>brands/addBrand",
           method: "POST",
           data: {
-            username:username, password:password, accountType:accountType
+            brand:brand
           },
           success: function(data){
-            if(data != ''){
-              alert(data);
-            }
             dataTable.ajax.reload();
-          },
-          error: function(data){
-            alert('Username is taken! Please use different username.')
           }
         });
       }
@@ -109,10 +79,10 @@ $(document).ready(function () {
       }
     });
 
-    function update_user(id, column, value)
+    function update_brand(id, column, value)
     {
       $.ajax({
-        url: "<?php echo base_url(); ?>users/updateUser",
+        url: "<?php echo base_url(); ?>brands/updateBrand",
         method: "POST",
         data: {id:id, column:column, value:value},
         success:function(data)
@@ -140,22 +110,15 @@ $(document).ready(function () {
       if(value != oldValue && value != ''){
         var id = $(this).data("id");
         var column = $(this).data("column");
-        update_user(id, column, value);
+        update_brand(id, column, value);
       }
-    });
-
-    dataTable.on('change', '.updateDropdown', function(){
-      var id = $(this).data("id");
-      var column = $(this).data("column");
-      var value = $('option:selected', this).val();
-      update_user(id, column, value);
     });
 
     dataTable.on('click', '.delete', function () {
       var id = $(this).attr("id");
-      if(confirm("Are you sure you want to remove this user?")){
+      if(confirm("Are you sure you want to remove this brand?")){
         $.ajax({
-          url:"<?php echo base_url(); ?>users/deleteUser",
+          url:"<?php echo base_url(); ?>brands/deleteBrand",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -169,7 +132,7 @@ $(document).ready(function () {
     });
 
     $('.delete-all').on('click', function(){
-      if(confirm("Are you sure you want to remove selected user/s?"))
+      if(confirm("Are you sure you want to remove selected brand/s?"))
       {
         var id = [];
 
@@ -178,7 +141,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>users/deleteAllUser",
+          url:"<?php echo base_url(); ?>brands/deleteAllBrand",
           method:"POST",
           data:{id:id},
           success:function(data){
