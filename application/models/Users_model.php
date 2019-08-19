@@ -21,15 +21,6 @@
 
             $this->db->insert('users', $data);
         }
-
-        public function register($enc_password){
-			$data = array(
-                'username' => $this->input->post('username'),
-                'password' => $enc_password,
-                'accountType' => $this->input->post('accountType')
-			);
-			return $this->db->insert('users', $data);
-        }
         
         public function check_username_exists($username){
 			$query = $this->db->get_where('users', array('username' => $username));

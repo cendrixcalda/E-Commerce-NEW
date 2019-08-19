@@ -562,6 +562,64 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   padding: 10px;
 }
 
+.admin-body .admin-main .login-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 25px;
+}
+
+.admin-body .admin-main .login-form input {
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+}
+
+.admin-body .admin-main .login-form .margin {
+  margin: 10px;
+}
+
+.admin-body .admin-main .login-form .password-container {
+  width: 100%;
+  height: 40px;
+}
+
+.admin-body .admin-main .login-form input[type=text], .admin-body .admin-main .login-form input[type=password] {
+  padding: 15px;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.admin-body .admin-main .login-form input[type=text]:focus, .admin-body .admin-main .login-form input[type=password]:focus {
+  border-bottom: 1px solid #292929;
+}
+
+.admin-body .admin-main .login-form input[type=submit] {
+  background: #292929;
+  color: white;
+  margin: 20px 10px;
+}
+
+.admin-body .admin-main .login-form .field-icon {
+  float: right;
+  position: relative;
+  right: 10px;
+  top: -29px;
+  z-index: 2;
+}
+
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {
   max-width: 900px;
   margin: 0 auto;

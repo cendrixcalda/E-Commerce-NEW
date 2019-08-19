@@ -1,43 +1,6 @@
 <?php
     class Users extends CI_Controller{
 
-        public function register(){
-
-			// $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username_exists|xss_clean');
-			// $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]|xss_clean');
-			// if($this->form_validation->run() == FALSE){
-            //     // redirect('/admin/usermanagement');
-            //     $data = 'sss';
-            //     return $data;
-			// } else{
-                if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['accountType'])){
-                    $username = $this->input->post('username');
-                    $password = $this->input->post('password');
-                    if($this->users_model->check_username_exists($username)){
-                        $enc_password = sha1($password);
-                        $this->users_model->register($enc_password);
-                        // return true;
-                    } else {
-                        echo "Username already taken! Please use another one.";
-                    }
-                } else{
-                    redirect('/admin');
-                }
-                
-				// $this->session->set_flashdata('user_registered', 'You are now registered and can log in');
-				// redirect('admin');
-            // }
-        }
-        
-        public function check_username_exists($username){
-			$this->form_validation->set_message('check_username_exists', 'That username is taken. Please choose a different one');
-			if($this->users_model->check_username_exists($username)){
-				return true;
-			} else {
-				return false;
-			}
-		}
-
         public function showAllUsers(){
             if(isset($_POST["checker"])){
                 $result = $this->users_model->get_all_users();
@@ -78,11 +41,33 @@
 
         public function addUser(){
             if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['accountType'])){
-                $this->users_model->insert_user();
+                $username = $this->input->post('username');
+                $password = $this->input->post('password');
+                if(strlen($username) < 4 || !preg_match("/^[a-zA-Z0-9]*$/", $username)){
+                    echo 'Invalid username. Username must be a minimum of 4 characters long and must composed of letters and numbers only.';
+                } else{
+                    if($this->users_model->check_username_exists($username)){
+                        if(strlen($password) < 8 || (!preg_match("/^\S*(?=\S*[\d])\S*$/", $password))){
+                            echo 'Invalid Password. Password must be a minimum of 8 characters long and must contain atleast 1 number.';
+                        } else{
+                            $this->users_model->insert_user();
+                        }
+                    } else {
+                        echo "Username already taken! Please use another one.";
+                    }
+                }
             } else{
                 redirect('/admin');
             }
         }
+
+        public function check_username_exists($username){
+			if($this->users_model->check_username_exists($username)){
+				return true;
+			} else {
+				return false;
+			}
+		}
 
         function deleteUser(){
             if(isset($_POST["id"])){
@@ -102,7 +87,28 @@
 
         function updateUser(){
             if(isset($_POST["id"])){
-                $this->users_model->update_user();
+                $column = $this->input->post('column');
+                $value = $this->input->post('value');
+
+                if($column == 'username'){
+                    if(strlen($value) < 4 || !preg_match("/^[a-zA-Z0-9]*$/", $value)){
+                        echo 'Invalid username. Username must be a minimum of 4 characters long and must composed of letters and numbers only.';
+                    } else{
+                        if($this->users_model->check_username_exists($value)){
+                            $this->users_model->update_user();
+                        } else {
+                            echo "Username already taken! Please use another one.";
+                        }
+                    }
+                } elseif($column == 'password'){
+                    if(strlen($value) < 8 || (!preg_match("/^\S*(?=\S*[\d])\S*$/", $value))){
+                        echo 'Invalid Password. Password must be a minimum of 8 characters long and must contain atleast 1 number.';
+                    } else{
+                        $this->users_model->update_user();
+                    }
+                } else{
+                    $this->users_model->update_user();
+                }
             } else{
                 redirect('/admin');
             }

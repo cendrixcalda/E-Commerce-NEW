@@ -384,6 +384,49 @@ footer{
         width: 100%;
         overflow-x: auto;
         padding: 10px;
+        .login-form{
+            @include flexCenterCenter(column);
+            // width: 300px;
+            // height: 300px;
+            border: 1px solid $shadowColor;
+            padding: 25px;
+            input{
+                width: 100%;
+                height: 40px;
+                // margin: 10px;
+                border: none;
+                outline: none;
+            }
+            .margin{
+                margin: 10px;
+            }
+            .password-container{
+                width: 100%;
+                height: 40px;
+            }
+            input[type=text], input[type=password]{
+                padding: 15px;
+                background: $secondaryColor;
+                border-bottom: 1px solid $shadowColor;
+                &:focus{
+                    border-bottom: 1px solid $primaryColor;
+
+                }
+            }
+            input[type=submit]{
+                background: $primaryColor;
+                color: $secondaryColor;
+                margin: 20px 10px;
+            }
+
+            .field-icon {
+                float: right;
+                position: relative;
+                right: 10px;
+                top: -29px;
+                z-index: 2;
+            }
+        }
         //DataTable Custom Styling
         .dtHorizontalVerticalExampleWrapper {
             max-width: 900px;

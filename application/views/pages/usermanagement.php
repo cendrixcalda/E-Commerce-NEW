@@ -40,6 +40,7 @@ $(document).ready(function () {
   tr.remove();
 
   var oldValue;
+  window.prevFocus = $();
 
   var dataTable = $('#dtHorizontalVerticalExample').DataTable({
     scrollX: true,
@@ -88,7 +89,7 @@ $(document).ready(function () {
       // if(username)
       if(username != '' && password != '' && accountType != ''){
         $.ajax({
-          url: "<?php echo base_url(); ?>users/register",
+          url: "<?php echo base_url(); ?>users/addUser",
           method: "POST",
           data: {
             username:username, password:password, accountType:accountType
@@ -96,11 +97,9 @@ $(document).ready(function () {
           success: function(data){
             if(data != ''){
               alert(data);
+            } else if(data == ''){
+              dataTable.ajax.reload();
             }
-            dataTable.ajax.reload();
-          },
-          error: function(data){
-            alert('Username is taken! Please use different username.')
           }
         });
       }
@@ -117,10 +116,15 @@ $(document).ready(function () {
         data: {id:id, column:column, value:value},
         success:function(data)
         {
-          $('.checkbox-all').prop('indeterminate', false);
-          $('.checkbox-all').prop('checked', false);
-          $('.delete-all').hide( "slow");
-          dataTable.ajax.reload();
+          if(data != ''){
+            alert(data);
+            $(prevFocus).text(oldValue);
+          } else if(data == ''){
+            $('.checkbox-all').prop('indeterminate', false);
+            $('.checkbox-all').prop('checked', false);
+            $('.delete-all').hide( "slow");
+            dataTable.ajax.reload();
+          }
         }
       });
     }
@@ -140,6 +144,7 @@ $(document).ready(function () {
       if(value != oldValue && value != ''){
         var id = $(this).data("id");
         var column = $(this).data("column");
+        window.prevFocus = $(this);
         update_user(id, column, value);
       }
     });
