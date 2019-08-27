@@ -2,20 +2,41 @@
     class Categories extends CI_Controller{
         public function showAllCategories(){
             if(isset($_POST["checker"])){
-                $result = $this->categories_model->get_categories();
+                $accountTypeSession = $this->session->userdata('account_type');
+                
+                if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                    $result = $this->categories_model->get_categories();
+                } else{
+                    $result = $this->categories_model->get_categories_inventory();
+                }
+                
                 $data = array();
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $category = $row->category;
+                    $noneSelected = ($category == 'None') ? 'disabled' : '' ;
+                    $noneNotSelected = ($category == 'None') ? '' : 'contenteditable' ;
+                    $noneCheckbox = ($category == 'None') ? 'not-checkbox' : 'checkbox' ;
+
+                    $disableRestore = ($accountTypeSession == 'User' || $category == 'None') ? 'fa-disabled' : '' ;
+                    $disableRestore1 = ($accountTypeSession == 'User' || $category == 'None') ? 'disabled-restore' : 'restore' ;
+                    $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $category == 'None') ? 'fa-disabled' : '' ;
+                    $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $category == 'None') ? 'disabled-delete' : 'delete' ;
 
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
-                                        <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->categoryID.'" id="tableDefaultCheck'.$rowCount.'">
+                                        <input type="checkbox" class="custom-control-input '.$noneCheckbox.'" data-id="'.$row->categoryID.'" id="tableDefaultCheck'.$rowCount.'" '.$noneSelected.'>
                                         <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
                                     </div></td>';
                     $sub_array[] = '<div class="editable" data-column="categoryID">'.$row->categoryID.'</div>';
-                    $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->categoryID.'" data-column="category">'.$row->category.'</div>';
-                    $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->categoryID.'"><i class="fas fa-trash"></i></button></div>';
+                    $sub_array[] = '<div '.$noneNotSelected.' spellcheck="false" class="editable update" data-id="'.$row->categoryID.'" data-column="category">'.$row->category.'</div>';
+                    $sub_array[] = '<div '.$noneNotSelected.' spellcheck="false" class="editable update" data-id="'.$row->categoryID.'" data-column="categoryCode">'.$row->categoryCode.'</div>';
+                    if($accountTypeSession != 'User'){
+                        $sub_array[] = '<div class="editable" data-column="status">'.$row->status.'</div>';
+                    }
+                    $sub_array[] = '<div><button type="button" name="delete" class="'.$disableDelete1.'" id="'.$row->categoryID.'"><i class="fas fa-trash '.$disableDelete.'"></i></button></div>';
+                    $sub_array[] = '<div><button type="button" name="restore" class="'.$disableRestore1.'" id="'.$row->categoryID.'"><i class="fas fa-trash-restore '.$disableRestore.'"></i></button></div>';
                     $data[] = $sub_array;
                     $rowCount++;
                 }
@@ -46,17 +67,17 @@
             }
         }
 
-        function deleteAllCategory(){
+        function updateCategory(){
             if(isset($_POST["id"])){
-                $this->categories_model->delete_all_category();
+                $this->categories_model->update_category();
             } else{
                 redirect('/admin');
             }
         }
 
-        function updateCategory(){
+        function restoreCategory(){
             if(isset($_POST["id"])){
-                $this->categories_model->update_category();
+                $this->categories_model->restore_category();
             } else{
                 redirect('/admin');
             }

@@ -5,32 +5,38 @@ class Categories_model extends CI_Model{
         $this->load->database();
     }
 
+    public function get_categories_inventory(){
+        $this->db->order_by("(CASE category WHEN 'None' THEN 0 ELSE 1 END),  category asc");
+        $query = $this->db->get_where('categories', array('status' => 'Active'));
+        return $query->result();
+    }
+
     public function get_categories(){
-        $this->db->order_by("category", "asc");
+        $this->db->order_by("(CASE category WHEN 'None' THEN 0 ELSE 1 END),  category asc");
         $query = $this->db->get('categories');
         return $query->result();
     }
     
     public function insert_category(){
         $data = array(
-            'category' => $this->input->post('category')
+            'category' => $this->input->post('category'),
+            'categoryCode' => $this->input->post('categoryCode'),
+            'status' => $this->input->post('status')
         );
         
         $this->db->insert('categories', $data);
     }
     
     function delete_category(){
-        $id = $_POST['id'];
-        $this->db->where("categoryID", $id);  
-        $this->db->delete("categories");
-    }
-    
-    function delete_all_category(){
         $data['ids'] = $_POST["id"];
         
         foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Disabled'
+            );
+
             $this->db->where("categoryID", $id);  
-            $this->db->delete("categories");
+            $this->db->update("categories", $data);
         }
     }
     
@@ -42,5 +48,18 @@ class Categories_model extends CI_Model{
         
         $this->db->where("categoryID", $id);  
         $this->db->update("categories", $data);
+    }
+
+    function restore_category(){
+        $data['ids'] = $_POST["id"];
+        
+        foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Active'
+            );
+
+            $this->db->where("categoryID", $id);  
+        $this->db->update("categories", $data);
+        }
     }
 }

@@ -8,25 +8,65 @@
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $accountTypeSession = $this->session->userdata('account_type');
+                    $userIDSession = $this->session->userdata('user_id');
+
                     $accountType = $row->accountType;
                     $userSelected = ($accountType == 'User') ? 'selected' : '' ;
                     $adminSelected = ($accountType == 'Administrator') ? 'selected' : '' ;
 
+                    $status = $row->status;
+                    $activeSelected = ($status == 'Active') ? 'selected' : '' ;
+                    $disabledSelected = ($status == 'Disabled') ? 'selected' : '' ;
+
                     $sub_array = array();
-                    $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
-                                        <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->accountID.'" id="tableDefaultCheck'.$rowCount.'">
-                                        <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
-                                    </div></td>';
-                    $sub_array[] = '<div class="editable" data-column="accountID">'.$row->accountID.'</div>';
-                    $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->accountID.'" data-column="username">'.$row->username.'</div>';
-                    $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->accountID.'" data-column="password">'.$row->password.'</div>';
-                    $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="accountType" class="dropdown updateDropdown">
-                                        <option '.$userSelected.' value="User">User</option>
-                                        <option '.$adminSelected.' value="Administrator">Administrator</option>
-                                    </select>';
-                    $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->accountID.'"><i class="fas fa-trash"></i></button>';
-                    $data[] = $sub_array;
-                    $rowCount++;
+                    if($accountTypeSession == 'Administrator' && $accountType == 'Administrator' && $row->accountID != $userIDSession){
+
+                    } else{
+                        $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
+                                            <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->accountID.'" id="tableDefaultCheck'.$rowCount.'">
+                                            <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
+                                        </div></td>';
+                        $sub_array[] = '<div class="editable" data-column="accountID">'.$row->accountID.'</div>';
+                        $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->accountID.'" data-column="username">'.$row->username.'</div>';
+                        $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->accountID.'" data-column="password">'.$row->password.'</div>';
+                        if($accountTypeSession == 'Administrator'){
+                            if($accountType == 'Administrator'){
+                                $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="accountType" class="dropdown updateDropdown" disabled>
+                                                    <option '.$userSelected.' value="User">User</option>
+                                                    <option '.$adminSelected.' value="Administrator">Administrator</option>
+                                                </select>';
+                                $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="status" class="dropdown1 updateDropdown" disabled>
+                                                <option '.$activeSelected.' value="Active">Active</option>
+                                                <option '.$disabledSelected.' value="Disabled">Disabled</option>
+                                            </select>';
+                                $sub_array[] = '<div><button type="button" name="delete" class="disabled-delete" id="'.$row->accountID.'"><i class="fas fa-trash fa-disabled"></i></button>';
+                            } else{
+                                $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="accountType" class="dropdown updateDropdown">
+                                                    <option '.$userSelected.' value="User">User</option>
+                                                    <option '.$adminSelected.' value="Administrator">Administrator</option>
+                                                </select>';
+                                $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="status" class="dropdown1 updateDropdown">
+                                                <option '.$activeSelected.' value="Active">Active</option>
+                                                <option '.$disabledSelected.' value="Disabled">Disabled</option>
+                                            </select>';
+                                $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->accountID.'"><i class="fas fa-trash"></i></button>';
+                            }
+                        } elseif($accountTypeSession == 'Super-Administrator'){
+                            $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="accountType" class="dropdown updateDropdown">
+                                                <option '.$userSelected.' value="User">User</option>
+                                                <option '.$adminSelected.' value="Administrator">Administrator</option>
+                                            </select>';
+                            $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="status" class="dropdown1 updateDropdown">
+                                            <option '.$activeSelected.' value="Active">Active</option>
+                                            <option '.$disabledSelected.' value="Disabled">Disabled</option>
+                                        </select>';
+                            $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->accountID.'"><i class="fas fa-trash"></i></button>';
+                        }
+                        $sub_array[] = '<div><button type="button" name="duplicate" class="duplicate" id="'.$row->accountID.'"><i class="fa fa-clone fa-disabled"></i></button></div>';
+                        $data[] = $sub_array;
+                        $rowCount++;
+                    }
                 }
 
                 $output = array(
@@ -40,7 +80,7 @@
         }
 
         public function addUser(){
-            if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['accountType'])){
+            if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['accountType']) && isset($_POST['status'])){
                 $username = $this->input->post('username');
                 $password = $this->input->post('password');
                 if(strlen($username) < 4 || !preg_match("/^[a-zA-Z0-9]*$/", $username)){
@@ -60,14 +100,6 @@
                 redirect('/admin');
             }
         }
-
-        public function check_username_exists($username){
-			if($this->users_model->check_username_exists($username)){
-				return true;
-			} else {
-				return false;
-			}
-		}
 
         function deleteUser(){
             if(isset($_POST["id"])){
@@ -111,45 +143,6 @@
                 }
             } else{
                 redirect('/admin');
-            }
-        }
-
-        public function login(){
-            if(isset($_POST["submit"])){
-                $username = $this->input->post('username');
-                $password = $this->input->post('password');
-
-                $this->form_validation->set_rules('username', 'Username', 'required');
-                $this->form_validation->set_rules('password', 'Password', 'required');
-
-                if($this->form_validation->run() === FALSE){
-                    if(isset($this->session->userdata['logged_in'])){
-                        // redirect('admin/login');
-                    }
-                } else {
-                    $username = $this->input->post('username');
-                    $password = $this->input->post('password');
-
-                    $user = $this->users_model->login($username, $password);
-
-                    if($user['accountID']){
-                        $user_data = array(
-                            'user_id' => $user['accountID'],
-                            'username' => $username,
-                            'account_type' => $user['accountType'],
-                            'logged_in' => true
-                        );
-                        $this->session->set_userdata($user_data);
-                        $this->session->set_flashdata('user_loggedin', 'You are now logged in');
-                        redirect('admin');
-                    } else {
-                        $this->session->set_flashdata('login_failed', 'Invalid username/password');
-                        redirect('admin/login');
-                    }		
-                }
-                // redirect('/admin/usermanagement');
-            } else{
-
             }
         }
     }

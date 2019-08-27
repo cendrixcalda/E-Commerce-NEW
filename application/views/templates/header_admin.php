@@ -11,7 +11,7 @@
     <link href="<?php echo base_url(); ?>assets/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <link href="<?php echo base_url(); ?>assets/css/addons/datatables.min.css" rel="stylesheet">
-    
+
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
@@ -23,7 +23,8 @@
                 <a href="<?php echo base_url(); ?>admin/dashboard" <?php if($this->uri->segment(2)==""){echo ' class="active"';}?><?php if($this->uri->segment(2)=="dashboard"){echo ' class="active"';}?> >Dashboard</a>
                 <a href="<?php echo base_url(); ?>admin/inventory" <?php if($this->uri->segment(2)=="inventory"){echo ' class="active"';}?> >Inventory</a>
                 <?php
-                    if($this->session->userdata('account_type') == "Administrator"){
+                    $accountType = $this->session->userdata('account_type');
+                    if($accountType == "Administrator" || $accountType == "Super-Administrator"){
                         echo '<a href="'.base_url().'admin/usermanagement"';if($this->uri->segment(2)=="usermanagement"){echo ' class="active"';} echo '" >User Management</a>';
                     }
                 ?>
@@ -33,7 +34,7 @@
                 <a href="<?php echo base_url(); ?>admin/colors" <?php if($this->uri->segment(2)=="colors"){echo ' class="active"';}?> >Colors</a>
                 <a href="<?php echo base_url(); ?>admin/countries" <?php if($this->uri->segment(2)=="countries"){echo ' class="active"';}?> >Countries</a>
                 <a href="<?php echo base_url(); ?>admin/materials" <?php if($this->uri->segment(2)=="materials"){echo ' class="active"';}?> >Materials</a>
-                <a href="<?php echo base_url(); ?>admin/sizes" <?php if($this->uri->segment(2)=="sizes"){echo ' class="active"';}?> >Sizes</a>
+                <!-- <a href="<?php echo base_url(); ?>admin/sizes" <?php if($this->uri->segment(2)=="sizes"){echo ' class="active"';}?> >Sizes</a> -->
                 <a href="<?php echo base_url(); ?>admin/logout">Logout</a>
             </div>
         </nav>

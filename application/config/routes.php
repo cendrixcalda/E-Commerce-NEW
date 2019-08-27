@@ -5,17 +5,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // $route['users'] = 'admin/dashboard';
 
-$route['admin/sizes'] = 'admin/sizes';
-$route['admin/materials'] = 'admin/materials';
-$route['admin/countries'] = 'admin/countries';
-$route['admin/colors'] = 'admin/colors';
-$route['admin/categories'] = 'admin/categories';
-$route['admin/brands'] = 'admin/brands';
-$route['admin/orders'] = 'admin/orders';
-$route['admin/usermanagement'] = 'admin/usermanagement';
-$route['admin/inventory'] = 'admin/inventory';
-$route['admin/dashboard'] = 'admin/dashboard';
-$route['admin/login'] = 'admin/login';
+// $route['admin/sizes'] = 'admin/sizes';
+// $route['admin/materials'] = 'admin/materials';
+// $route['admin/countries'] = 'admin/countries';
+// $route['admin/colors'] = 'admin/colors';
+// $route['admin/categories'] = 'admin/categories';
+// $route['admin/brands'] = 'admin/brands';
+// $route['admin/orders'] = 'admin/orders';
+// $route['admin/usermanagement'] = 'admin/usermanagement';
+// $route['admin/inventory'] = 'admin/inventory';
+// $route['admin/dashboard'] = 'admin/dashboard';
+// $route['admin/login'] = 'admin/login';
 $route['admin'] = 'admin/dashboard';
 
 $route['shop/women'] = 'shop/women';

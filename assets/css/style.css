@@ -488,6 +488,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  overflow-y: hidden;
   min-height: 100vh;
 }
 
@@ -527,7 +528,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
 
 .admin-body .admin-nav .navigation-admin a {
   color: white;
-  padding: 15px;
+  padding: 14px;
 }
 
 .admin-body .admin-nav .navigation-admin a:hover {
@@ -633,7 +634,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   visibility: hidden;
   width: 150px;
   background-color: #f51111;
-  color: #fff;
+  color: white;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
@@ -656,6 +657,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {
+  min-width: 497px;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -665,17 +667,17 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   min-width: 80px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample th:nth-child(16) {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample th:nth-child(18) {
   white-space: nowrap;
   min-width: 230px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(:first-child):not(:nth-child(2)):not(:last-child) {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(:first-child):not(:nth-child(2)):not(:last-child):not(:nth-last-child(2)) {
   white-space: nowrap;
   min-width: 130px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(.editable):not(:last-child) {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(:last-child):not(:nth-last-child(2)) {
   white-space: nowrap;
   padding: 1px !important;
 }
@@ -704,7 +706,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   left: 15px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .delete-all {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .delete-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .disabled-delete-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .duplicate-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .restore-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper table.dataTable thead .disabled-restore-all {
   display: none;
   left: 10px;
 }
@@ -760,7 +762,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   border-color: #292929 !important;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .add {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .disabled-delete, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .delete-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .disabled-delete-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .add, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .duplicate, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .duplicate-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .restore, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .disabled-restore, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .restore-all, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper .disabled-restore-all {
   position: relative;
   left: 20px;
   top: 3px;
@@ -805,14 +807,31 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   padding: 14px 30px 15px 14px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .dropdown1 {
+  width: 100%;
+  padding: 15px;
+  white-space: nowrap;
+  min-width: 120px;
+  border: none;
+  outline: none;
+  background: transparent;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .dropdown1:focus {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 14px 30px 15px 14px;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown1 {
   padding: 15px 30px 15px 15px;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown:hover, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown:focus {
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown:hover, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown:focus, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown1:hover, .admin-body .admin-main .dtHorizontalVerticalExampleWrapper select.dropdown1:focus {
   background: transparent url("http://cdn.onlinewebfonts.com/svg/img_295694.svg") no-repeat 155px;
   background-size: 10px;
 }
@@ -873,6 +892,11 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 15px 13px;
   outline: none;
+}
+
+.admin-body .admin-main .dtHorizontalVerticalExampleWrapper .fa-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper.max-view {

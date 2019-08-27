@@ -6,20 +6,27 @@
                 <tr>
                     <th class="no-sort">
                     <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input checkbox-all" id="tableDefaultCheck1">
-                    <label class="custom-control-label" for="tableDefaultCheck1"></label>
+                    <input type="checkbox" class="custom-control-input checkbox-all" id="tableDefaultCheck1" disabled>
+                    <label class="custom-control-label fa-disabled" for="tableDefaultCheck1"></label>
                     </div>
                     </th>
                     <th>ID</th>
                     <th>Brand</th>
-                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
-                </tr>
+                    <th>Status</th>
+                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash fa-disabled"></i></button></th>
+                    <th class="no-sort"><button type="button" class="duplicate-all"><i class="fa fa-clone fa-disabled"></i></button></th>
+                  </tr>
             </thead>
                 <tr class="insert no-sort">
                     <td></td>
                     <td></td>
                     <td><div contenteditable spellcheck="false" class="editable" id="data1" name="brand"></div></td>
+                    <td><select name="status" id="data2" class="dropdown">
+                      <option value="Active">Active</option>
+                      <option value="Disabled">Disabled</option>
+                    </select></td>
                     <td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
+                    <td></td>
                 </tr>
         </table>
     </form>
@@ -47,6 +54,17 @@ $(document).ready(function () {
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
+      },
+      {
+        targets: [3],
+        render: function(data, type, full, meta){
+          if(type === 'filter' || type === 'sort'){
+            var api = new $.fn.dataTable.Api(meta.settings);
+            var td = api.cell({row: meta.row, column: meta.col}).node();
+            data = $('select, input', td).val();
+          }
+          return data;
+        }
       }]
     });
     $('.dataTables_length').addClass('bs-select');
@@ -61,13 +79,14 @@ $(document).ready(function () {
       e.preventDefault();
 
       var brand = $('#data1').text();
+      var status = $('#data2 option:selected').val();
 
-      if(brand != ''){
+      if(brand != '' && status != ''){
         $.ajax({
           url: "<?php echo base_url(); ?>brands/addBrand",
           method: "POST",
           data: {
-            brand:brand
+            brand:brand, status:status
           },
           success: function(data){
             dataTable.ajax.reload();
@@ -87,10 +106,7 @@ $(document).ready(function () {
         data: {id:id, column:column, value:value},
         success:function(data)
         {
-          $('.checkbox-all').prop('indeterminate', false);
-          $('.checkbox-all').prop('checked', false);
-          $('.delete-all').hide( "slow");
-          dataTable.ajax.reload();
+          reloadTable();
         }
       });
     }
@@ -114,45 +130,48 @@ $(document).ready(function () {
       }
     });
 
-    dataTable.on('click', '.delete', function () {
-      var id = $(this).attr("id");
-      if(confirm("Are you sure you want to remove this brand?")){
-        $.ajax({
-          url:"<?php echo base_url(); ?>brands/deleteBrand",
-          method:"POST",
-          data:{id:id},
-          success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
-          }
-        });
-      }
+    dataTable.on('change', '.updateDropdown', function(){
+      var id = $(this).data("id");
+      var column = $(this).data("column");
+      var value = $('option:selected', this).val();
+
+      update_brand(id, column, value);
     });
 
-    $('.delete-all').on('click', function(){
-      if(confirm("Are you sure you want to remove selected brand/s?"))
-      {
-        var id = [];
 
-        $('.checkbox:checked').each(function(i){
-          id[i] = $(this).data('id');
-        });
+    // dataTable.on('click', '.delete', function () {
+    //   var id = $(this).attr("id");
+    //   if(confirm("Are you sure you want to remove this brand?")){
+    //     $.ajax({
+    //       url:"<?php echo base_url(); ?>brands/deleteBrand",
+    //       method:"POST",
+    //       data:{id:id},
+    //       success:function(data){
+    //         reloadTable();
+    //       }
+    //     });
+    //   }
+    // });
 
-        $.ajax({
-          url:"<?php echo base_url(); ?>brands/deleteAllBrand",
-          method:"POST",
-          data:{id:id},
-          success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
-          }
-        });
-      }
-    });
+    // $('.delete-all').on('click', function(){
+    //   if(confirm("Are you sure you want to remove selected brand/s?"))
+    //   {
+    //     var id = [];
+
+    //     $('.checkbox:checked').each(function(i){
+    //       id[i] = $(this).data('id');
+    //     });
+
+    //     $.ajax({
+    //       url:"<?php echo base_url(); ?>brands/deleteAllBrand",
+    //       method:"POST",
+    //       data:{id:id},
+    //       success:function(data){
+    //         reloadTable();
+    //       }
+    //     });
+    //   }
+    // });
 
     dataTable.on('change', '.checkbox', function () {
       var selected = $('.checkbox:checked');
@@ -161,13 +180,16 @@ $(document).ready(function () {
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if(selected.length == 0){
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', false);
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       } else if (selected.length > 0){
         $('.checkbox-all').prop('indeterminate', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       }
     });
 
@@ -176,10 +198,20 @@ $(document).ready(function () {
 
       if ($('.checkbox:checked').length == $('.checkbox').length) {
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if($('.checkbox:checked').length == 0){
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       }
     });
+
+    function reloadTable(){
+      $('.checkbox-all').prop('indeterminate', false);
+      $('.checkbox-all').prop('checked', false);
+      $('.delete-all').hide( "slow");
+      $('.duplicate-all').hide( "slow");
+      dataTable.ajax.reload();
+    }
 
   });
   </script>

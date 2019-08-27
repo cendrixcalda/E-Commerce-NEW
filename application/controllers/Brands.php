@@ -7,15 +7,27 @@
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $brand = $row->brand;
+                    $noneSelected = ($brand == 'None') ? 'disabled' : '' ;
+                    $noneNotSelected = ($brand == 'None') ? '' : 'contenteditable' ;
+
+                    $status = $row->status;
+                    $activeSelected = ($status == 'Active') ? 'selected' : '' ;
+                    $disabledSelected = ($status == 'Disabled') ? 'selected' : '' ;
 
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
-                                        <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->brandID.'" id="tableDefaultCheck'.$rowCount.'">
-                                        <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
+                                        <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->brandID.'" id="tableDefaultCheck'.$rowCount.'" disabled>
+                                        <label class="custom-control-label fa-disabled" for="tableDefaultCheck'.$rowCount.'"></label>
                                     </div></td>';
                     $sub_array[] = '<div class="editable" data-column="brandID">'.$row->brandID.'</div>';
-                    $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->brandID.'" data-column="brand">'.$row->brand.'</div>';
-                    $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->brandID.'"><i class="fas fa-trash"></i></button>';
+                    $sub_array[] = '<div '.$noneNotSelected.' spellcheck="false" class="editable update" data-id="'.$row->brandID.'" data-column="brand">'.$row->brand.'</div>';
+                    $sub_array[] = '<select data-id="'.$row->brandID.'" data-column="status" class="dropdown updateDropdown" '.$noneSelected.'>
+                                    <option '.$activeSelected.' value="Active">Active</option>
+                                    <option '.$disabledSelected.' value="Disabled">Disabled</option>
+                                    </select>';
+                    $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->brandID.'"><i class="fas fa-trash fa-disabled"></i></button>';
+                    $sub_array[] = '<div><button type="button" name="duplicate" class="duplicate" id="'.$row->brandID.'"><i class="fa fa-clone fa-disabled"></i></button></div>';
                     $data[] = $sub_array;
                     $rowCount++;
                 }

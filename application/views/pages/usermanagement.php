@@ -14,7 +14,9 @@ width="100%">
 <th>Username</th>
 <th>Password</th>
 <th>Account Type</th>
+<th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
+<th class="no-sort"><button type="button" class="duplicate-all"><i class="fa fa-clone fa-disabled"></i></button></th>
 </tr>
 </thead>
 <tr class="insert no-sort">
@@ -26,7 +28,12 @@ width="100%">
     <option value="User">User</option>
     <option value="Administrator">Administrator</option>
 </select></td>
+<td><select name="status" id="data4" class="dropdown">
+  <option value="Active">Active</option>
+  <option value="Disabled">Disabled</option>
+</select></td>
 <td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
+<td></td>
 </tr>
 </table>
 </form>
@@ -50,17 +57,14 @@ $(document).ready(function () {
       url: '<?php echo base_url(); ?>users/showAllUsers',
 
       type: 'POST',
-      data: { checker: "check" },
-      // success: function(data){
-        //   console.log(data);
-        // }
+      data: { checker: "check" }
       },
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
       },
       {
-        targets: [4],
+        targets: [4, 5],
         render: function(data, type, full, meta){
           if(type === 'filter' || type === 'sort'){
             var api = new $.fn.dataTable.Api(meta.settings);
@@ -85,14 +89,14 @@ $(document).ready(function () {
       var username = $('#data1').text();
       var password = $('#data2').text();
       var accountType = $('#data3 option:selected').val();
+      var status = $('#data4 option:selected').val();
 
-      // if(username)
-      if(username != '' && password != '' && accountType != ''){
+      if(username != '' && password != '' && status != ''){
         $.ajax({
           url: "<?php echo base_url(); ?>users/addUser",
           method: "POST",
           data: {
-            username:username, password:password, accountType:accountType
+            username:username, password:password, accountType:accountType, status:status
           },
           success: function(data){
             if(data != ''){
@@ -120,10 +124,7 @@ $(document).ready(function () {
             alert(data);
             $(prevFocus).text(oldValue);
           } else if(data == ''){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
           }
         }
       });
@@ -164,10 +165,7 @@ $(document).ready(function () {
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -187,10 +185,7 @@ $(document).ready(function () {
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -203,13 +198,16 @@ $(document).ready(function () {
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if(selected.length == 0){
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', false);
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       } else if (selected.length > 0){
         $('.checkbox-all').prop('indeterminate', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       }
     });
 
@@ -218,10 +216,21 @@ $(document).ready(function () {
 
       if ($('.checkbox:checked').length == $('.checkbox').length) {
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if($('.checkbox:checked').length == 0){
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       }
     });
+
+    function reloadTable(){
+      $('.checkbox-all').prop('indeterminate', false);
+      $('.checkbox-all').prop('checked', false);
+      $('.delete-all').hide( "slow");
+      $('.duplicate-all').hide( "slow");
+      dataTable.ajax.reload();
+    }
+
 
   });
   </script>

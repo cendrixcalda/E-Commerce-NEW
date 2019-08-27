@@ -1,3 +1,11 @@
+<?php
+  $accountTypeSession = $this->session->userdata('account_type');
+  
+  $disableRestore = ($accountTypeSession == 'User') ? 'fa-disabled' : '' ;
+  $disableRestore1 = ($accountTypeSession == 'User') ? 'disabled-restore-all' : 'restore-all' ;
+  $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'fa-disabled' : '' ;
+  $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'disabled-delete-all' : 'delete-all' ;
+?>
 <div class="dtHorizontalVerticalExampleWrapper">
     <?php echo form_open_multipart('', array('id' => 'add_color')); ?>
         <table id="dtHorizontalVerticalExample" class="table table-hover table-bordered table-sm " cellspacing="0"
@@ -12,15 +20,29 @@
                     </th>
                     <th>ID</th>
                     <th>Color</th>
-                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
-                </tr>
+                    <th>Color Code</th>
+                    <?php
+                      if($accountTypeSession != 'User'){
+                        echo '<th>Status</th>';
+                      }
+                    ?>
+                    <th class="no-sort"><button type="button" class="<?php echo $disableDelete1 ?>"><i class="fas fa-trash <?php echo $disableDelete ?>"></i></button></th>
+                    <th class="no-sort"><button type="button" class="<?php echo $disableRestore1 ?>"><i class="fas fa-trash-restore <?php echo $disableRestore ?>"></i></button></th>
+                  </tr>
             </thead>
                 <tr class="insert no-sort">
                     <td></td>
                     <td></td>
                     <td><div contenteditable spellcheck="false" class="editable" id="data1" name="color"></div></td>
+                    <td><div contenteditable spellcheck="false" class="editable" id="data2" name="colorCode"></div></td>
+                    <?php
+                      if($accountTypeSession != 'User'){
+                        echo '<td><div class="editable" name="status">Active</div></td>';
+                      }
+                    ?>
                     <td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
-                </tr>
+                    <td></td>
+                  </tr>
         </table>
     </form>
 </div>
@@ -60,13 +82,15 @@ $(document).ready(function () {
       e.preventDefault();
 
       var color = $('#data1').text();
+      var colorCode = $('#data2').text();
+      var status = 'Active'
 
-      if(color != ''){
+      if(color != '' && colorCode != '' && status != ''){
         $.ajax({
           url: "<?php echo base_url(); ?>colors/addColor",
           method: "POST",
           data: {
-            color:color
+            color:color, colorCode:colorCode, status:status
           },
           success: function(data){
             dataTable.ajax.reload();
@@ -86,10 +110,7 @@ $(document).ready(function () {
         data: {id:id, column:column, value:value},
         success:function(data)
         {
-          $('.checkbox-all').prop('indeterminate', false);
-          $('.checkbox-all').prop('checked', false);
-          $('.delete-all').hide( "slow");
-          dataTable.ajax.reload();
+          reloadTable();
         }
       });
     }
@@ -114,25 +135,23 @@ $(document).ready(function () {
     });
 
     dataTable.on('click', '.delete', function () {
-      var id = $(this).attr("id");
       if(confirm("Are you sure you want to remove this color?")){
+        var id = [];
+        id[0] = $(this).attr("id");
+        
         $.ajax({
           url:"<?php echo base_url(); ?>colors/deleteColor",
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
     });
 
     $('.delete-all').on('click', function(){
-      if(confirm("Are you sure you want to remove selected color/s?"))
-      {
+      if(confirm("Are you sure you want to remove selected color/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){
@@ -140,14 +159,46 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>colors/deleteAllColor",
+          url:"<?php echo base_url(); ?>colors/deleteColor",
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
+          }
+        });
+      }
+    });
+
+    dataTable.on('click', '.restore', function () {
+      if(confirm("Are you sure you want to restore this color?")){
+        var id = [];
+        id[0] = $(this).attr("id");
+
+        $.ajax({
+          url:"<?php echo base_url(); ?>colors/restoreColor",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            reloadTable();
+          }
+        });
+      }
+    });
+
+    $('.restore-all').on('click', function(){
+      if(confirm("Are you sure you want to restore selected color/s?")){
+        var id = [];
+
+        $('.checkbox:checked').each(function(i){
+          id[i] = $(this).data('id');
+        });
+
+        $.ajax({
+          url:"<?php echo base_url(); ?>colors/restoreColor",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            reloadTable();
           }
         });
       }
@@ -160,25 +211,38 @@ $(document).ready(function () {
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', true);
         $('.delete-all').show( "slow");
+        $('.restore-all').show( "slow");
       } else if(selected.length == 0){
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', false);
         $('.delete-all').hide( "slow");
+        $('.restore-all').hide( "slow");
       } else if (selected.length > 0){
         $('.checkbox-all').prop('indeterminate', true);
         $('.delete-all').show( "slow");
+        $('.restore-all').show( "slow");
       }
     });
 
     $(".checkbox-all").click(function(){
-      $('input:checkbox').not(this).prop('checked', this.checked);
+      $('input:checkbox').not(this).not('.not-checkbox').prop('checked', this.checked);
 
-      if ($('.checkbox:checked').length == $('.checkbox').length) {
+      if ($('.checkbox:checked').length == $('.checkbox').length && $('.checkbox:checked').length != 0) {
         $('.delete-all').show( "slow");
+        $('.restore-all').show( "slow");
       } else if($('.checkbox:checked').length == 0){
         $('.delete-all').hide( "slow");
+        $('.restore-all').hide( "slow");
       }
     });
+
+    function reloadTable(){
+      $('.checkbox-all').prop('indeterminate', false);
+      $('.checkbox-all').prop('checked', false);
+      $('.delete-all').hide( "slow");
+      $('.restore-all').hide( "slow");
+      dataTable.ajax.reload();
+    }
 
   });
   </script>

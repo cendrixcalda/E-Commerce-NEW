@@ -6,9 +6,9 @@
         }
 
         public function get_all_users(){
-            $this->db->from('users');
-
-            $query = $this->db->get();
+            $accountType = array('User', 'Administrator');
+            $this->db->where_in('accountType', $accountType);
+            $query = $this->db->get('users');
             return $query->result();
         }
 
@@ -16,7 +16,8 @@
             $data = array(
                 'username' => $this->input->post('username'),
                 'password' => $this->input->post('password'),
-                'accountType' => $this->input->post('accountType')
+                'accountType' => $this->input->post('accountType'),
+                'status' => $this->input->post('status')
             );
 
             $this->db->insert('users', $data);
@@ -58,10 +59,8 @@
 
          public function login($username, $password){
 			$this->db->where('username', $username);
-			// $this->db->where('password', $password);
-			$result = $this->db->get('users');
+			$result = $this->db->get_where('users', array('status' => 'Active'));
 			if($result->num_rows() == 1){
-                // return $result->row_array();
                 $this->db->where('username', $username);
                 $this->db->where('password', $password);
                 $result = $this->db->get('users');

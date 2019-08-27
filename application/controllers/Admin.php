@@ -68,11 +68,11 @@
             }
             
             $option['brands'] = $this->brands_model->get_brands();
-            $option['categories'] = $this->items_model->get_categories();
-            $option['colors'] = $this->items_model->get_colors();
-            $option['countries'] = $this->items_model->get_countries();
-            $option['materials'] = $this->items_model->get_materials();
-            $option['sizes'] = $this->items_model->get_sizes();
+            $option['categories'] = $this->categories_model->get_categories();
+            $option['colors'] = $this->colors_model->get_colors();
+            $option['countries'] = $this->countries_model->get_countries();
+            $option['materials'] = $this->materials_model->get_materials();
+            $option['sizes'] = $this->sizes_model->get_sizes();
             
             $this->load->view('templates/header_admin');
             $this->load->view('pages/inventory', $option);

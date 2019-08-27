@@ -4,33 +4,39 @@ class Colors_model extends CI_Model{
     {
         $this->load->database();
     }
+    
+    public function get_colors_inventory(){
+        $this->db->order_by("(CASE color WHEN 'None' THEN 0 ELSE 1 END),  color asc");
+        $query = $this->db->get_where('colors', array('status' => 'Active'));
+        return $query->result();
+    }
 
     public function get_colors(){
-        $this->db->order_by("color", "asc");
+        $this->db->order_by("(CASE color WHEN 'None' THEN 0 ELSE 1 END),  color asc");
         $query = $this->db->get('colors');
         return $query->result();
     }
     
     public function insert_color(){
         $data = array(
-            'color' => $this->input->post('color')
+            'color' => $this->input->post('color'),
+            'colorCode' => $this->input->post('colorCode'),
+            'status' => $this->input->post('status')
         );
         
         $this->db->insert('colors', $data);
     }
     
     function delete_color(){
-        $id = $_POST['id'];
-        $this->db->where("colorID", $id);  
-        $this->db->delete("colors");
-    }
-    
-    function delete_all_color(){
         $data['ids'] = $_POST["id"];
         
         foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Disabled'
+            );
+
             $this->db->where("colorID", $id);  
-            $this->db->delete("colors");
+            $this->db->update("colors", $data);
         }
     }
     
@@ -42,5 +48,18 @@ class Colors_model extends CI_Model{
         
         $this->db->where("colorID", $id);  
         $this->db->update("colors", $data);
+    }
+
+    function restore_color(){
+        $data['ids'] = $_POST["id"];
+        
+        foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Active'
+            );
+
+            $this->db->where("colorID", $id);  
+            $this->db->update("colors", $data);
+        }
     }
 }

@@ -4,33 +4,37 @@ class sizes_model extends CI_Model{
     {
         $this->load->database();
     }
+    
+    public function get_sizes_inventory(){
+        $query = $this->db->get_where('sizes', array('status' => 'Active'));
+        return $query->result();
+    }
 
     public function get_sizes(){
-        $this->db->order_by("size", "asc");
         $query = $this->db->get('sizes');
         return $query->result();
     }
     
     public function insert_size(){
         $data = array(
-            'size' => $this->input->post('size')
+            'size' => $this->input->post('size'),
+            'sizeCode' => $this->input->post('sizeCode'),
+            'status' => $this->input->post('status')
         );
         
         $this->db->insert('sizes', $data);
     }
     
     function delete_size(){
-        $id = $_POST['id'];
-        $this->db->where("sizeID", $id);  
-        $this->db->delete("sizes");
-    }
-    
-    function delete_all_size(){
         $data['ids'] = $_POST["id"];
-        
+
         foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Disabled'
+            );
+
             $this->db->where("sizeID", $id);  
-            $this->db->delete("sizes");
+            $this->db->update("sizes", $data);
         }
     }
     
@@ -42,5 +46,18 @@ class sizes_model extends CI_Model{
         
         $this->db->where("sizeID", $id);  
         $this->db->update("sizes", $data);
+    }
+
+    function restore_size(){
+        $data['ids'] = $_POST["id"];
+        
+        foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Active'
+            );
+
+            $this->db->where("sizeID", $id);  
+            $this->db->update("sizes", $data);
+        }
     }
 }

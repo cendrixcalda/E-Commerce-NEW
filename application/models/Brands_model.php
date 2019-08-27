@@ -5,15 +5,22 @@ class Brands_model extends CI_Model{
         $this->load->database();
     }
 
+    public function get_brands_inventory(){
+        $this->db->order_by("(CASE brand WHEN 'None' THEN 0 ELSE 1 END),  brand asc");
+        $query = $this->db->get_where('brands', array('status' => 'Active'));
+        return $query->result();
+    }
+
     public function get_brands(){
-        $this->db->order_by("brand", "asc");
+        $this->db->order_by("(CASE brand WHEN 'None' THEN 0 ELSE 1 END),  brand asc");
         $query = $this->db->get('brands');
         return $query->result();
     }
     
     public function insert_brand(){
         $data = array(
-            'brand' => $this->input->post('brand')
+            'brand' => $this->input->post('brand'),
+            'status' => $this->input->post('status')
         );
         
         $this->db->insert('brands', $data);

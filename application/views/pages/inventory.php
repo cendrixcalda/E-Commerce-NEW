@@ -1,3 +1,10 @@
+<!-- <select id="chkveg" class="multi-select" multiple="multiple">
+<option value="cheese">Cheese</option>
+<option value="tomatoes">Tomatoes</option>
+</select><br /><br />
+
+<input type="button" id="btnget" value="Get Selected Values" /> -->
+
 <div class="dtHorizontalVerticalExampleWrapper">
 <?php echo form_open_multipart('', array('id' => 'add_item')); ?>
 <table id="dtHorizontalVerticalExample" class="table table-hover table-bordered table-sm " cellspacing="0"
@@ -11,6 +18,7 @@ width="100%">
 </div>
 </th>
 <th>ID</th>
+<th>SKU</th>
 <th>Name</th>
 <th>Brand</th>
 <th>For Genders</th>
@@ -20,16 +28,19 @@ width="100%">
 <th>Net Price</th>
 <th>Stock</th>
 <th>Color</th>
+<th>Size</th>
+<th>Material</th>
 <th>Made In</th>
-<th>Materials</th>
-<th>Sizes</th>
+<th>Description</th>
 <th>Date</th>
 <th>Image</th>
-<th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
+<th class="no-sort"><button type="button" class="delete-all options"><i class="fas fa-trash"></i></button></th>
+<th class="no-sort"><button type="button" class="duplicate-all"><i class="fa fa-clone"></i></button></th>
 </tr>
 
 </thead>
 <tr class="insert no-sort">
+<td></td>
 <td></td>
 <td></td>
 <td><div contenteditable spellcheck="false" class="editable" id="data1" name="name"></div></td>
@@ -67,9 +78,10 @@ width="100%">
 
 <td><select name="brandID" id="data2" class="dropdown"><?php echo $optionBrand ?></select></td>
 <td><select name="forGenders" id="data3" class="dropdown">
-    <option value="Men">Men</option>
-    <option value="Women">Women</option>
-    <option value="Unisex">Unisex</option>
+  <option value="None">None</option>
+  <option value="Men">Men</option>
+  <option value="Women">Women</option>
+  <option value="Unisex">Unisex</option>
 </select></td>
 <td><select name="categoryID" id="data4" class="dropdown"><?php echo $optionCategory ?></select></td>
 <td><div contenteditable spellcheck="false" class="editable price" id="data5" name="price"></div></td>
@@ -77,12 +89,14 @@ width="100%">
 <td><div class="editable netPrice" id="data7" name="netPrice">0</div></td>
 <td><div contenteditable spellcheck="false" class="editable stock" id="data8" name="stock"></div></td>
 <td><select name="colorID" id="data9" class="dropdown"><?php echo $optionColor ?></select></td>
-<td><select name="countryID" id="data10" class="dropdown"><?php echo $optionCountry ?></select></td>
+<td><select name="sizeID" id="data10" class="dropdown"><?php echo $optionSize ?></select></td>
 <td><select name="materialID" id="data11" class="dropdown"><?php echo $optionMaterial ?></select></td>
-<td><select name="sizeID" id="data12" class="dropdown"><?php echo $optionSize ?></select></td>
-<td><input type="date" id="data13" class="dropdown date" required="required" /></td>
-<td><input type="file" name="userfile" class="image" id="data14" /></td>
-<td><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
+<td><select name="countryID" id="data12" class="dropdown"><?php echo $optionCountry ?></select></td>
+<td><div contenteditable spellcheck="false" class="editable" id="data13" name="description"></div></td>
+<td><input type="date" id="data14" class="dropdown date" required="required" /></td>
+<td><input type="file" name="userfile" class="image" id="data15" /></td>
+<td class="options"><button type="submit" name="submit" value="add" class="add"><i class="fas fa-plus"></i></button></td>
+<td></td>
 </tr>
 </table>
 </form>
@@ -114,16 +128,13 @@ $(document).ready(function () {
 
       type: 'POST',
       data: { checker: "check" },
-      // success: function(data){
-        //   console.log(data);
-        // }
       },
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
       },
       {
-        targets: [4],
+        targets: [5],
         render: function(data, type, full, meta){
           if(type === 'filter' || type === 'sort'){
             var api = new $.fn.dataTable.Api(meta.settings);
@@ -134,7 +145,7 @@ $(document).ready(function () {
         }
       },
       {
-        targets: [3, 5, 10, 11, 12, 13],
+        targets: [4, 6, 11, 12, 13, 14],
         render: function(data, type, full, meta){
           if(type === 'filter' || type === 'sort'){
             var api = new $.fn.dataTable.Api(meta.settings);
@@ -151,11 +162,11 @@ $(document).ready(function () {
       },
       {
         type: 'size-range',
-        targets: 13
+        targets: 12
       },
       {
         type: 'extract-date',
-        targets: 14
+        targets: 16
       }]
     });
     $('.dataTables_length').addClass('bs-select');
@@ -168,7 +179,7 @@ $(document).ready(function () {
 
     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
       "size-range-pre": function ( a ) {
-        var sizeArr = ['Extra Extra Small', 'Extra Small', 'Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'];
+        var sizeArr = ['None', 'Extra Extra Small', 'Extra Small', 'Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'];
         return sizeArr.indexOf(a);
       },
       "size-range-asc": function ( a, b ) {
@@ -205,11 +216,12 @@ $(document).ready(function () {
       var netPrice = $('#data7').text();
       var stock = $('#data8').text();
       var color = $('#data9 option:selected').val();
-      var madeIn = $('#data10 option:selected').val();
-      var materials = $('#data11 option:selected').val();
-      var sizes = $('#data12 option:selected').val();
-      var date = $('#data13').val();
-      var image = document.getElementById("data14").files[0];
+      var size = $('#data10 option:selected').val();
+      var material = $('#data11 option:selected').val();
+      var madeIn = $('#data12 option:selected').val();
+      var description = $('#data13').text();
+      var date = $('#data14').val();
+      var image = document.getElementById("data15").files[0];
       
       var formData = new FormData();
 
@@ -222,25 +234,22 @@ $(document).ready(function () {
       formData.append("netPrice", netPrice);
       formData.append("stock", stock);
       formData.append("color", color);
+      formData.append("size", size);
+      formData.append("material", material);
       formData.append("madeIn", madeIn);
-      formData.append("materials", materials);
-      formData.append("sizes", sizes);
+      formData.append("description", description);
       formData.append("date", date);
       formData.append("userfile", image);
 
-      if(name != '' && brand != '' && forGenders != '' && category != '' && price != '' && salePercentage != '' && netPrice != '' && stock != '' && color != '' && madeIn != '' && materials != '' && sizes != '' && date != '' && image !== undefined){
+      if(name != '' && brand != '' && forGenders != '' && category != '' && price != '' && salePercentage != '' && netPrice != '' && stock != '' && color != '' && size != '' && material != '' && madeIn != '' && description != '' && date != '' && image !== undefined){
         $.ajax({
           url: "<?php echo base_url(); ?>items/addItem",
           method: "POST",
           data:formData,
           processData:false,
           contentType:false,
-          // data: {
-
-          //   name:name, brand:brand, forGenders:forGenders, category:category, price:price, salePercentage:salePercentage, netPrice:netPrice, stock:stock, color:color, madeIn:madeIn, materials:materials, sizes:sizes, date:date
-          // },
           success: function(data){
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -249,18 +258,15 @@ $(document).ready(function () {
       }
     });
 
-    function update_item(id, column, value)
+    function update_item(id, column, value, name, category, gender, color, size)
     {
       $.ajax({
         url: "<?php echo base_url(); ?>items/updateItem",
         method: "POST",
-        data: {id:id, column:column, value:value},
+        data: {id:id, column:column, value:value, name:name, category:category, gender:gender, color:color, size:size},
         success:function(data)
         {
-          $('.checkbox-all').prop('indeterminate', false);
-          $('.checkbox-all').prop('checked', false);
-          $('.delete-all').hide( "slow");
-          dataTable.ajax.reload();
+          reloadTable();
         }
       });
     }
@@ -281,10 +287,7 @@ $(document).ready(function () {
         contentType:false,
         success:function(data)
         {
-          $('.checkbox-all').prop('indeterminate', false);
-          $('.checkbox-all').prop('checked', false);
-          $('.delete-all').hide( "slow");
-          dataTable.ajax.reload();
+          reloadTable();
         }
       });
     }
@@ -316,7 +319,13 @@ $(document).ready(function () {
       if(value != oldValue && value != ''){
         var id = $(this).data("id");
         var column = $(this).data("column");
-        update_item(id, column, value);
+        var name = $(this).closest('tr').find('.name').text();
+        var category = $(this).closest('tr').find('.category option:selected').val();
+        var gender = $(this).closest('tr').find('.gender option:selected').val();
+        var color = $(this).closest('tr').find('.color option:selected').val();
+        var size = $(this).closest('tr').find('.size option:selected').val();
+
+        update_item(id, column, value, name, category, gender, color, size);
       }
     });
 
@@ -401,7 +410,13 @@ $(document).ready(function () {
       var id = $(this).data("id");
       var column = $(this).data("column");
       var value = $('option:selected', this).val();
-      update_item(id, column, value);
+      var name = $(this).closest('tr').find('.name').text();
+      var category = $(this).closest('tr').find('.category option:selected').val();
+      var gender = $(this).closest('tr').find('.gender option:selected').val();
+      var color = $(this).closest('tr').find('.color option:selected').val();
+      var size = $(this).closest('tr').find('.size option:selected').val();
+
+      update_item(id, column, value, name, category, gender, color, size);
     });
 
     dataTable.on('change', '.updateDate', function(){
@@ -419,17 +434,16 @@ $(document).ready(function () {
     });
 
     dataTable.on('click', '.delete', function () {
-      var id = $(this).attr("id");
       if(confirm("Are you sure you want to remove this item?")){
+        var id = [];
+        id[0] = $(this).attr("id");
+
         $.ajax({
           url:"<?php echo base_url(); ?>items/deleteItem",
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -445,14 +459,46 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>items/deleteAllItem",
+          url:"<?php echo base_url(); ?>items/deleteItem",
           method:"POST",
           data:{id:id},
           success:function(data){
-            $('.checkbox-all').prop('indeterminate', false);
-            $('.checkbox-all').prop('checked', false);
-            $('.delete-all').hide( "slow");
-            dataTable.ajax.reload();
+            reloadTable();
+          }
+        });
+      }
+    });
+
+    dataTable.on('click', '.duplicate', function () {
+      if(confirm("Are you sure you want to duplicate this item?")){
+        var id = [];
+        id[0] = $(this).attr("id");
+        
+        $.ajax({
+          url:"<?php echo base_url(); ?>items/duplicateItem",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            reloadTable();
+          }
+        });
+      }
+    });
+
+    $('.duplicate-all').on('click', function(){
+      if(confirm("Are you sure you want to duplicate selected item/s?")){
+        var id = [];
+
+        $('.checkbox:checked').each(function(i){
+          id[i] = $(this).data('id');
+        });
+
+        $.ajax({
+          url:"<?php echo base_url(); ?>items/duplicateItem",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            reloadTable();
           }
         });
       }
@@ -465,13 +511,16 @@ $(document).ready(function () {
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if(selected.length == 0){
         $('.checkbox-all').prop('indeterminate', false);
         $('.checkbox-all').prop('checked', false);
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       } else if (selected.length > 0){
         $('.checkbox-all').prop('indeterminate', true);
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       }
     });
 
@@ -480,10 +529,20 @@ $(document).ready(function () {
 
       if ($('.checkbox:checked').length == $('.checkbox').length) {
         $('.delete-all').show( "slow");
+        $('.duplicate-all').show( "slow");
       } else if($('.checkbox:checked').length == 0){
         $('.delete-all').hide( "slow");
+        $('.duplicate-all').hide( "slow");
       }
     });
+
+    function reloadTable(){
+      $('.checkbox-all').prop('indeterminate', false);
+      $('.checkbox-all').prop('checked', false);
+      $('.delete-all').hide( "slow");
+      $('.duplicate-all').hide( "slow");
+      dataTable.ajax.reload();
+    }
 
   });
   </script>

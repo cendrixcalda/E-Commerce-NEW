@@ -4,17 +4,18 @@
     public function showAllItems(){
         if(isset($_POST["checker"])){
             $result = $this->items_model->get_all_items();
-            $categories = $this->items_model->get_categories();
-            $brands = $this->brands_model->get_brands();
-            $colors = $this->items_model->get_colors();
-            $countries = $this->items_model->get_countries();
-            $materials = $this->items_model->get_materials();
-            $sizes = $this->items_model->get_sizes();
+            $categories = $this->categories_model->get_categories_inventory();
+            $brands = $this->brands_model->get_brands_inventory();
+            $colors = $this->colors_model->get_colors_inventory();
+            $countries = $this->countries_model->get_countries_inventory();
+            $materials = $this->materials_model->get_materials_inventory();
+            $sizes = $this->sizes_model->get_sizes_inventory();
             $data = array();
             
             $rowCount = 2;
             foreach($result as $row){
                 $forGenders = $row->forGenders;
+                $noneSelected = ($forGenders == 'None') ? 'selected' : '' ;
                 $menSelected = ($forGenders == 'Men') ? 'selected' : '' ;
                 $womenSelected = ($forGenders == 'Women') ? 'selected' : '' ;
                 $unisexSelected = ($forGenders == 'Unisex') ? 'selected' : '' ;
@@ -68,25 +69,29 @@
                 <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
                 </div></td>';
                 $sub_array[] = '<div class="editable" data-column="itemID">'.$row->itemID.'</div>';
-                $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->itemID.'" data-column="name">'.$row->name.'</div>';
+                $sub_array[] = '<div class="editable" data-column="SKU">'.$row->SKU.'</div>';
+                $sub_array[] = '<div contenteditable spellcheck="false" class="editable update name" data-id="'.$row->itemID.'" data-column="name">'.$row->name.'</div>';
                 $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="brandID" class="dropdown updateDropdown">'.$optionBrand.'</select>';
-                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="forGenders" class="dropdown updateDropdown">
+                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="forGenders" class="dropdown updateDropdown gender">
+                <option '.$noneSelected.' value="None">None</option>
                 <option '.$menSelected.' value="Men">Men</option>
                 <option '.$womenSelected.' value="Women">Women</option>
                 <option '.$unisexSelected.' value="Unisex">Unisex</option>
                 </select>';
-                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="categoryID" class="dropdown updateDropdown">'.$optionCategory.'</select>';
+                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="categoryID" class="dropdown updateDropdown category">'.$optionCategory.'</select>';
                 $sub_array[] = '<div contenteditable spellcheck="false" class="editable updatePrice price" data-id="'.$row->itemID.'" data-column="price">'.$row->price.'</div>';
                 $sub_array[] = '<div contenteditable spellcheck="false" class="editable updateSalePercentage salePercentage" data-id="'.$row->itemID.'" data-column="salePercentage">'.$row->salePercentage.'</div>';
                 $sub_array[] = '<div class="editable update netPrice" data-id="'.$row->itemID.'" data-column="netPrice">'.$row->netPrice.'</div>';
                 $sub_array[] = '<div contenteditable spellcheck="false" class="editable update stock" data-id="'.$row->itemID.'" data-column="stock">'.$row->stock.'</div>';
-                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="colorID" class="dropdown updateDropdown">'.$optionColor.'</select>';
-                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="countryID" class="dropdown updateDropdown">'.$optionCountry.'</select>';
+                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="colorID" class="dropdown updateDropdown color">'.$optionColor.'</select>';
+                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="sizeID" class="dropdown updateDropdown size">'.$optionSize.'</select>';
                 $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="materialID" class="dropdown updateDropdown">'.$optionMaterial.'</select>';
-                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="sizeID" class="dropdown updateDropdown">'.$optionSize.'</select>';
+                $sub_array[] = '<select data-id="'.$row->itemID.'" data-column="countryID" class="dropdown updateDropdown">'.$optionCountry.'</select>';
+                $sub_array[] = '<div contenteditable spellcheck="false" class="editable update" data-id="'.$row->itemID.'" data-column="description">'.$row->description.'</div>';
                 $sub_array[] = '<input type="date" data-id="'.$row->itemID.'" data-column="date" class="dropdown updateDate date" value="'.$row->date.'" required="required" />';
                 $sub_array[] = '<input type="file" name="userfile" data-id="'.$row->itemID.'" data-column="image"  class="imageUpdate" id="'.$row->itemID.'" /><label for="'.$row->itemID.'" class="imageLabel">'.$row->image.'</label>';
-                $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->itemID.'"><i class="fas fa-trash"></i></button>';
+                $sub_array[] = '<div class="options"><button type="button" name="delete" class="delete" id="'.$row->itemID.'"><i class="fas fa-trash"></i></button></div>';
+                $sub_array[] = '<div><button type="button" name="duplicate" class="duplicate" id="'.$row->itemID.'"><i class="fa fa-clone"></i></button></div>';
                 $data[] = $sub_array;
                 $rowCount++;
             }
@@ -119,8 +124,16 @@
                 $data = array('upload_data' => $this->upload->data());
                 $post_image = $_FILES['userfile']['name'];
             }
+
+            $name = $this->input->post('name');
+            $categoryID = $this->input->post('category');
+            $gender = $this->input->post('forGenders');
+            $colorID = $this->input->post('color');
+            $sizeID = $this->input->post('size');
+
+            $sku = $this->skuGenerator($name, $categoryID, $gender, $colorID, $sizeID);
             
-            $this->items_model->insert_item($post_image);
+            $this->items_model->insert_item($post_image, $sku);
         } else{
             redirect('/admin');
         }
@@ -128,17 +141,8 @@
     
     function deleteItem(){
         if(isset($_POST["id"])){
-            $id = $_POST["id"];
-            $this->items_model->delete_item($id);
-        } else{
-            redirect('/admin');
-        }
-    }
-    
-    function deleteAllItem(){
-        if(isset($_POST["id"])){
             $data['ids'] = $_POST["id"];
-            $this->items_model->delete_all_item($data);
+            $this->items_model->delete_item($data);
         } else{
             redirect('/admin');
         }
@@ -146,11 +150,14 @@
     
     function updateItem(){
         if(isset($_POST["id"])){
-            $id = $_POST["id"];
-            $data = array(
-                $_POST["column"]  =>  $_POST["value"]
-            );
-            $this->items_model->update_item($id, $data);
+            $name = $this->input->post('name');
+            $categoryID = $this->input->post('category');
+            $gender = $this->input->post('gender');
+            $colorID = $this->input->post('color');
+            $sizeID = $this->input->post('size');
+
+            $sku = $this->skuGenerator($name, $categoryID, $gender, $colorID, $sizeID);
+            $this->items_model->update_item($sku);
         } else{
             redirect('/admin');
         }
@@ -186,5 +193,41 @@
         } else{
             redirect('/admin');
         }
+    }
+
+    function duplicateItem(){
+        if(isset($_POST["id"])){
+            $data['ids'] = $_POST["id"];
+            $this->items_model->duplicate_item($data);
+        } else{
+            redirect('/admin');
+        }
+    }
+
+    public function skuGenerator($name, $categoryID, $gender, $colorID, $sizeID){
+        $nameWords = explode(" ", $name);
+        $nameCode = "";
+
+        foreach ($nameWords as $acronym) {
+        $nameCode .= $acronym[0];
+        }
+
+        $nameCode = strtoupper($nameCode);
+        $categoryCode = $this->items_model->get_category_code($categoryID);
+        $colorCode = $this->items_model->get_color_code($colorID);
+        $sizeCode = $this->items_model->get_size_code($sizeID);
+
+        if($gender == "Men"){
+            $genderCode = "M";
+        } elseif($gender == "Women"){
+            $genderCode = "WM";
+        } elseif($gender == "Unisex"){
+            $genderCode = "UNI";
+        } else{
+            $genderCode = "NON";
+        }
+        
+        $sku = $nameCode."-".$categoryCode['categoryCode'].$genderCode."-".$colorCode['colorCode'].$sizeCode['sizeCode'];
+        return $sku;
     }
 }
