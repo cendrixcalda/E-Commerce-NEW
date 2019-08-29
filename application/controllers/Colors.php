@@ -14,13 +14,14 @@
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $status = $row->status;
                     $color = $row->color;
-                    $noneSelected = ($color == 'None') ? 'disabled' : '' ;
+                    $noneSelected = ($color == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'disabled' : '' ;
                     $noneNotSelected = ($color == 'None') ? '' : 'contenteditable' ;
-                    $noneCheckbox = ($color == 'None') ? 'not-checkbox' : 'checkbox' ;
+                    $noneCheckbox = ($color == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'not-checkbox' : 'checkbox' ;
 
-                    $disableRestore = ($accountTypeSession == 'User' || $color == 'None') ? 'fa-disabled' : '' ;
-                    $disableRestore1 = ($accountTypeSession == 'User' || $color == 'None') ? 'disabled-restore' : 'restore' ;
+                    $disableRestore = ($accountTypeSession == 'User' || $color == 'None' || $status == 'Active') ? 'fa-disabled' : '' ;
+                    $disableRestore1 = ($accountTypeSession == 'User' || $color == 'None' || $status == 'Active') ? 'disabled-restore' : 'restore' ;
                     $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $color == 'None') ? 'fa-disabled' : '' ;
                     $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $color == 'None') ? 'disabled-delete' : 'delete' ;
 

@@ -230,4 +230,13 @@
         $sku = $nameCode."-".$categoryCode['categoryCode'].$genderCode."-".$colorCode['colorCode'].$sizeCode['sizeCode'];
         return $sku;
     }
+
+    public function getAffectedItems(){
+        if(isset($_POST["id"])){
+            $affectedItems = $this->items_model->get_affected_items();
+            echo $affectedItems;
+        } else{
+            redirect('/admin');
+        }
+    }
 }

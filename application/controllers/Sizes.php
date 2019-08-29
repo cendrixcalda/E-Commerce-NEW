@@ -14,13 +14,14 @@
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $status = $row->status;
                     $size = $row->size;
-                    $noneSelected = ($size == 'None') ? 'disabled' : '' ;
+                    $noneSelected = ($size == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'disabled' : '' ;
                     $noneNotSelected = ($size == 'None') ? '' : 'contenteditable' ;
-                    $noneCheckbox = ($size == 'None') ? 'not-checkbox' : 'checkbox' ;
+                    $noneCheckbox = ($size == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'not-checkbox' : 'checkbox' ;
 
-                    $disableRestore = ($accountTypeSession == 'User' || $size == 'None') ? 'fa-disabled' : '' ;
-                    $disableRestore1 = ($accountTypeSession == 'User' || $size == 'None') ? 'disabled-restore' : 'restore' ;
+                    $disableRestore = ($accountTypeSession == 'User' || $size == 'None' || $status == 'Active') ? 'fa-disabled' : '' ;
+                    $disableRestore1 = ($accountTypeSession == 'User' || $size == 'None' || $status == 'Active') ? 'disabled-restore' : 'restore' ;
                     $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $size == 'None') ? 'fa-disabled' : '' ;
                     $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $size == 'None') ? 'disabled-delete' : 'delete' ;
 

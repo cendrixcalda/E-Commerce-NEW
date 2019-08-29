@@ -14,13 +14,14 @@
 
                 $rowCount = 2;
                 foreach($result as $row){
+                    $status = $row->status;
                     $country = $row->country;
-                    $noneSelected = ($country == 'None') ? 'disabled' : '' ;
+                    $noneSelected = ($country == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'disabled' : '' ;
                     $noneNotSelected = ($country == 'None') ? '' : 'contenteditable' ;
-                    $noneCheckbox = ($country == 'None') ? 'not-checkbox' : 'checkbox' ;
+                    $noneCheckbox = ($country == 'None' || ($status == 'Active' && $accountTypeSession == 'Administrator')) ? 'not-checkbox' : 'checkbox' ;
 
-                    $disableRestore = ($accountTypeSession == 'User' || $country == 'None') ? 'fa-disabled' : '' ;
-                    $disableRestore1 = ($accountTypeSession == 'User' || $country == 'None') ? 'disabled-restore' : 'restore' ;
+                    $disableRestore = ($accountTypeSession == 'User' || $country == 'None' || $status == 'Active') ? 'fa-disabled' : '' ;
+                    $disableRestore1 = ($accountTypeSession == 'User' || $country == 'None' || $status == 'Active') ? 'disabled-restore' : 'restore' ;
                     $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $country == 'None') ? 'fa-disabled' : '' ;
                     $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $country == 'None') ? 'disabled-delete' : 'delete' ;
 

@@ -172,4 +172,15 @@ class Items_model extends CI_Model{
         
         return $query->row_array();
     }
+
+    public function get_affected_items(){
+        $data['ids'] = $this->input->post('id');
+        $column =  $this->input->post('column');
+        $row = 0;
+
+        foreach($data['ids'] as $id){
+            $row += $this->db->where($column, $id)->count_all_results('items');
+        }
+        return $row;
+    }
 }

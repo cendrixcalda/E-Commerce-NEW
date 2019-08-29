@@ -27,17 +27,15 @@ class Brands_model extends CI_Model{
     }
     
     function delete_brand(){
-        $id = $_POST['id'];
-        $this->db->where("brandID", $id);  
-        $this->db->delete("brands");
-    }
-    
-    function delete_all_brand(){
         $data['ids'] = $_POST["id"];
         
         foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Disabled'
+            );
+
             $this->db->where("brandID", $id);  
-            $this->db->delete("brands");
+            $this->db->update("brands", $data);
         }
     }
     
@@ -49,5 +47,18 @@ class Brands_model extends CI_Model{
         
         $this->db->where("brandID", $id);  
         $this->db->update("brands", $data);
+    }
+
+    function restore_brand(){
+        $data['ids'] = $_POST["id"];
+        
+        foreach($data['ids'] as $id){
+            $data = array(
+                'status'  =>  'Active'
+            );
+
+            $this->db->where("brandID", $id);  
+            $this->db->update("brands", $data);
+        }
     }
 }
