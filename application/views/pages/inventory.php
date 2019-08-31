@@ -174,6 +174,13 @@ $(document).ready(function () {
     $('#dtHorizontalVerticalExample').dataTable().fnSettings().aoDrawCallback.push({
       "fn": function () {
         $('#dtHorizontalVerticalExample tbody').prepend(insertRow);
+
+        var rows = (dataTable.rows().count());
+        if(rows == 0){
+          $("#tableDefaultCheck1").prop("disabled", true);
+        } else{
+          $("#tableDefaultCheck1").prop("disabled", false);
+        }
       }
     });
 

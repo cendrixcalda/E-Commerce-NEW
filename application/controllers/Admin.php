@@ -98,6 +98,16 @@
             $this->load->view('pages/orders');
             $this->load->view('templates/footer_admin');
         }
+
+        public function archives(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/archives');
+            $this->load->view('templates/footer_admin');
+        }
         
         public function brands(){
             if(!$this->session->userdata('logged_in')){

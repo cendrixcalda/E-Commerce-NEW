@@ -512,6 +512,8 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   width: 400px;
   height: 100%;
   position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
 
 .admin-body .admin-nav .navigation-admin {
@@ -524,19 +526,60 @@ footer .main-footer .subscribe .btn-subscribe:hover {
           flex-direction: column;
   background: #292929;
   height: 100vh;
+  z-index: 2;
+  overflow: hidden;
 }
 
 .admin-body .admin-nav .navigation-admin a {
   color: white;
-  padding: 14px;
+  padding: 12px;
 }
 
 .admin-body .admin-nav .navigation-admin a:hover {
   color: #646464;
 }
 
+.admin-body .admin-nav .navigation-admin a.logout {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: auto;
+}
+
+.admin-body .admin-nav .navigation-admin a.fold {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.admin-body .admin-nav .navigation-admin a.fold i {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
 .admin-body .admin-nav .navigation-admin .active {
   background: rgba(0, 0, 0, 0.2);
+}
+
+.admin-body .admin-nav .navigation-admin .other {
+  position: relative;
+  top: -200px;
+  z-index: -1;
+}
+
+.admin-body .admin-nav .navigation-admin .other a {
+  color: white;
+  padding: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.admin-body .admin-nav .navigation-admin .other a:hover {
+  color: #646464;
+}
+
+.admin-body .admin-nav .navigation-admin .other.hide-other {
+  top: 0px;
+  z-index: 0;
 }
 
 .admin-body .admin-nav.hide-nav {

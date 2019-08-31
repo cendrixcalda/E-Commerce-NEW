@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $route['admin/colors'] = 'admin/colors';
 // $route['admin/categories'] = 'admin/categories';
 // $route['admin/brands'] = 'admin/brands';
+// $route['admin/archives'] = 'admin/archives';
 // $route['admin/orders'] = 'admin/orders';
 // $route['admin/usermanagement'] = 'admin/usermanagement';
 // $route['admin/inventory'] = 'admin/inventory';

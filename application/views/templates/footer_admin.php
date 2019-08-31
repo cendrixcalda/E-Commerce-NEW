@@ -9,16 +9,32 @@
     $(document).ready(function () {
     
         $('.hide').on('click', function(){
-        $('.admin-nav').toggleClass('hide-nav');
-        $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
-        $('.hamburger').toggleClass('show');
+            $('.admin-nav').toggleClass('hide-nav');
+            $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
+            $('.hamburger').toggleClass('show');
         });
         
         $('.hamburger').on('click', function(){
-        $('.admin-nav').toggleClass('hide-nav');
-        $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
-        $('.hamburger').toggleClass('show');
+            $('.admin-nav').toggleClass('hide-nav');
+            $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
+            $('.hamburger').toggleClass('show');
         });
+
+        $('.fold').on('click', function(){
+            $('.other').toggleClass('hide-other');
+        });
+
+        // $(".fold").click(function(){
+        //     // $('.admin-nav').toggleClass('hide-nav');
+        //     // $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
+        //     // $('.hamburger').toggleClass('show');
+        //     $('.other').css('display', 'block');
+        //     $(this).css('background', "red");
+        // }, function(){
+        //     $('.other').css('height', '0px');
+        // });
+
+
 
         $(".toggle-password").click(function() {
             $(this).toggleClass("fa-eye fa-eye-slash");
