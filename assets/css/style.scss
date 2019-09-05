@@ -4,6 +4,8 @@ $secondaryColor: white;
 $otherColor1: rgb(245, 17, 17);
 $otherColor2: rgb(100, 100, 100);
 $shadowColor: rgba(0,0,0,0.2);
+$navBackground: rgb(22, 22, 22);
+$navSelected: rgb(32, 32, 32);
 
 //Mixins
 @mixin flexCenter {
@@ -359,16 +361,18 @@ footer{
         position: relative;
         z-index: 2;
         overflow: hidden;
+        max-height: 100vh;
         .navigation-admin{
             display: flex;
             flex-direction: column;
-            background: $primaryColor;
+            background: $navBackground;
             height: 100vh;
             z-index: 2;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             a{
                 color: $secondaryColor;
-                padding: 12px;
+                padding: 13px;
                 &:hover{
                     color: $otherColor2;
                 }
@@ -376,7 +380,7 @@ footer{
                     border-top: 1px solid $shadowColor;
                     margin-top: auto;
                 }
-                &.fold{
+                &.fold-accordion{
                     display: flex;
                     i{
                         margin-left: auto;
@@ -385,31 +389,29 @@ footer{
                 }
             }
             .active{
-                background: $shadowColor;
+                background: $navSelected;
             }
-            .other{
-                position: relative;
-                top: -200px;
-                z-index: -1;
+            .accordion{
+                max-height: 0px;
+                overflow: hidden;
+                background: $shadowColor;
                 a{
                     color: $secondaryColor;
-                    padding: 12px;
+                    padding: 10.4px;
                     display: flex;
                     &:hover{
                         color: $otherColor2;
                     }
                 }
-            }
-            .other.hide-other{
-                top: 0px;
-                z-index: 0;
+                &.hide-accordion{
+                    max-height: 500px;
+                }
             }
         }
-    }
-    
-    .admin-nav.hide-nav{
-        width: 0px;
-        left: -$navWidth;
+        &.hide-nav{
+            width: 0px;
+            left: -$navWidth;
+        }
     }
 
     .admin-main{

@@ -514,6 +514,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  max-height: 100vh;
 }
 
 .admin-body .admin-nav .navigation-admin {
@@ -524,15 +525,16 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background: #292929;
+  background: #161616;
   height: 100vh;
   z-index: 2;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .admin-body .admin-nav .navigation-admin a {
   color: white;
-  padding: 12px;
+  padding: 13px;
 }
 
 .admin-body .admin-nav .navigation-admin a:hover {
@@ -544,42 +546,41 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   margin-top: auto;
 }
 
-.admin-body .admin-nav .navigation-admin a.fold {
+.admin-body .admin-nav .navigation-admin a.fold-accordion {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.admin-body .admin-nav .navigation-admin a.fold i {
+.admin-body .admin-nav .navigation-admin a.fold-accordion i {
   margin-left: auto;
   margin-right: 10px;
 }
 
 .admin-body .admin-nav .navigation-admin .active {
+  background: #202020;
+}
+
+.admin-body .admin-nav .navigation-admin .accordion {
+  max-height: 0px;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.2);
 }
 
-.admin-body .admin-nav .navigation-admin .other {
-  position: relative;
-  top: -200px;
-  z-index: -1;
-}
-
-.admin-body .admin-nav .navigation-admin .other a {
+.admin-body .admin-nav .navigation-admin .accordion a {
   color: white;
-  padding: 12px;
+  padding: 10.4px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.admin-body .admin-nav .navigation-admin .other a:hover {
+.admin-body .admin-nav .navigation-admin .accordion a:hover {
   color: #646464;
 }
 
-.admin-body .admin-nav .navigation-admin .other.hide-other {
-  top: 0px;
-  z-index: 0;
+.admin-body .admin-nav .navigation-admin .accordion.hide-accordion {
+  max-height: 500px;
 }
 
 .admin-body .admin-nav.hide-nav {

@@ -22,11 +22,26 @@
                 <a class="hide"><i class="fas fa-arrow-left"></i></a>
                 <a href="<?php echo base_url(); ?>admin/dashboard" <?php if($this->uri->segment(2)==""){echo ' class="active"';}?><?php if($this->uri->segment(2)=="dashboard"){echo ' class="active"';}?> >Dashboard</a>
                 <a href="<?php echo base_url(); ?>admin/inventory" <?php if($this->uri->segment(2)=="inventory"){echo ' class="active"';}?> >Inventory</a>
-                <a href="<?php echo base_url(); ?>admin/orders" <?php if($this->uri->segment(2)=="orders"){echo ' class="active"';}?> >Orders</a>
+                <a class="fold-accordion">Orders
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <div class="accordion">
+                    <a href="<?php echo base_url(); ?>admin/orders" <?php if($this->uri->segment(2)=="orders"){echo ' class="active"';}?> >Orders</a>
+                    <a href="<?php echo base_url(); ?>admin/orderdetails" <?php if($this->uri->segment(2)=="orderdetails"){echo ' class="active"';}?> >Order Details</a>
+                </div>
+                
                 <?php
                     $accountType = $this->session->userdata('account_type');
                     if($accountType == "Administrator" || $accountType == "Super-Administrator"){
-                        echo '<a href="'.base_url().'admin/archives"';if($this->uri->segment(2)=="archives"){echo ' class="active"';} echo '" >Archives</a>';
+                        echo '<a class="fold-accordion">Archives
+                                <i class="fa fa-caret-down"></i>
+                            </a>';
+
+                        echo '<div class="accordion">
+                                <a href="'.base_url().'admin/archives"';if($this->uri->segment(2)=="archives"){echo ' class="active"';} echo '" >Items Archives</a>
+                                <a href="'.base_url().'admin/ordersarchives"';if($this->uri->segment(2)=="ordersarchives"){echo ' class="active"';} echo '" >Order Archives</a>
+                                <a href="'.base_url().'admin/orderdetailsarchives"';if($this->uri->segment(2)=="orderdetailsarchives"){echo ' class="active"';} echo '" >Order Details Archives</a>
+                             </div>';
                     }
                 ?>
                 <?php
@@ -35,17 +50,17 @@
                         echo '<a href="'.base_url().'admin/usermanagement"';if($this->uri->segment(2)=="usermanagement"){echo ' class="active"';} echo '" >User Management</a>';
                     }
                 ?>
-                <a class="fold">Other
+                <a class="fold-accordion">Other
                     <i class="fa fa-caret-down"></i>
                 </a>
  
-                <div class="other">
-                <a href="<?php echo base_url(); ?>admin/brands" <?php if($this->uri->segment(2)=="brands"){echo ' class="active"';}?> >Brands</a>
-                <a href="<?php echo base_url(); ?>admin/categories" <?php if($this->uri->segment(2)=="categories"){echo ' class="active"';}?> >Categories</a>
-                <a href="<?php echo base_url(); ?>admin/colors" <?php if($this->uri->segment(2)=="colors"){echo ' class="active"';}?> >Colors</a>
-                <a href="<?php echo base_url(); ?>admin/countries" <?php if($this->uri->segment(2)=="countries"){echo ' class="active"';}?> >Countries</a>
-                <a href="<?php echo base_url(); ?>admin/materials" <?php if($this->uri->segment(2)=="materials"){echo ' class="active"';}?> >Materials</a>
-                <!-- <a href="<?php echo base_url(); ?>admin/sizes" <?php if($this->uri->segment(2)=="sizes"){echo ' class="active"';}?> >Sizes</a> -->
+                <div class="accordion">
+                    <a href="<?php echo base_url(); ?>admin/brands" <?php if($this->uri->segment(2)=="brands"){echo ' class="active"';}?> >Brands</a>
+                    <a href="<?php echo base_url(); ?>admin/categories" <?php if($this->uri->segment(2)=="categories"){echo ' class="active"';}?> >Categories</a>
+                    <a href="<?php echo base_url(); ?>admin/colors" <?php if($this->uri->segment(2)=="colors"){echo ' class="active"';}?> >Colors</a>
+                    <a href="<?php echo base_url(); ?>admin/countries" <?php if($this->uri->segment(2)=="countries"){echo ' class="active"';}?> >Countries</a>
+                    <a href="<?php echo base_url(); ?>admin/materials" <?php if($this->uri->segment(2)=="materials"){echo ' class="active"';}?> >Materials</a>
+                    <!-- <a href="<?php echo base_url(); ?>admin/sizes" <?php if($this->uri->segment(2)=="sizes"){echo ' class="active"';}?> >Sizes</a> -->
                 </div>
                 <a class="logout" href="<?php echo base_url(); ?>admin/logout">Logout</a>
             </div>

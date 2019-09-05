@@ -20,21 +20,29 @@
             $('.hamburger').toggleClass('show');
         });
 
-        $('.fold').on('click', function(){
-            $('.other').toggleClass('hide-other');
+        <?php 
+            $url = $this->uri->segment(2);
+
+            if($url == "orders" || $url == "orderdetails"){
+                echo "$('.accordion:nth-of-type(1)').toggleClass('hide-accordion');";
+            }
+
+            if($url == "archives" || $url == "orderarchives" || $url == "orderdetailsarchives"){
+                echo "$('.accordion:nth-of-type(2)').toggleClass('hide-accordion');";
+            }
+
+            if($url == "brands" || $url == "categories" || $url == "colors" || $url == "countries" || $url == "materials"){
+                echo "$('.accordion:nth-of-type(3)').toggleClass('hide-accordion');";
+            }
+        ?>
+
+        $('.fold-accordion').on('click', function(){
+            var otherAccordion = $(this).next('.accordion').toggleClass('hide-accordion');
+            $('.accordion').not(otherAccordion).removeClass('hide-accordion');
+            $(this).find($(".fa")).css('transition', '0s');
+            var otherIcon = $(this).find($(".fa")).toggleClass('fa-rotate-180');
+            $('.fold-accordion').find($(".fa")).not(otherIcon).removeClass('fa-rotate-180');
         });
-
-        // $(".fold").click(function(){
-        //     // $('.admin-nav').toggleClass('hide-nav');
-        //     // $('.dtHorizontalVerticalExampleWrapper').toggleClass('max-view');
-        //     // $('.hamburger').toggleClass('show');
-        //     $('.other').css('display', 'block');
-        //     $(this).css('background', "red");
-        // }, function(){
-        //     $('.other').css('height', '0px');
-        // });
-
-
 
         $(".toggle-password").click(function() {
             $(this).toggleClass("fa-eye fa-eye-slash");
