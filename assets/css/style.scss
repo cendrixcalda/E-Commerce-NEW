@@ -42,6 +42,10 @@ p{
     margin: 0px;
 }
 
+u{
+    text-decoration: underline;
+}
+
 
 nav{
     width: 100%;
@@ -359,20 +363,15 @@ footer{
         width: $navWidth;
         height: 100%;
         position: relative;
-        z-index: 2;
-        overflow: hidden;
         max-height: 100vh;
         .navigation-admin{
             display: flex;
             flex-direction: column;
             background: $navBackground;
             height: 100vh;
-            z-index: 2;
-            overflow-y: auto;
-            overflow-x: hidden;
             a{
                 color: $secondaryColor;
-                padding: 13px;
+                padding: 12px;
                 &:hover{
                     color: $otherColor2;
                 }
@@ -397,7 +396,6 @@ footer{
                 background: $shadowColor;
                 a{
                     color: $secondaryColor;
-                    padding: 10.4px;
                     display: flex;
                     &:hover{
                         color: $otherColor2;
@@ -509,7 +507,7 @@ footer{
                     white-space: nowrap;
                     min-width: 230px;
                 }
-                td:not(:first-child):not(:nth-child(2)):not(:last-child):not(:nth-last-child(2)){
+                td:not(:first-child):not(:last-child):not(:nth-last-child(2)){
                     white-space: nowrap;
                     min-width: 130px;
                 }

@@ -18,7 +18,7 @@
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
                     </div>
                     </th>
-                    <th>ID</th>
+                    <th>Color ID</th>
                     <th>Color</th>
                     <th>Color Code</th>
                     <?php

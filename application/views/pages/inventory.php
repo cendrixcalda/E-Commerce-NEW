@@ -1,10 +1,3 @@
-<!-- <select id="chkveg" class="multi-select" multiple="multiple">
-<option value="cheese">Cheese</option>
-<option value="tomatoes">Tomatoes</option>
-</select><br /><br />
-
-<input type="button" id="btnget" value="Get Selected Values" /> -->
-
 <div class="dtHorizontalVerticalExampleWrapper">
 <?php echo form_open_multipart('', array('id' => 'add_item')); ?>
 <table id="dtHorizontalVerticalExample" class="table table-hover table-bordered table-sm " cellspacing="0"
@@ -17,7 +10,7 @@ width="100%">
 <label class="custom-control-label" for="tableDefaultCheck1"></label>
 </div>
 </th>
-<th>ID</th>
+<th>Item Number</th>
 <th>SKU</th>
 <th>Name</th>
 <th>Brand</th>
@@ -183,6 +176,13 @@ $(document).ready(function () {
         }
       }
     });
+
+    <?php
+        if($this->uri->segment(3) != ""){
+            $slug = $this->uri->segment(3);
+            echo 'dataTable.search("'.$slug.'").draw();';
+        }
+    ?>
 
     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
       "size-range-pre": function ( a ) {
@@ -457,8 +457,7 @@ $(document).ready(function () {
     });
 
     $('.delete-all').on('click', function(){
-      if(confirm("Are you sure you want to remove selected item/s?"))
-      {
+      if(confirm("Are you sure you want to remove selected item/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){

@@ -24,24 +24,26 @@
             $url = $this->uri->segment(2);
 
             if($url == "orders" || $url == "orderdetails"){
-                echo "$('.accordion:nth-of-type(1)').toggleClass('hide-accordion');";
+                echo "$('.accordion1').toggleClass('hide-accordion');
+                    $('.fold-accordion1 .fa').toggleClass('fa-rotate-180');";
             }
 
-            if($url == "archives" || $url == "orderarchives" || $url == "orderdetailsarchives"){
-                echo "$('.accordion:nth-of-type(2)').toggleClass('hide-accordion');";
+            if($url == "itemsarchive" || $url == "ordersarchive" || $url == "orderdetailsarchive"){
+                echo "$('.accordion2').toggleClass('hide-accordion');
+                    $('.fold-accordion2 .fa').toggleClass('fa-rotate-180');";
             }
 
             if($url == "brands" || $url == "categories" || $url == "colors" || $url == "countries" || $url == "materials"){
-                echo "$('.accordion:nth-of-type(3)').toggleClass('hide-accordion');";
+                echo "$('.accordion3').toggleClass('hide-accordion');
+                    $('.fold-accordion3 .fa').toggleClass('fa-rotate-180');";
             }
         ?>
 
         $('.fold-accordion').on('click', function(){
             var otherAccordion = $(this).next('.accordion').toggleClass('hide-accordion');
             $('.accordion').not(otherAccordion).removeClass('hide-accordion');
-            $(this).find($(".fa")).css('transition', '0s');
             var otherIcon = $(this).find($(".fa")).toggleClass('fa-rotate-180');
-            $('.fold-accordion').find($(".fa")).not(otherIcon).removeClass('fa-rotate-180');
+            $('.fold-accordion .fa').not(otherIcon).removeClass('fa-rotate-180');
         });
 
         $(".toggle-password").click(function() {

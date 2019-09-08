@@ -99,13 +99,43 @@
             $this->load->view('templates/footer_admin');
         }
 
-        public function archives(){
+        public function ordersarchive(){
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
             
             $this->load->view('templates/header_admin');
-            $this->load->view('pages/archives');
+            $this->load->view('pages/ordersarchive');
+            $this->load->view('templates/footer_admin');
+        }
+
+        public function orderdetails(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/orderdetails');
+            $this->load->view('templates/footer_admin');
+        }
+
+        public function orderdetailsarchive(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/orderdetailsarchive');
+            $this->load->view('templates/footer_admin');
+        }
+
+        public function itemsarchive(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/itemsarchive');
             $this->load->view('templates/footer_admin');
         }
         

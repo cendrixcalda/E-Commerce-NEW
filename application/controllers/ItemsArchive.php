@@ -1,9 +1,12 @@
 <?php
-    class Archives extends CI_Controller{
+    class ItemsArchive extends CI_Controller{
+    public $archiveTableName = 'itemsArchive';
+    public $mainTableName = 'items';
+    public $idName = 'itemID';
     
-    public function showAllArchives(){
+    public function showAllItemsArchive(){
         if(isset($_POST["checker"])){
-            $result = $this->archives_model->get_all_archives();
+            $result = $this->archives_model->get_all_archives($this->archiveTableName);
             $categories = $this->categories_model->get_categories();
             $brands = $this->brands_model->get_brands();
             $colors = $this->colors_model->get_colors();
@@ -114,17 +117,17 @@
         }
     }
     
-    function deleteArchive(){
+    function deleteItemArchive(){
         if(isset($_POST["id"])){
-            $this->archives_model->delete_archive();
+            $this->archives_model->delete_archive($this->archiveTableName, $this->idName);
         } else{
             redirect('/admin');
         }
     }
 
-    function restoreArchive(){
+    function restoreItemArchive(){
         if(isset($_POST["id"])){
-            $this->archives_model->restore_archive();
+            $this->archives_model->restore_archive($this->archiveTableName, $this->idName, $this->mainTableName);
         } else{
             redirect('/admin');
         }

@@ -18,7 +18,7 @@
                 <label class="custom-control-label" for="tableDefaultCheck1"></label>
               </div>
               </th>
-              <th>ID</th>
+              <th>Brand ID</th>
               <th>Brand</th>
               <?php
                 if($accountTypeSession != 'User'){

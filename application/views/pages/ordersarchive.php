@@ -9,23 +9,16 @@ width="100%">
 <label class="custom-control-label" for="tableDefaultCheck1"></label>
 </div>
 </th>
-<th>ID</th>
-<th>SKU</th>
-<th>Name</th>
-<th>Brand</th>
-<th>For Genders</th>
-<th>Category</th>
-<th>Price</th>
-<th>Sale Percentage</th>
-<th>Net Price</th>
-<th>Stock</th>
-<th>Color</th>
-<th>Size</th>
-<th>Material</th>
-<th>Made In</th>
-<th>Description</th>
-<th>Date</th>
-<th>Image</th>
+<th>Order Number</th>
+<th>Grand Unit</th>
+<th>Grand Price</th>
+<th>Payment Method</th>
+<th>Shipping Address</th>
+<th>Contact Number</th>
+<th>Customer ID</th>
+<th>Order Date</th>
+<th>Order Time</th>
+<th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all options"><i class="fas fa-trash"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all"><i class="fas fa-trash-restore"></i></button></th>
 </tr>
@@ -40,7 +33,7 @@ $(document).ready(function () {
     scrollY: 400,
     order: [[ 1, "asc" ]],
     ajax: {
-      url: '<?php echo base_url(); ?>archives/showAllArchives',
+      url: '<?php echo base_url(); ?>ordersArchive/showAllOrdersArchive',
 
       type: 'POST',
       data: { checker: "check" },
@@ -48,14 +41,6 @@ $(document).ready(function () {
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
-      },
-      {
-        type: 'size-range',
-        targets: 12
-      },
-      {
-        type: 'extract-date',
-        targets: 16
       }]
     });
     $('.dataTables_length').addClass('bs-select');
@@ -72,44 +57,20 @@ $(document).ready(function () {
       }
     });
 
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-      "size-range-pre": function ( a ) {
-        var sizeArr = ['None', 'Extra Extra Small', 'Extra Small', 'Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'];
-
-        var a = a.replace('<div class="editable">','');
-        var a = a.replace('</div>','');
-        
-        return sizeArr.indexOf(a);
-      },
-      "size-range-asc": function ( a, b ) {
-        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-      },
-      "size-range-desc": function ( a, b ) {
-        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-      }
-    } );
-
-    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-      "extract-date-pre": function(value) {
-          var date = $(value, 'input').text();
-          date = date.split('-');
-          return Date.parse(date[1] + '/' + date[2] + '/' + date[0]);
-      },
-      "extract-date-asc": function(a, b) {
-          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-      },
-      "extract-date-desc": function(a, b) {
-          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-      }
-  });
+    <?php
+        if($this->uri->segment(3) != ""){
+            $slug = $this->uri->segment(3);
+            echo 'dataTable.search("'.$slug.'").draw();';
+        }
+    ?>
 
     dataTable.on('click', '.delete', function () {
-      if(confirm("WARNING: This operation is irreversible, once deleted item can't be restored again.\n\nContinue deleting this item?")){
+        if(confirm("WARNING: This operation is irreversible, once deleted order can't be restored again.\n\nContinue deleting this order?")){
         var id = [];
         id[0] = $(this).attr("id");
 
         $.ajax({
-          url:"<?php echo base_url(); ?>archives/deleteArchive",
+          url:"<?php echo base_url(); ?>ordersArchive/deleteOrderArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -120,7 +81,7 @@ $(document).ready(function () {
     });
 
     $('.delete-all').on('click', function(){
-      if(confirm("WARNING: This operation is irreversible, once deleted item/s can't be restored again.\n\nContinue deleting this item/s?")){
+        if(confirm("WARNING: This operation is irreversible, once deleted order/s can't be restored again.\n\nContinue deleting selected order/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){
@@ -128,7 +89,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>archives/deleteArchive",
+          url:"<?php echo base_url(); ?>ordersArchive/deleteOrderArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -139,12 +100,12 @@ $(document).ready(function () {
     });
 
     dataTable.on('click', '.restore', function () {
-      if(confirm("Are you sure you want to restore this item?")){
+      if(confirm("Are you sure you want to restore this order?")){
         var id = [];
         id[0] = $(this).attr("id");
 
         $.ajax({
-          url:"<?php echo base_url(); ?>archives/restoreArchive",
+          url:"<?php echo base_url(); ?>ordersArchive/restoreOrderArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -155,7 +116,7 @@ $(document).ready(function () {
     });
 
     $('.restore-all').on('click', function(){
-      if(confirm("Are you sure you want to restore selected item/s?")){
+      if(confirm("Are you sure you want to restore selected order/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){
@@ -163,7 +124,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>archives/restoreArchive",
+          url:"<?php echo base_url(); ?>ordersArchive/restoreOrderArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -194,7 +155,7 @@ $(document).ready(function () {
     });
 
     $(".checkbox-all").click(function(){
-      $('input:checkbox').not(this).prop('checked', this.checked);
+      $('input:checkbox').not(this).not('.not-checkbox').prop('checked', this.checked);
 
       if ($('.checkbox:checked').length == $('.checkbox').length) {
         $('.delete-all').show( "slow");
@@ -212,6 +173,6 @@ $(document).ready(function () {
       $('.restore-all').hide( "slow");
       dataTable.ajax.reload();
     }
-
-  });
-  </script>
+    
+});
+</script>
