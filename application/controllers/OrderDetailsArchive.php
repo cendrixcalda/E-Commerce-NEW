@@ -13,14 +13,19 @@
                 foreach($result as $row){
                     $dateTimeInTransit = $row->dateInTransit;
                     $dateTimeDelivered = $row->dateDelivered;
+                    $dateTimeCancelled = $row->dateCancelled;
                     $newDateTimeInTransit = new DateTime($dateTimeInTransit);
                     $newDateTimeDelivered = new DateTime($dateTimeDelivered);
+                    $newDateTimeCancelled = new DateTime($dateTimeCancelled);
 
                     $dateInTransit = ($dateTimeInTransit == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeInTransit->format('Y-m-d') ;
                     $timeInTransit = ($dateTimeInTransit == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeInTransit->format('h:i a') ;
 
                     $dateDelivered = ($dateTimeDelivered == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeDelivered->format('Y-m-d') ;
                     $timeDelivered = ($dateTimeDelivered == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeDelivered->format('h:i a') ;
+                    
+                    $dateCancelled = ($dateTimeCancelled == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeCancelled->format('Y-m-d') ;
+                    $timeCancelled = ($dateTimeCancelled == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeCancelled->format('h:i a') ;
                     
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
@@ -38,6 +43,8 @@
                     $sub_array[] = '<div class="editable">'.$timeInTransit.'</div>';
                     $sub_array[] = '<div class="editable">'.$dateDelivered.'</div>';
                     $sub_array[] = '<div class="editable">'.$timeDelivered.'</div>';
+                    $sub_array[] = '<div class="editable">'.$dateCancelled.'</div>';
+                    $sub_array[] = '<div class="editable">'.$timeCancelled.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->status.'</div>';
                     $sub_array[] = '<div><button type="button" name="delete" class="disabled-delete" id="'.$row->orderDetailID.'"><i class="fas fa-trash fa-disabled"></i></button></div>';
                     $sub_array[] = '<div><button type="button" name="restore" class="disabled-restore" id="'.$row->orderDetailID.'"><i class="fas fa-trash-restore fa-disabled"></i></button></div>';

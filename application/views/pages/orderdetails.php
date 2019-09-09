@@ -20,6 +20,8 @@ width="100%">
 <th>Time In Transit</th>
 <th>Date Delivered</th>
 <th>Time Delivered</th>
+<th>Date Cancelled</th>
+<th>Time Cancelled</th>
 <th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all disabled-delete-all"><i class="fas fa-trash fa-disabled"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all disabled-restore-all"><i class="fas fa-trash-restore fa-disabled"></i></button></th>
