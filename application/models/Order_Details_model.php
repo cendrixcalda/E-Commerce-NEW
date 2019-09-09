@@ -62,4 +62,15 @@
             );
             return $data;
         }
+
+        public function get_affected_order_details(){
+            $data['ids'] = $this->input->post('id');
+            $column =  $this->input->post('column');
+            $row = 0;
+    
+            foreach($data['ids'] as $id){
+                $row += $this->db->where($column, $id)->count_all_results('orderDetails');
+            }
+            return $row;
+        }
     }

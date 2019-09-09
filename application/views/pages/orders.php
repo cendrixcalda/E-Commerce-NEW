@@ -17,7 +17,7 @@ width="100%">
 <th>Contact Number</th>
 <th>Customer ID</th>
 <th>Order Date</th>
-<th>Order Time</th>
+<th class="no-sort">Order Time</th>
 <th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all options"><i class="fas fa-trash"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all disabled-restore-all"><i class="fas fa-trash-restore fa-disabled"></i></button></th>

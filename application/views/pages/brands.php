@@ -160,15 +160,19 @@ $(document).ready(function () {
         method:"POST",
         data:{id:id, column:column},
         success:function(affectedItems){
-          if(confirm("WARNING: "+affectedItems+" item/s will be affected once this data is deleted.\n\nContinue removing this brand?")){
-            $.ajax({
-              url:"<?php echo base_url(); ?>brands/deleteBrand",
-              method:"POST",
-              data:{id:id},
-              success:function(data){
-                reloadTable();
-              }
-            });
+          if(affectedItems <= 0){
+            if(confirm("Are you sure you want to remove this brand?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>brands/deleteBrand",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedItems+" item/s will be affected once this data is deleted.");
           }
         }
       });
@@ -186,15 +190,19 @@ $(document).ready(function () {
         method:"POST",
         data:{id:id, column:column},
         success:function(affectedItems){
-          if(confirm("WARNING: "+affectedItems+" item/s will be affected once this data is deleted.\n\nContinue removing selected brand/s?")){
-            $.ajax({
-              url:"<?php echo base_url(); ?>brands/deleteBrand",
-              method:"POST",
-              data:{id:id},
-              success:function(data){
-                reloadTable();
-              }
-            });
+          if(affectedItems <= 0){
+            if(confirm("Are you sure you want to remove selected brand/s?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>brands/deleteBrand",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedItems+" item/s will be affected once selected data is deleted.");
           }
         }
       });

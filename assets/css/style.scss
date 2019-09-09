@@ -371,7 +371,7 @@ footer{
             height: 100vh;
             a{
                 color: $secondaryColor;
-                padding: 12px;
+                padding: 11px;
                 &:hover{
                     color: $otherColor2;
                 }
@@ -397,6 +397,7 @@ footer{
                 a{
                     color: $secondaryColor;
                     display: flex;
+                    padding: 9px;
                     &:hover{
                         color: $otherColor2;
                     }

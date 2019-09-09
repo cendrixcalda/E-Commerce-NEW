@@ -441,38 +441,61 @@ $(document).ready(function () {
     });
 
     dataTable.on('click', '.delete', function () {
-      if(confirm("Are you sure you want to remove this item?")){
-        var id = [];
-        id[0] = $(this).attr("id");
-
-        $.ajax({
-          url:"<?php echo base_url(); ?>items/deleteItem",
-          method:"POST",
-          data:{id:id},
-          success:function(data){
-            reloadTable();
+      var id = [];
+      id[0] = $(this).attr("id");
+      var column = "itemID";
+      var affectedOrderDetails = 0;
+      $.ajax({
+        url:"<?php echo base_url(); ?>orderDetails/getAffectedOrderDetails",
+        method:"POST",
+        data:{id:id, column:column},
+        success:function(affectedOrderDetails){
+          if(affectedOrderDetails <= 0){
+            if(confirm("Are you sure you want to remove this item?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>items/deleteItem",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedOrderDetails+" order detail/s will be affected once this item is deleted.");
           }
-        });
-      }
+        }
+      });
     });
 
     $('.delete-all').on('click', function(){
-      if(confirm("Are you sure you want to remove selected item/s?")){
-        var id = [];
-
-        $('.checkbox:checked').each(function(i){
-          id[i] = $(this).data('id');
-        });
-
-        $.ajax({
-          url:"<?php echo base_url(); ?>items/deleteItem",
-          method:"POST",
-          data:{id:id},
-          success:function(data){
-            reloadTable();
+      var id = [];
+      $('.checkbox:checked').each(function(i){
+        id[i] = $(this).data('id');
+      });
+      var column = "itemID";
+      var affectedOrderDetails = 0;
+      $.ajax({
+        url:"<?php echo base_url(); ?>orderDetails/getAffectedOrderDetails",
+        method:"POST",
+        data:{id:id, column:column},
+        success:function(affectedOrderDetails){
+          if(affectedOrderDetails <= 0){
+            if(confirm("Are you sure you want to remove selected item/s?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>items/deleteItem",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedOrderDetails+" order detail/s will be affected once selected item/s is deleted.");
           }
-        });
-      }
+        }
+      });
     });
 
     dataTable.on('click', '.duplicate', function () {

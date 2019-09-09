@@ -28,7 +28,7 @@
                     $('.fold-accordion1 .fa').toggleClass('fa-rotate-180');";
             }
 
-            if($url == "itemsarchive" || $url == "ordersarchive" || $url == "orderdetailsarchive"){
+            if($url == "itemsarchive" || $url == "ordersarchive" || $url == "orderdetailsarchive" || $url == "customersarchive"){
                 echo "$('.accordion2').toggleClass('hide-accordion');
                     $('.fold-accordion2 .fa').toggleClass('fa-rotate-180');";
             }

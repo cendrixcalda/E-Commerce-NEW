@@ -17,11 +17,11 @@ width="100%">
 <th>Voucher Discount</th>
 <th>Total Price</th>
 <th>Date In Transit</th>
-<th>Time In Transit</th>
+<th class="no-sort">Time In Transit</th>
 <th>Date Delivered</th>
-<th>Time Delivered</th>
+<th class="no-sort">Time Delivered</th>
 <th>Date Cancelled</th>
-<th>Time Cancelled</th>
+<th class="no-sort">Time Cancelled</th>
 <th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all disabled-delete-all"><i class="fas fa-trash fa-disabled"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all disabled-restore-all"><i class="fas fa-trash-restore fa-disabled"></i></button></th>

@@ -19,12 +19,18 @@
                     $activeSelected = ($status == 'Active') ? 'selected' : '' ;
                     $disabledSelected = ($status == 'Disabled') ? 'selected' : '' ;
 
+                    $noneSelected = ($status == 'Active') ? 'disabled' : '' ;
+                    $noneCheckbox = ($status == 'Active')  ? 'not-checkbox' : 'checkbox' ;
+
+                    $disableDelete = ($status == 'Active') ? 'fa-disabled' : '' ;
+                    $disableDelete1 = ($status == 'Active') ? 'disabled-delete' : 'delete' ;
+
                     $sub_array = array();
                     if($accountTypeSession == 'Administrator' && $accountType == 'Administrator' && $row->accountID != $userIDSession){
 
                     } else{
                         $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
-                                            <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->accountID.'" id="tableDefaultCheck'.$rowCount.'">
+                                            <input type="checkbox" class="custom-control-input '.$noneCheckbox.'" data-id="'.$row->accountID.'" id="tableDefaultCheck'.$rowCount.'" '.$noneSelected.'>
                                             <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
                                         </div></td>';
                         $sub_array[] = '<div class="editable" data-column="accountID">'.$row->accountID.'</div>';
@@ -50,7 +56,7 @@
                                                 <option '.$activeSelected.' value="Active">Active</option>
                                                 <option '.$disabledSelected.' value="Disabled">Disabled</option>
                                             </select>';
-                                $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->accountID.'"><i class="fas fa-trash"></i></button>';
+                                $sub_array[] = '<div><button type="button" name="delete" class="'.$disableDelete1.'" id="'.$row->accountID.'"><i class="fas fa-trash '.$disableDelete.'"></i></button>';
                             }
                         } elseif($accountTypeSession == 'Super-Administrator'){
                             $sub_array[] = '<select data-id="'.$row->accountID.'" data-column="accountType" class="dropdown updateDropdown">
@@ -61,7 +67,7 @@
                                             <option '.$activeSelected.' value="Active">Active</option>
                                             <option '.$disabledSelected.' value="Disabled">Disabled</option>
                                         </select>';
-                            $sub_array[] = '<div><button type="button" name="delete" class="delete" id="'.$row->accountID.'"><i class="fas fa-trash"></i></button>';
+                            $sub_array[] = '<div><button type="button" name="delete" class="'.$disableDelete1.'" id="'.$row->accountID.'"><i class="fas fa-trash '.$disableDelete.'"></i></button>';
                         }
                         $sub_array[] = '<div><button type="button" name="duplicate" class="duplicate" id="'.$row->accountID.'"><i class="fa fa-clone fa-disabled"></i></button></div>';
                         $data[] = $sub_array;

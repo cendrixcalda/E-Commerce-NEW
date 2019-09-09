@@ -17,7 +17,7 @@
                     $dateTime = $row->orderDate;
                     $newDateTime = new DateTime($dateTime);
                     $date = $newDateTime->format('Y-m-d');
-                    $time = $newDateTime->format('H:i a');
+                    $time = $newDateTime->format('h:i a');
                     
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
@@ -30,7 +30,7 @@
                     $sub_array[] = '<div class="editable">'.$row->paymentMethod.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->shippingAddress.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->contactNumber.'</div>';
-                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/ordersarchive/'.$row->customerID.'"><u>'.$row->customerID.'</u></a></div>';
+                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/customers/'.$row->customerID.'"><u>'.$row->customerID.'</u></a></div>';
                     $sub_array[] = '<div class="editable">'.$date.'</div>';
                     $sub_array[] = '<div class="editable">'.$time.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->status.'</div>';

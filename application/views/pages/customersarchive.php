@@ -9,17 +9,13 @@ width="100%">
 <label class="custom-control-label" for="tableDefaultCheck1"></label>
 </div>
 </th>
-<th>Order Number</th>
-<th>Grand Unit</th>
-<th>Grand Price</th>
-<th>Payment Method</th>
-<th>Shipping Address</th>
-<th>Contact Number</th>
 <th>Customer ID</th>
-<th>Order Date</th>
-<th class="no-sort">Order Time</th>
+<th>Firstname</th>
+<th>Lastname</th>
+<th>Password</th>
+<th>Email</th>
 <th>Status</th>
-<th class="no-sort"><button type="button" class="delete-all options"><i class="fas fa-trash"></i></button></th>
+<th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all"><i class="fas fa-trash-restore"></i></button></th>
 </tr>
 </thead>
@@ -28,15 +24,19 @@ width="100%">
 
 <script>
 $(document).ready(function () {
+
+  var oldValue;
+  window.prevFocus = $();
+
   var dataTable = $('#dtHorizontalVerticalExample').DataTable({
     scrollX: true,
     scrollY: 400,
     order: [[ 1, "asc" ]],
     ajax: {
-      url: '<?php echo base_url(); ?>ordersArchive/showAllOrdersArchive',
+      url: '<?php echo base_url(); ?>customersArchive/showAllCustomersArchive',
 
       type: 'POST',
-      data: { checker: "check" },
+      data: { checker: "check" }
       },
       columnDefs: [{
         orderable: false,
@@ -57,20 +57,13 @@ $(document).ready(function () {
       }
     });
 
-    <?php
-        if($this->uri->segment(3) != ""){
-            $slug = $this->uri->segment(3);
-            echo 'dataTable.search("'.$slug.'").draw();';
-        }
-    ?>
-
     dataTable.on('click', '.delete', function () {
-        if(confirm("WARNING: This operation is irreversible, once deleted order can't be restored again.\n\nContinue deleting this order?")){
+      if(confirm("WARNING: This operation is irreversible, once deleted customer can't be restored again.\n\nContinue deleting this customer?")){
         var id = [];
         id[0] = $(this).attr("id");
 
         $.ajax({
-          url:"<?php echo base_url(); ?>ordersArchive/deleteOrderArchive",
+          url:"<?php echo base_url(); ?>customersArchive/deleteCustomerArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -81,7 +74,7 @@ $(document).ready(function () {
     });
 
     $('.delete-all').on('click', function(){
-        if(confirm("WARNING: This operation is irreversible, once deleted order/s can't be restored again.\n\nContinue deleting selected order/s?")){
+        if(confirm("WARNING: This operation is irreversible, once deleted customer/s can't be restored again.\n\nContinue deleting selected customer/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){
@@ -89,7 +82,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>ordersArchive/deleteOrderArchive",
+          url:"<?php echo base_url(); ?>customersArchive/deleteCustomerArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -100,12 +93,12 @@ $(document).ready(function () {
     });
 
     dataTable.on('click', '.restore', function () {
-      if(confirm("Are you sure you want to restore this order?")){
+      if(confirm("Are you sure you want to restore this customer?")){
         var id = [];
         id[0] = $(this).attr("id");
 
         $.ajax({
-          url:"<?php echo base_url(); ?>ordersArchive/restoreOrderArchive",
+          url:"<?php echo base_url(); ?>customersArchive/restoreCustomerArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -116,7 +109,7 @@ $(document).ready(function () {
     });
 
     $('.restore-all').on('click', function(){
-      if(confirm("Are you sure you want to restore selected order/s?")){
+      if(confirm("Are you sure you want to restore selected customer/s?")){
         var id = [];
 
         $('.checkbox:checked').each(function(i){
@@ -124,7 +117,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-          url:"<?php echo base_url(); ?>ordersArchive/restoreOrderArchive",
+          url:"<?php echo base_url(); ?>customersArchive/restoreCustomerArchive",
           method:"POST",
           data:{id:id},
           success:function(data){
@@ -173,6 +166,7 @@ $(document).ready(function () {
       $('.restore-all').hide( "slow");
       dataTable.ajax.reload();
     }
-    
-});
-</script>
+
+
+  });
+  </script>

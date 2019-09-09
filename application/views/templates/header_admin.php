@@ -19,6 +19,9 @@
         <button class="fa fa-bars hamburger"></button>
         <nav class="admin-nav">
             <div class="navigation-admin">
+                <?php
+                    $accountType = $this->session->userdata('account_type');
+                ?>
                 <a class="hide"><i class="fas fa-arrow-left"></i></a>
                 <a href="<?php echo base_url(); ?>admin/dashboard" <?php if($this->uri->segment(2)==""){echo ' class="active"';}?><?php if($this->uri->segment(2)=="dashboard"){echo ' class="active"';}?> >Dashboard</a>
                 <a href="<?php echo base_url(); ?>admin/inventory" <?php if($this->uri->segment(2)=="inventory"){echo ' class="active"';}?> >Inventory</a>
@@ -31,21 +34,25 @@
                 </div>
                 
                 <?php
-                    $accountType = $this->session->userdata('account_type');
                     if($accountType == "Administrator" || $accountType == "Super-Administrator"){
                         echo '<a class="fold-accordion fold-accordion2">Archives
                                 <i class="fa fa-caret-down"></i>
                             </a>';
 
                         echo '<div class="accordion accordion2">
-                                <a href="'.base_url().'admin/itemsarchive"';if($this->uri->segment(2)=="itemsarchive"){echo ' class="active"';} echo '" >Items Archives</a>
-                                <a href="'.base_url().'admin/ordersarchive"';if($this->uri->segment(2)=="ordersarchive"){echo ' class="active"';} echo '" >Order Archives</a>
-                                <a href="'.base_url().'admin/orderdetailsarchive"';if($this->uri->segment(2)=="orderdetailsarchive"){echo ' class="active"';} echo '" >Order Details Archives</a>
-                             </div>';
+                                <a href="'.base_url().'admin/itemsarchive"';if($this->uri->segment(2)=="itemsarchive"){echo ' class="active"';} echo '" >Items Archive</a>
+                                <a href="'.base_url().'admin/ordersarchive"';if($this->uri->segment(2)=="ordersarchive"){echo ' class="active"';} echo '" >Orders Archive</a>
+                                <a href="'.base_url().'admin/orderdetailsarchive"';if($this->uri->segment(2)=="orderdetailsarchive"){echo ' class="active"';} echo '" >Order Details Archive</a>
+                                <a href="'.base_url().'admin/customersarchive"';if($this->uri->segment(2)=="customersarchive"){echo ' class="active"';} echo '" >Customers Archive</a>
+                            </div>';
                     }
                 ?>
                 <?php
-                    $accountType = $this->session->userdata('account_type');
+                    if($accountType == "Administrator" || $accountType == "Super-Administrator"){
+                        echo '<a href="'.base_url().'admin/customers"';if($this->uri->segment(2)=="customers"){echo ' class="active"';} echo '" >Customers</a>';
+                    }
+                ?>
+                <?php
                     if($accountType == "Administrator" || $accountType == "Super-Administrator"){
                         echo '<a href="'.base_url().'admin/usermanagement"';if($this->uri->segment(2)=="usermanagement"){echo ' class="active"';} echo '" >User Management</a>';
                     }

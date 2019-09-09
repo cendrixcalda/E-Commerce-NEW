@@ -18,6 +18,7 @@
                     $disableInTransit = ($status == 'Delivered') ? 'disabled' : '' ;
                     $disableDelivered = ($status == 'In Transit' || $status == 'Delivered') ? '' : 'disabled' ;
                     $cancelled = ($status == 'Cancelled') ? 'disabled' : '' ;
+                    $cancelled1 = ($status != 'Cancelled') ? 'disabled' : '' ;
 
                     $dateTimeInTransit = $row->dateInTransit;
                     $dateTimeDelivered = $row->dateDelivered;
@@ -54,7 +55,7 @@
                     $sub_array[] = '<div class="editable">'.$dateCancelled.'</div>';
                     $sub_array[] = '<div class="editable">'.$timeCancelled.'</div>';
                     $sub_array[] = '<select data-id="'.$row->orderDetailID.'" data-column="status" class="dropdown updateDropdown">
-                                        <option '.$noneSelected.' value="Cancelled" disabled>Cancelled</option>
+                                        <option '.$noneSelected.' value="Cancelled" '.$cancelled1.'>Cancelled</option>
                                         <option '.$pendingSelected.' value="Pending" '.$cancelled.'>Pending</option>
                                         <option '.$intransitSelected.' value="In Transit" '.$disableInTransit.' '.$cancelled.'>In Transit</option>
                                         <option '.$deliveredSelected.' value="Delivered" '.$disableDelivered.' '.$cancelled.'>Delivered</option>
@@ -90,6 +91,15 @@
                 $this->order_details_model->update_order_details($dateColumn, $dateValue);
                 $data = $this->order_details_model->check_order_number_completed();
                 $this->orders_model->update_order_status($data);
+            } else{
+                redirect('/admin');
+            }
+        }
+
+        public function getAffectedOrderDetails(){
+            if(isset($_POST["id"])){
+                $affectedOrderDetails = $this->order_details_model->get_affected_order_details();
+                echo $affectedOrderDetails;
             } else{
                 redirect('/admin');
             }

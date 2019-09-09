@@ -167,15 +167,19 @@ $(document).ready(function () {
         method:"POST",
         data:{id:id, column:column},
         success:function(affectedItems){
-          if(confirm("WARNING: "+affectedItems+" item/s will be affected once this data is deleted.\n\nContinue removing this size?")){
-            $.ajax({
-              url:"<?php echo base_url(); ?>sizes/deleteSize",
-              method:"POST",
-              data:{id:id},
-              success:function(data){
-                reloadTable();
-              }
-            });
+          if(affectedItems <= 0){
+            if(confirm("Are you sure you want to remove this size?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>sizes/deleteSize",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedItems+" item/s will be affected once this data is deleted.");
           }
         }
       });
@@ -193,54 +197,23 @@ $(document).ready(function () {
         method:"POST",
         data:{id:id, column:column},
         success:function(affectedItems){
-          if(confirm("WARNING: "+affectedItems+" item/s will be affected once this data is deleted.\n\nContinue removing selected size/s?")){
-            $.ajax({
-              url:"<?php echo base_url(); ?>sizes/deleteSize",
-              method:"POST",
-              data:{id:id},
-              success:function(data){
-                reloadTable();
-              }
-            });
+          if(affectedItems <= 0){
+            if(confirm("Are you sure you want to remove selected size/s?")){
+              $.ajax({
+                url:"<?php echo base_url(); ?>sizes/deleteSize",
+                method:"POST",
+                data:{id:id},
+                success:function(data){
+                  reloadTable();
+                }
+              });
+            }
+          } else{
+            alert("Action Denied!\n"+affectedItems+" item/s will be affected once selected data is deleted.");
           }
         }
       });
     });
-
-    // dataTable.on('click', '.delete', function () {
-    //   if(confirm("Are you sure you want to remove this size?")){
-    //     var id = [];
-    //     id[0] = $(this).attr("id");
-        
-    //     $.ajax({
-    //       url:"<?php echo base_url(); ?>sizes/deleteSize",
-    //       method:"POST",
-    //       data:{id:id},
-    //       success:function(data){
-    //         reloadTable();
-    //       }
-    //     });
-    //   }
-    // });
-
-    // $('.delete-all').on('click', function(){
-    //   if(confirm("Are you sure you want to remove selected size/s?")){
-    //     var id = [];
-
-    //     $('.checkbox:checked').each(function(i){
-    //       id[i] = $(this).data('id');
-    //     });
-
-    //     $.ajax({
-    //       url:"<?php echo base_url(); ?>sizes/deleteSize",
-    //       method:"POST",
-    //       data:{id:id},
-    //       success:function(data){
-    //         reloadTable();
-    //       }
-    //     });
-    //   }
-    // });
 
     dataTable.on('click', '.restore', function () {
       if(confirm("Are you sure you want to restore this size?")){

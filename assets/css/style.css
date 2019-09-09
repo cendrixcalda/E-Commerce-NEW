@@ -533,7 +533,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
 
 .admin-body .admin-nav .navigation-admin a {
   color: white;
-  padding: 12px;
+  padding: 11px;
 }
 
 .admin-body .admin-nav .navigation-admin a:hover {
@@ -571,6 +571,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding: 9px;
 }
 
 .admin-body .admin-nav .navigation-admin .accordion a:hover {

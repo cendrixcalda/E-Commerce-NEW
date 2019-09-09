@@ -17,11 +17,11 @@ width="100%">
 <th>Voucher Discount</th>
 <th>Total Price</th>
 <th>Date In Transit</th>
-<th>Time In Transit</th>
+<th class="no-sort">Time In Transit</th>
 <th>Date Delivered</th>
-<th>Time Delivered</th>
+<th class="no-sort">Time Delivered</th>
 <th>Date Cancelled</th>
-<th>Time Cancelled</th>
+<th class="no-sort">Time Cancelled</th>
 <th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all disabled-delete-all"><i class="fas fa-trash fa-disabled"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all disabled-restore-all"><i class="fas fa-trash-restore fa-disabled"></i></button></th>
@@ -45,9 +45,32 @@ $(document).ready(function () {
       columnDefs: [{
         orderable: false,
         targets: 'no-sort'
+      },
+      {
+        targets: [14],
+        render: function(data, type, full, meta){
+          if(type === 'filter' || type === 'sort'){
+            var api = new $.fn.dataTable.Api(meta.settings);
+            var td = api.cell({row: meta.row, column: meta.col}).node();
+            data = $('select, input', td).val();
+          }
+          return data;
+        }
       }]
     });
     $('.dataTables_length').addClass('bs-select');
+
+    $('#dtHorizontalVerticalExample').dataTable().fnSettings().aoDrawCallback.push({
+      "fn": function () {
+
+        var rows = $(".checkbox").length;
+        if(rows == 0){
+          $("#tableDefaultCheck1").prop("disabled", true);
+        } else{
+          $("#tableDefaultCheck1").prop("disabled", false);
+        }
+      }
+    });
 
     <?php
         if($this->uri->segment(3) != ""){

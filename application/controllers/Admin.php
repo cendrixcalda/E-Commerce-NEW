@@ -78,6 +78,26 @@
             $this->load->view('pages/inventory', $option);
             $this->load->view('templates/footer_admin');
         }
+
+        public function customers(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/customers');
+            $this->load->view('templates/footer_admin');
+        }
+
+        public function customersarchive(){
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+            
+            $this->load->view('templates/header_admin');
+            $this->load->view('pages/customersarchive');
+            $this->load->view('templates/footer_admin');
+        }
         
         public function usermanagement(){
             if(!$this->session->userdata('logged_in')){
