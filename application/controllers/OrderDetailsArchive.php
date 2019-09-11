@@ -14,9 +14,13 @@
                     $dateTimeInTransit = $row->dateInTransit;
                     $dateTimeDelivered = $row->dateDelivered;
                     $dateTimeCancelled = $row->dateCancelled;
+                    $dateTimeExchanged = $row->dateExchanged;
+                    $dateTimeRefunded = $row->dateRefunded;
                     $newDateTimeInTransit = new DateTime($dateTimeInTransit);
                     $newDateTimeDelivered = new DateTime($dateTimeDelivered);
                     $newDateTimeCancelled = new DateTime($dateTimeCancelled);
+                    $newDateTimeExchanged = new DateTime($dateTimeExchanged);
+                    $newDateTimeRefunded = new DateTime($dateTimeRefunded);
 
                     $dateInTransit = ($dateTimeInTransit == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeInTransit->format('Y-m-d') ;
                     $timeInTransit = ($dateTimeInTransit == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeInTransit->format('h:i a') ;
@@ -26,6 +30,12 @@
                     
                     $dateCancelled = ($dateTimeCancelled == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeCancelled->format('Y-m-d') ;
                     $timeCancelled = ($dateTimeCancelled == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeCancelled->format('h:i a') ;
+                    
+                    $dateExchanged = ($dateTimeExchanged == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeExchanged->format('Y-m-d') ;
+                    $timeExchanged = ($dateTimeExchanged == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeExchanged->format('h:i a') ;
+                    
+                    $dateRefunded = ($dateTimeRefunded == '0000-00-00 00:00:00') ? '0000-00-00' : $newDateTimeRefunded->format('Y-m-d') ;
+                    $timeRefunded = ($dateTimeRefunded == '0000-00-00 00:00:00') ? '00:00 am' : $newDateTimeRefunded->format('h:i a') ;
                     
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
@@ -45,6 +55,10 @@
                     $sub_array[] = '<div class="editable">'.$timeDelivered.'</div>';
                     $sub_array[] = '<div class="editable">'.$dateCancelled.'</div>';
                     $sub_array[] = '<div class="editable">'.$timeCancelled.'</div>';
+                    $sub_array[] = '<div class="editable">'.$dateExchanged.'</div>';
+                    $sub_array[] = '<div class="editable">'.$timeExchanged.'</div>';
+                    $sub_array[] = '<div class="editable">'.$dateRefunded.'</div>';
+                    $sub_array[] = '<div class="editable">'.$timeRefunded.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->status.'</div>';
                     $sub_array[] = '<div><button type="button" name="delete" class="disabled-delete" id="'.$row->orderDetailID.'"><i class="fas fa-trash fa-disabled"></i></button></div>';
                     $sub_array[] = '<div><button type="button" name="restore" class="disabled-restore" id="'.$row->orderDetailID.'"><i class="fas fa-trash-restore fa-disabled"></i></button></div>';

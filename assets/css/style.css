@@ -710,11 +710,6 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   min-width: 80px;
 }
 
-.admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample th:nth-child(18) {
-  white-space: nowrap;
-  min-width: 230px;
-}
-
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper #dtHorizontalVerticalExample td:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
   white-space: nowrap;
   min-width: 130px;

@@ -22,6 +22,10 @@ width="100%">
 <th class="no-sort">Time Delivered</th>
 <th>Date Cancelled</th>
 <th class="no-sort">Time Cancelled</th>
+<th>Date Exchanged</th>
+<th class="no-sort">Time Exchanged</th>
+<th>Date Refunded</th>
+<th class="no-sort">Time Refunded</th>
 <th>Status</th>
 <th class="no-sort"><button type="button" class="delete-all disabled-delete-all"><i class="fas fa-trash fa-disabled"></i></button></th>
 <th class="no-sort"><button type="button" class="restore-all disabled-restore-all"><i class="fas fa-trash-restore fa-disabled"></i></button></th>
@@ -47,7 +51,7 @@ $(document).ready(function () {
         targets: 'no-sort'
       },
       {
-        targets: [14],
+        targets: [18],
         render: function(data, type, full, meta){
           if(type === 'filter' || type === 'sort'){
             var api = new $.fn.dataTable.Api(meta.settings);
