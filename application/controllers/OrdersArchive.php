@@ -24,7 +24,7 @@
                     <input type="checkbox" class="custom-control-input checkbox" data-id="'.$row->orderID.'" id="tableDefaultCheck'.$rowCount.'">
                     <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
                     </div></td>';
-                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/orderdetailsarchive/'.$row->orderNumber.'"><u>'.$row->orderNumber.'</u></a></div>';
+                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/order_details_archive/'.$row->orderNumber.'"><u>'.$row->orderNumber.'</u></a></div>';
                     $sub_array[] = '<div class="editable">'.$row->grandUnit.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->grandPrice.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->paymentMethod.'</div>';

@@ -43,7 +43,7 @@
                     <label class="custom-control-label" for="tableDefaultCheck'.$rowCount.'"></label>
                     </div></td>';
                     $sub_array[] = '<div class="editable">'.$row->orderDetailID.'</div>';
-                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/ordersarchive/'.$row->orderNumber.'"><u>'.$row->orderNumber.'</u></a></div>';
+                    $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/orders_archive/'.$row->orderNumber.'"><u>'.$row->orderNumber.'</u></a></div>';
                     $sub_array[] = '<div class="editable"><a href="'.base_url().'admin/inventory/'.$row->itemID.'"><u>'.$row->itemID.'</u></a></div>';
                     $sub_array[] = '<div class="editable">'.$row->unit.'</div>';
                     $sub_array[] = '<div class="editable">'.$row->priceBought.'</div>';

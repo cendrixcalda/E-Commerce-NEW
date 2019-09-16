@@ -23,12 +23,12 @@
         <?php 
             $url = $this->uri->segment(2);
 
-            if($url == "orders" || $url == "orderdetails"){
+            if($url == "orders" || $url == "order_details"){
                 echo "$('.accordion1').toggleClass('hide-accordion');
                     $('.fold-accordion1 .fa').toggleClass('fa-rotate-180');";
             }
 
-            if($url == "itemsarchive" || $url == "ordersarchive" || $url == "orderdetailsarchive" || $url == "customersarchive"){
+            if($url == "items_archive" || $url == "orders_archive" || $url == "order_details_archive" || $url == "customers_archive"){
                 echo "$('.accordion2').toggleClass('hide-accordion');
                     $('.fold-accordion2 .fa').toggleClass('fa-rotate-180');";
             }

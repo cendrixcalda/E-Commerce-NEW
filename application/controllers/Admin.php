@@ -80,33 +80,51 @@
         }
 
         public function customers(){
+            $accountTypeSession = $this->session->userdata('account_type');
+
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/customers');
-            $this->load->view('templates/footer_admin');
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+				$this->load->view('templates/header_admin');
+                $this->load->view('pages/customers');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
         }
 
-        public function customersarchive(){
+        public function customers_archive(){
+            $accountTypeSession = $this->session->userdata('account_type');
+
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/customersarchive');
-            $this->load->view('templates/footer_admin');
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+				$this->load->view('templates/header_admin');
+                $this->load->view('pages/customers-archive');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
         }
         
-        public function usermanagement(){
+        public function user_management(){
+            $accountTypeSession = $this->session->userdata('account_type');
+
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/usermanagement');
-            $this->load->view('templates/footer_admin');
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+				$this->load->view('templates/header_admin');
+                $this->load->view('pages/user-management');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
         }
 
         public function orders(){
@@ -119,44 +137,62 @@
             $this->load->view('templates/footer_admin');
         }
 
-        public function ordersarchive(){
+        public function orders_archive(){
+            $accountTypeSession = $this->session->userdata('account_type');
+
+            if(!$this->session->userdata('logged_in')){
+				redirect('admin/login');
+            }
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+				$this->load->view('templates/header_admin');
+                $this->load->view('pages/orders-archive');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
+        }
+
+        public function order_details(){
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
             
             $this->load->view('templates/header_admin');
-            $this->load->view('pages/ordersarchive');
+            $this->load->view('pages/order-details');
             $this->load->view('templates/footer_admin');
         }
 
-        public function orderdetails(){
+        public function order_details_archive(){
+            $accountTypeSession = $this->session->userdata('account_type');
+
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/orderdetails');
-            $this->load->view('templates/footer_admin');
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                $this->load->view('templates/header_admin');
+                $this->load->view('pages/order-details-archive');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
         }
 
-        public function orderdetailsarchive(){
-            if(!$this->session->userdata('logged_in')){
-				redirect('admin/login');
-            }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/orderdetailsarchive');
-            $this->load->view('templates/footer_admin');
-        }
+        public function items_archive(){
+            $accountTypeSession = $this->session->userdata('account_type');
 
-        public function itemsarchive(){
             if(!$this->session->userdata('logged_in')){
 				redirect('admin/login');
             }
-            
-            $this->load->view('templates/header_admin');
-            $this->load->view('pages/itemsarchive');
-            $this->load->view('templates/footer_admin');
+
+            if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                $this->load->view('templates/header_admin');
+                $this->load->view('pages/items-archive');
+                $this->load->view('templates/footer_admin');
+            } else{
+                show_404();
+            }
         }
         
         public function brands(){

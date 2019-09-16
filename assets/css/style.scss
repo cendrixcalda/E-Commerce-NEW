@@ -361,17 +361,19 @@ footer{
     }
     .admin-nav{
         width: $navWidth;
-        height: 100%;
         position: relative;
-        max-height: 100vh;
         .navigation-admin{
             display: flex;
             flex-direction: column;
             background: $navBackground;
             height: 100vh;
+            overflow-y: auto;
             a{
                 color: $secondaryColor;
-                padding: 11px;
+                padding: 11px 20px;
+                i:not(.fa){
+                    width: 40px;
+                }
                 &:hover{
                     color: $otherColor2;
                 }
@@ -381,7 +383,7 @@ footer{
                 }
                 &.fold-accordion{
                     display: flex;
-                    i{
+                    i.fa{
                         margin-left: auto;
                         margin-right: 10px;
                     }
@@ -392,18 +394,19 @@ footer{
             }
             .accordion{
                 max-height: 0px;
-                overflow: hidden;
+                overflow-y: hidden;
                 background: $shadowColor;
                 a{
                     color: $secondaryColor;
                     display: flex;
-                    padding: 9px;
+                    padding: 9px 20px;
                     &:hover{
                         color: $otherColor2;
                     }
                 }
                 &.hide-accordion{
                     max-height: 500px;
+                    // overflow-y: visible;
                 }
             }
         }
@@ -418,7 +421,6 @@ footer{
         width: 100%;
         overflow-x: auto;
         padding: 10px;
-
         .login-form{
             @include flexCenterCenter(column);
             border: 1px solid $shadowColor;
