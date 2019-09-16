@@ -28,15 +28,23 @@ class Categories_model extends CI_Model{
     }
     
     function delete_category(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
-        
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
 
-            $this->db->where("categoryID", $id);  
-            $this->db->update("categories", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("categoryID", $id);  
+                $this->db->delete("categories");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("categoryID", $id);  
+                $this->db->update("categories", $data);
+            }
         }
     }
     

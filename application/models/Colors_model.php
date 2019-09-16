@@ -28,15 +28,23 @@ class Colors_model extends CI_Model{
     }
     
     function delete_color(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
-        
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
 
-            $this->db->where("colorID", $id);  
-            $this->db->update("colors", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("colorID", $id);  
+                $this->db->delete("colors");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("colorID", $id);  
+                $this->db->update("colors", $data);
+            }
         }
     }
     

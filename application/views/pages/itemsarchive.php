@@ -104,10 +104,10 @@ $(document).ready(function () {
   });
 
     dataTable.on('click', '.delete', function () {
-      if(confirm("WARNING: This operation is irreversible, once deleted item can't be restored again.\n\nContinue deleting this item?")){
-        var id = [];
-        id[0] = $(this).attr("id");
+      var id = [];
+      id[0] = $(this).attr("id");
 
+      if(confirm("WARNING: This operation is irreversible, once deleted item can't be restored again.\n\nContinue deleting this item?")){
         $.ajax({
           url:"<?php echo base_url(); ?>itemsArchive/deleteItemArchive",
           method:"POST",
@@ -119,14 +119,13 @@ $(document).ready(function () {
       }
     });
 
-    $('.delete-all').on('click', function(){
-      if(confirm("WARNING: This operation is irreversible, once deleted item/s can't be restored again.\n\nContinue deleting selected item/s?")){
+    $('.delete-all').click(function(){
+      if(confirm("WARNING: This operation is irreversible, once deleted item/s can't be restored again.\n\nContinue deleting selected item?")){
         var id = [];
-
         $('.checkbox:checked').each(function(i){
           id[i] = $(this).data('id');
         });
-
+      
         $.ajax({
           url:"<?php echo base_url(); ?>itemsArchive/deleteItemArchive",
           method:"POST",

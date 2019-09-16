@@ -27,15 +27,23 @@ class Brands_model extends CI_Model{
     }
     
     function delete_brand(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
-        
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
 
-            $this->db->where("brandID", $id);  
-            $this->db->update("brands", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("brandID", $id);  
+                $this->db->delete("brands");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("brandID", $id);  
+                $this->db->update("brands", $data);
+            }
         }
     }
     

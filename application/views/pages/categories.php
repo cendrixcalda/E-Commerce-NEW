@@ -3,8 +3,6 @@
   
   $disableRestore = ($accountTypeSession == 'User') ? 'fa-disabled' : '' ;
   $disableRestore1 = ($accountTypeSession == 'User') ? 'disabled-restore-all' : 'restore-all' ;
-  $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'fa-disabled' : '' ;
-  $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'disabled-delete-all' : 'delete-all' ;
 ?>
 <div class="dtHorizontalVerticalExampleWrapper">
     <?php echo form_open_multipart('', array('id' => 'add_category')); ?>
@@ -26,7 +24,7 @@
                         echo '<th>Status</th>';
                       }
                     ?>
-                    <th class="no-sort"><button type="button" class="<?php echo $disableDelete1 ?>"><i class="fas fa-trash <?php echo $disableDelete ?>"></i></button></th>
+                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
                     <th class="no-sort"><button type="button" class="<?php echo $disableRestore1 ?>"><i class="fas fa-trash-restore <?php echo $disableRestore ?>"></i></button></th>
                   </tr>
             </thead>
@@ -111,7 +109,7 @@ $(document).ready(function () {
             category:category, categoryCode:categoryCode, status:status
           },
           success: function(data){
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -163,7 +161,14 @@ $(document).ready(function () {
         data:{id:id, column:column},
         success:function(affectedItems){
           if(affectedItems <= 0){
-            if(confirm("Are you sure you want to remove this category?")){
+            <?php
+              if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                echo "msg = 'WARNING: This operation is irreversible, once deleted category can\'t be restored again.\\n\\nContinue deleting this category?';";
+              } else{
+                echo "msg = 'Are you sure you want to remove this category?';";
+              }
+            ?>
+            if(confirm(msg)){
               $.ajax({
                 url:"<?php echo base_url(); ?>categories/deleteCategory",
                 method:"POST",
@@ -193,7 +198,14 @@ $(document).ready(function () {
         data:{id:id, column:column},
         success:function(affectedItems){
           if(affectedItems <= 0){
-            if(confirm("Are you sure you want to remove selected category/s?")){
+            <?php
+              if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                echo "msg = 'WARNING: This operation is irreversible, once deleted category/s can\'t be restored again.\\n\\nContinue deleting selected category/s?';";
+              } else{
+                echo "msg = 'Are you sure you want to remove selected category/s?';";
+              }
+            ?>
+            if(confirm(msg)){
               $.ajax({
                 url:"<?php echo base_url(); ?>categories/deleteCategory",
                 method:"POST",

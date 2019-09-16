@@ -27,15 +27,23 @@ class Countries_model extends CI_Model{
     }
     
     function delete_country(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
-        
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
 
-            $this->db->where("countryID", $id);  
-            $this->db->update("countries", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("countryID", $id);  
+                $this->db->delete("countries");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("countryID", $id);  
+                $this->db->update("countries", $data);
+            }
         }
     }
     

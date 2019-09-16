@@ -3,8 +3,6 @@
   
   $disableRestore = ($accountTypeSession == 'User') ? 'fa-disabled' : '' ;
   $disableRestore1 = ($accountTypeSession == 'User') ? 'disabled-restore-all' : 'restore-all' ;
-  $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'fa-disabled' : '' ;
-  $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') ? 'disabled-delete-all' : 'delete-all' ;
 ?>
 <div class="dtHorizontalVerticalExampleWrapper">
     <?php echo form_open_multipart('', array('id' => 'add_color')); ?>
@@ -26,7 +24,7 @@
                         echo '<th>Status</th>';
                       }
                     ?>
-                    <th class="no-sort"><button type="button" class="<?php echo $disableDelete1 ?>"><i class="fas fa-trash <?php echo $disableDelete ?>"></i></button></th>
+                    <th class="no-sort"><button type="button" class="delete-all"><i class="fas fa-trash"></i></button></th>
                     <th class="no-sort"><button type="button" class="<?php echo $disableRestore1 ?>"><i class="fas fa-trash-restore <?php echo $disableRestore ?>"></i></button></th>
                   </tr>
             </thead>
@@ -111,7 +109,7 @@ $(document).ready(function () {
             color:color, colorCode:colorCode, status:status
           },
           success: function(data){
-            dataTable.ajax.reload();
+            reloadTable();
           }
         });
       }
@@ -163,7 +161,14 @@ $(document).ready(function () {
         data:{id:id, column:column},
         success:function(affectedItems){
           if(affectedItems <= 0){
-            if(confirm("Are you sure you want to remove this color?")){
+            <?php
+              if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                echo "msg = 'WARNING: This operation is irreversible, once deleted color can\'t be restored again.\\n\\nContinue deleting this color?';";
+              } else{
+                echo "msg = 'Are you sure you want to remove this color?';";
+              }
+            ?>
+            if(confirm(msg)){
               $.ajax({
                 url:"<?php echo base_url(); ?>colors/deleteColor",
                 method:"POST",
@@ -193,7 +198,14 @@ $(document).ready(function () {
         data:{id:id, column:column},
         success:function(affectedItems){
           if(affectedItems <= 0){
-            if(confirm("Are you sure you want to remove selected color/s?")){
+            <?php
+              if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+                echo "msg = 'WARNING: This operation is irreversible, once deleted color/s can\'t be restored again.\\n\\nContinue deleting selected color/s?';";
+              } else{
+                echo "msg = 'Are you sure you want to remove selected color/s?';";
+              }
+            ?>
+            if(confirm(msg)){
               $.ajax({
                 url:"<?php echo base_url(); ?>colors/deleteColor",
                 method:"POST",

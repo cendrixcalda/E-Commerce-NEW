@@ -26,15 +26,23 @@ class sizes_model extends CI_Model{
     }
     
     function delete_size(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
 
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
-
-            $this->db->where("sizeID", $id);  
-            $this->db->update("sizes", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("sizeID", $id);  
+                $this->db->delete("sizes");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("sizeID", $id);  
+                $this->db->update("sizes", $data);
+            }
         }
     }
     

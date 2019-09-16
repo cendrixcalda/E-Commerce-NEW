@@ -27,15 +27,23 @@ class Materials_model extends CI_Model{
     }
     
     function delete_material(){
+        $accountTypeSession = $this->session->userdata('account_type');
         $data['ids'] = $_POST["id"];
-        
-        foreach($data['ids'] as $id){
-            $data = array(
-                'status'  =>  'Disabled'
-            );
 
-            $this->db->where("materialID", $id);  
-            $this->db->update("materials", $data);
+        if($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator'){
+            foreach($data['ids'] as $id){
+                $this->db->where("materialID", $id);  
+                $this->db->delete("materials");
+            }
+        } else{
+            foreach($data['ids'] as $id){
+                $data = array(
+                    'status'  =>  'Disabled'
+                );
+    
+                $this->db->where("materialID", $id);  
+                $this->db->update("materials", $data);
+            }
         }
     }
     

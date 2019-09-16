@@ -22,9 +22,8 @@
 
                     $disableRestore = ($accountTypeSession == 'User' || $country == 'None' || $status == 'Active') ? 'fa-disabled' : '' ;
                     $disableRestore1 = ($accountTypeSession == 'User' || $country == 'None' || $status == 'Active') ? 'disabled-restore' : 'restore' ;
-                    $disableDelete = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $country == 'None') ? 'fa-disabled' : '' ;
-                    $disableDelete1 = ($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator' || $country == 'None') ? 'disabled-delete' : 'delete' ;
-
+                    $disableDelete = ($country == 'None' || (($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') && $status == 'Active')) ? 'fa-disabled' : '' ;
+                    $disableDelete1 = ($country == 'None' || (($accountTypeSession == 'Administrator' || $accountTypeSession == 'Super-Administrator') && $status == 'Active')) ? 'disabled-delete' : 'delete' ;
 
                     $sub_array = array();
                     $sub_array[] = '<td class="cb"><div class="custom-control custom-checkbox my-checkbox">
