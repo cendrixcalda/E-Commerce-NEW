@@ -605,8 +605,6 @@ footer .main-footer .subscribe .btn-subscribe:hover {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
-  overflow-x: auto;
-  padding: 10px;
 }
 
 .admin-body .admin-main .login-form {
@@ -624,7 +622,8 @@ footer .main-footer .subscribe .btn-subscribe:hover {
       -ms-flex-direction: column;
           flex-direction: column;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 25px;
+  border-radius: 10px;
+  padding: 40px 20px;
 }
 
 .admin-body .admin-main .login-form input {
@@ -632,6 +631,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   height: 40px;
   border: none;
   outline: none;
+  border-radius: 3px;
 }
 
 .admin-body .admin-main .login-form .margin {
@@ -700,6 +700,148 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   border-width: 5px;
   border-style: solid;
   border-color: transparent #f51111 transparent transparent;
+}
+
+.admin-body .admin-main .dashboard-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 90%;
+  height: 100px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  height: 100px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .icon-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #292929;
+  margin-right: 10px;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .icon-container i {
+  font-size: 15px;
+  color: white;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .details p:nth-child(1) {
+  font-size: 14px;
+  color: #646464;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .details p:nth-child(2) {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm:last-of-type {
+  border-right: 0px;
+}
+
+.admin-body .admin-main .dashboard-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 90%;
+  min-height: 400px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.admin-body .admin-main .dashboard-main .dashboard-box-md {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50%;
+  height: 350px;
+  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px 5px;
+}
+
+.admin-body .admin-main .dashboard-main .dashboard-box-md .title-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: auto;
+}
+
+.admin-body .admin-main .dashboard-main .dashboard-box-md .title-container select {
+  margin-left: auto;
+  padding: 3px;
+  outline: none;
+}
+
+.admin-body .admin-main .dashboard-main .dashboard-box-md .chart-container {
+  width: 90%;
+  margin: auto;
 }
 
 .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {

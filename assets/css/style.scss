@@ -3,6 +3,7 @@ $primaryColor: rgb(41, 41, 41);
 $secondaryColor: white;
 $otherColor1: rgb(245, 17, 17);
 $otherColor2: rgb(100, 100, 100);
+$otherColor3: rgb(61, 27, 216);
 $shadowColor: rgba(0,0,0,0.2);
 $navBackground: rgb(22, 22, 22);
 $navSelected: rgb(32, 32, 32);
@@ -367,7 +368,9 @@ footer{
             flex-direction: column;
             background: $navBackground;
             height: 100vh;
+            // width: $navWidth;
             overflow-y: auto;
+            // position: fixed;
             a{
                 color: $secondaryColor;
                 padding: 11px 20px;
@@ -419,17 +422,19 @@ footer{
     .admin-main{
         @include flexCenterCenter(column);
         width: 100%;
-        overflow-x: auto;
-        padding: 10px;
+        // overflow-x: auto;
+        // padding: 10px;
         .login-form{
             @include flexCenterCenter(column);
             border: 1px solid $shadowColor;
-            padding: 25px;
+            border-radius: 10px;
+            padding: 40px 20px;
             input{
                 width: 100%;
                 height: 40px;
                 border: none;
                 outline: none;
+                border-radius: 3px;
             }
             .margin{
                 margin: 10px;
@@ -493,6 +498,82 @@ footer{
                   }
               }
         }
+        
+        //Dashboard Styling
+        .dashboard-top{
+            @include flexCenter();
+            width: 90%;
+            height: 100px;
+            box-shadow: 0 4px 8px 0 $shadowColor;
+            border-radius: 5px;
+            .dashboard-box-sm{
+                @include flexCenterCenter(row);
+                width: 100%;
+                height: 100px;
+                border-right: 1px solid $shadowColor;
+                .icon-container{
+                    @include flexCenterCenter(row);
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: $primaryColor;
+                        margin-right: 10px;
+                    i{
+                        font-size: 15px;
+                        color: $secondaryColor;
+                    }
+                }
+                .details{
+                    p:nth-child(1){
+                        font-size: 14px;
+                        color: $otherColor2;
+                    }
+                    p:nth-child(2){
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .dashboard-box-sm:last-of-type{
+                border-right: 0px;
+            }
+        }
+
+        .dashboard-main{
+            @include flexCenterCenter(row);
+            width: 90%;
+            min-height: 400px;
+            margin-top: 10px;
+            // border: 1px solid $shadowColor;
+            border-radius: 5px;
+            .dashboard-box-md{
+                @include flexCenterCenter(column);
+                width: 50%;
+                height: 350px;
+                box-shadow: 0 3px 6px 0 $shadowColor;
+                margin: 10px 5px;
+                .title-container{
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+                    width: 100%;
+                    padding: 10px 20px;
+                    border-bottom: 1px solid $shadowColor;
+                    margin-bottom: auto;
+                    select{
+                        margin-left: auto;
+                        padding: 3px;
+                        outline: none;
+                    }
+                }
+                .chart-container{
+                    width: 90%;
+                    margin: auto;
+                }
+            }
+        }
+
+
         //DataTable Custom Styling
         .dtHorizontalVerticalExampleWrapper {
             min-width: 497px;
