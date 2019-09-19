@@ -820,26 +820,29 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 100%;
   padding: 10px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: auto;
 }
 
-.admin-body .admin-main .dashboard-main .dashboard-box-md .title-container select {
-  margin-left: auto;
-  padding: 3px;
-  outline: none;
+.admin-body .admin-main .dashboard-main .dashboard-box-md .title-container p:nth-child(1) {
+  font-weight: bold;
+}
+
+.admin-body .admin-main .dashboard-main .dashboard-box-md .title-container p:nth-child(2) {
+  font-size: 13px;
+  color: #646464;
 }
 
 .admin-body .admin-main .dashboard-main .dashboard-box-md .chart-container {
+  position: relative;
   width: 90%;
   margin: auto;
 }

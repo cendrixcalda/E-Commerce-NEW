@@ -89,4 +89,9 @@
                 redirect('/admin');
             }
         }
+
+        public function getCustomersAllTime(){
+            $alltimeCustomers = $this->customers_model->get_all_time_customers();
+            echo $alltimeCustomers;
+        }
     }

@@ -53,4 +53,60 @@
             }
             return $row;
         }
+
+        public function get_all_time_orders(){
+            $orders = $this->db->count_all_results('orders');
+            $ordersArchived = $this->db->count_all_results('ordersArchive');
+            $result = $orders + $ordersArchived;
+            return $result;
+        }
+
+        public function get_monthly_orders(){
+            $total = array();
+            $incomplete = array();
+            $completed = array();
+            $cancelled = array();
+            $refunded = array();
+            for($i = 1; $i < 13; $i++){
+                $year = "YEAR(orderDate) = ".date('Y');
+                $month = "MONTH(orderDate) = '".$i."'";
+
+                $this->db->select_sum('grandUnit');
+
+                $monthlyOrders = $this->db->where($year)->where($month)->count_all_results('orders');
+                $MonthlyOrdersArchive = $this->db->where($year)->where($month)->count_all_results('ordersArchive');
+                $totalMonthlyOrders = $monthlyOrders + $MonthlyOrdersArchive;
+                $total[] = $totalMonthlyOrders;
+
+                $monthlyOrdersIncomplete = $this->db->where($year)->where($month)->where('status', 'Incomplete')->count_all_results('orders');
+                $MonthlyOrdersIncompleteArchive = $this->db->where($year)->where($month)->where('status', 'Incomplete')->count_all_results('ordersArchive');
+                $totalMonthlyOrdersIncomplete = $monthlyOrdersIncomplete + $MonthlyOrdersIncompleteArchive;
+                $incomplete[] = $totalMonthlyOrdersIncomplete;
+
+                $monthlyOrdersCompleted = $this->db->where($year)->where($month)->where('status', 'Completed')->count_all_results('orders');
+                $MonthlyOrdersCompletedArchive = $this->db->where($year)->where($month)->where('status', 'Completed')->count_all_results('ordersArchive');
+                $totalMonthlyOrdersCompleted = $monthlyOrdersCompleted + $MonthlyOrdersCompletedArchive;
+                $completed[] = $totalMonthlyOrdersCompleted;
+
+                $monthlyOrdersCancelled = $this->db->where($year)->where($month)->where('status', 'Cancelled')->count_all_results('orders');
+                $MonthlyOrdersCancelledArchive = $this->db->where($year)->where($month)->where('status', 'Cancelled')->count_all_results('ordersArchive');
+                $totalMonthlyOrdersCancelled = $monthlyOrdersCancelled + $MonthlyOrdersCancelledArchive;
+                $cancelled[] = $totalMonthlyOrdersCancelled;
+
+                $monthlyOrdersRefunded = $this->db->where($year)->where($month)->where('status', 'Refunded')->count_all_results('orders');
+                $MonthlyOrdersRefundedArchive = $this->db->where($year)->where($month)->where('status', 'Refunded')->count_all_results('ordersArchive');
+                $totalMonthlyOrdersRefunded = $monthlyOrdersRefunded + $MonthlyOrdersRefundedArchive;
+                $refunded[] = $totalMonthlyOrdersRefunded;
+            }
+
+            $output = array(
+                "total"  => $total,
+                "incomplete"  => $incomplete,
+                "completed"  => $completed,
+                "cancelled"  => $cancelled,
+                "refunded"  => $refunded,
+            );
+
+            return $output;
+        }
     }

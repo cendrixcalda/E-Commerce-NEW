@@ -69,4 +69,14 @@
                 redirect('/admin');
             }
         }
+
+        public function getOrdersAllTime(){
+            $alltimeOrders = $this->orders_model->get_all_time_orders();
+            echo $alltimeOrders;
+        }
+
+        public function getMonthlyOrders(){
+            $monthlyOrders = $this->orders_model->get_monthly_orders();
+            echo json_encode($monthlyOrders);
+        }
     }

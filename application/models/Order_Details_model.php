@@ -73,4 +73,49 @@
             }
             return $row;
         }
+
+        public function get_all_time_items_sold(){
+            $itemsSold = $this->db->where('status', 'Delivered')->count_all_results('orderDetails');
+            $itemsSoldArchived = $this->db->where('status', 'Delivered')->count_all_results('orderDetailsArchive');
+            $result = $itemsSold + $itemsSoldArchived;
+            return $result;
+        }
+
+        public function get_all_time_revenue(){
+            $this->db->select_sum('totalPrice');
+            $query = $this->db->get_where('orderDetails', array('status' => 'Delivered'));
+            $revenue =  $query->row()->totalPrice;
+
+            $this->db->select_sum('totalPrice');
+            $query1 = $this->db->get_where('orderDetailsArchive', array('status' => 'Delivered'));
+            $revenueArchive =  $query1->row()->totalPrice;
+
+            $totalRevenue = $revenue + $revenueArchive;
+            return $totalRevenue;
+        }
+
+        public function get_monthly_revenue(){
+            $result = array();
+            for($i = 1; $i < 13; $i++){
+                $year = "YEAR(dateDelivered) = ".date('Y');
+                $month = "MONTH(dateDelivered) = '".$i."'";
+
+                $this->db->select_sum('totalPrice');
+                $query = $this->db->where($year)->where($month)->where('status', 'Delivered')->get('orderDetails');
+                $monthlyRevenue =  $query->row()->totalPrice;
+
+                $this->db->select_sum('totalPrice');
+                $query1 = $this->db->where($year)->where($month)->where('status', 'Delivered')->get('orderDetailsArchive');
+                $MonthlyRevenueArchive =  $query1->row()->totalPrice;
+
+                $totalMonthlyrevenue = $monthlyRevenue + $MonthlyRevenueArchive;
+                $result[] = $totalMonthlyrevenue;
+            }
+
+            $output = array(
+                "data"  => $result
+            );
+
+            return $output;
+        }
     }

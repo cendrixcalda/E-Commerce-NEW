@@ -7,6 +7,7 @@ $otherColor3: rgb(61, 27, 216);
 $shadowColor: rgba(0,0,0,0.2);
 $navBackground: rgb(22, 22, 22);
 $navSelected: rgb(32, 32, 32);
+$fa: rgb(250, 3, 77);
 
 //Mixins
 @mixin flexCenter {
@@ -553,20 +554,22 @@ footer{
                 box-shadow: 0 3px 6px 0 $shadowColor;
                 margin: 10px 5px;
                 .title-container{
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
+                    @include flexCenter();
+                    flex-direction: column;
                     width: 100%;
                     padding: 10px 20px;
-                    border-bottom: 1px solid $shadowColor;
+                    // border-bottom: 1px solid $shadowColor;
                     margin-bottom: auto;
-                    select{
-                        margin-left: auto;
-                        padding: 3px;
-                        outline: none;
+                    p:nth-child(1){
+                        font-weight: bold;
+                    }
+                    p:nth-child(2){
+                        font-size: 13px;
+                        color: $otherColor2;
                     }
                 }
                 .chart-container{
+                    position: relative;
                     width: 90%;
                     margin: auto;
                 }

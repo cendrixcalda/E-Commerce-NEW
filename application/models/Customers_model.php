@@ -53,4 +53,11 @@
              $this->db->where("customerID", $id);  
              $this->db->update("customers", $data);
          }
+
+         public function get_all_time_customers(){
+            $customers = $this->db->count_all_results('customers');
+            $customersArchived = $this->db->count_all_results('customersArchive');
+            $result = $customers + $customersArchived;
+            return $result;
+        }
     }

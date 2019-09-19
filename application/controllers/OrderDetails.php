@@ -125,4 +125,19 @@
                 redirect('/admin');
             }
         }
+
+        public function getItemsSoldAllTime(){
+            $alltimeItemsSold = $this->order_details_model->get_all_time_items_sold();
+            echo $alltimeItemsSold;
+        }
+
+        public function getRevenueAllTime(){
+            $allTimeRevenue = $this->order_details_model->get_all_time_revenue();
+            echo $allTimeRevenue;
+        }
+
+        public function getMonthlyRevenue(){
+            $monthlyRevenue = $this->order_details_model->get_monthly_revenue();
+            echo json_encode($monthlyRevenue);
+        }
     }
