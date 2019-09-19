@@ -766,9 +766,13 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   color: #646464;
 }
 
-.admin-body .admin-main .dashboard-top .dashboard-box-sm .details p:nth-child(2) {
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .details .counter1, .admin-body .admin-main .dashboard-top .dashboard-box-sm .details .counter2, .admin-body .admin-main .dashboard-top .dashboard-box-sm .details .counter3, .admin-body .admin-main .dashboard-top .dashboard-box-sm .details .counter4 {
   font-size: 20px;
   font-weight: bold;
+}
+
+.admin-body .admin-main .dashboard-top .dashboard-box-sm .details .counter1:before {
+  content: '\20B1';
 }
 
 .admin-body .admin-main .dashboard-top .dashboard-box-sm:last-of-type {

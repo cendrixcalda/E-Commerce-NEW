@@ -3,36 +3,32 @@
         <div class="icon-container">
             <i class="fas fa-dollar-sign"></i>
         </div>
-        <div class="details">
+        <div class="details detail-1">
             <p>Total Revenue</p>
-            <p id="revenue-alltime"></p>
         </div>
     </div>
     <div class="dashboard-box-sm">
         <div class="icon-container">
             <i class="fas fa-shopping-cart"></i>
         </div>
-        <div class="details">
+        <div class="details detail-2">
             <p>Total Orders</p>
-            <p id="oders-alltime"></p>
         </div>
     </div>
     <div class="dashboard-box-sm">
         <div class="icon-container">
             <i class="fas fa-truck"></i>
         </div>
-        <div class="details">
+        <div class="details detail-3">
             <p>Total Items Sold</p>
-            <p id="oder-details-alltime"></p>
         </div>
     </div>
     <div class="dashboard-box-sm">
         <div class="icon-container">
             <i class="fas fa-user-tag"></i>
         </div>
-        <div class="details">
+        <div class="details detail-4">
             <p>Total Customers</p>
-            <p id="customers-alltime"></p>
         </div>
     </div>
 </div>
@@ -72,10 +68,10 @@
                 labels: [],
                 datasets: [{
                     data: [],
-                    fill: true,
+                    fill: false,
                     pointBackgroundColor: 'rgb(41, 41, 41)',
                     borderColor: 'rgb(41, 41, 41)',
-                    borderWidth: 1
+                    borderWidth: 3
                 }]
             },
             options:{
@@ -102,7 +98,7 @@
                     point:{
                         radius: 0
                     }
-                }
+                },
             }
         });
         
@@ -116,7 +112,7 @@
                         fill: false,
                         backgroundColor: "rgb(41, 41, 41)",
                         borderColor: "rgb(41, 41, 41)",
-                        borderWidth: 1,
+                        borderWidth: 3,
                         data: []
                     },
                     {
@@ -124,7 +120,7 @@
                         fill: false,
                         backgroundColor: "rgb(61, 27, 216)",
                         borderColor: "rgb(61, 27, 216)",
-                        borderWidth: 1,
+                        borderWidth: 3,
                         data: []
                     },
                     {
@@ -132,7 +128,7 @@
                         fill: false,
                         backgroundColor: "rgb(33, 208, 231)",
                         borderColor: "rgb(33, 208, 231)",
-                        borderWidth: 1,
+                        borderWidth: 3,
                         data: []
                     },
                     {
@@ -140,7 +136,7 @@
                         fill: false,
                         backgroundColor: "rgb(250, 3, 77)",
                         borderColor: "rgb(250, 3, 77)",
-                        borderWidth: 1,
+                        borderWidth: 3,
                         data: [],
                         hidden: true,
                     },
@@ -149,7 +145,7 @@
                         fill: false,
                         backgroundColor: "rgb(176, 22, 196)",
                         borderColor: "rgb(176, 22, 196)",
-                        borderWidth: 1,
+                        borderWidth: 3,
                         data: [],
                         hidden: true,
                     },
@@ -195,7 +191,10 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>orderDetails/getRevenueAllTime',
                 success: function(revenue){
-                    $('#revenue-alltime').html('&#8369;'+formatNumber(revenue));
+                    $('.detail-1').append('<p class="counter1">'+formatNumber(revenue)+'</p>')
+                    $('.counter1').counterUp({
+                        time: 1000
+                    });
                 }
             });
         };
@@ -204,7 +203,10 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>orders/getOrdersAllTime',
                 success: function(orders){
-                    $('#oders-alltime').html(formatNumber(orders));
+                    $('.detail-2').append('<p class="counter2">'+formatNumber(orders)+'</p>')
+                    $('.counter2').counterUp({
+                        time: 1000
+                    });
                 }
             });
         };
@@ -213,7 +215,10 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>orderDetails/getItemsSoldAllTime',
                 success: function(itemsSold){
-                    $('#oder-details-alltime').html(formatNumber(itemsSold));
+                    $('.detail-3').append('<p class="counter3">'+formatNumber(itemsSold)+'</p>')
+                    $('.counter3').counterUp({
+                        time: 1000
+                    });
                 }
             });
         };
@@ -222,7 +227,10 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>customers/getCustomersAllTime',
                 success: function(customers){
-                    $('#customers-alltime').html(formatNumber(customers));
+                    $('.detail-4').append('<p class="counter4">'+formatNumber(customers)+'</p>')
+                    $('.counter4').counterUp({
+                        time: 1000
+                    });
                 }
             });
         };
@@ -236,26 +244,29 @@
 
                     for (var i in orders.total) {
                         ordersChart.data.datasets[0].data.push(orders.total[i]);
+                        ordersChart.update();
                     }
 
                     for (var i in orders.incomplete) {
                         ordersChart.data.datasets[1].data.push(orders.incomplete[i]);
+                        ordersChart.update();
                     }
 
                     for (var i in orders.completed) {
                         ordersChart.data.datasets[2].data.push(orders.completed[i]);
+                        ordersChart.update();
                     }
 
                     for (var i in orders.cancelled) {
                         ordersChart.data.datasets[3].data.push(orders.cancelled[i]);
+                        ordersChart.update();
                     }
 
                     for (var i in orders.refunded) {
                         ordersChart.data.datasets[4].data.push(orders.refunded[i]);
+                        ordersChart.update();
                     }
                     
-                    // ordersChart.data.datasets[1].data.push(3, 6, 8, 2, 5, 1, 3, 4, 6);
-                    ordersChart.update();
                 }
             });
         };
@@ -265,12 +276,14 @@
                 url: '<?php echo base_url(); ?>orderDetails/getMonthlyRevenue',
                 success: function(revenue){
                     var revenue = JSON.parse(revenue);
-                    revenueChart.data.labels.push("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-
+                    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    // revenueChart.data.labels.push("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                    
                     for (var i in revenue.data) {
+                        revenueChart.data.labels.push(months[i]);
                         revenueChart.data.datasets[0].data.push(revenue.data[i]);
-                    }
-                    revenueChart.update();
+                        revenueChart.update();
+                    }   
                 }
             });
         };
