@@ -710,7 +710,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
       -ms-flex-pack: center;
           justify-content: center;
   width: 90%;
-  height: 100px;
+  min-height: 100px;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
@@ -730,7 +730,9 @@ footer .main-footer .subscribe .btn-subscribe:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   height: 100px;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -814,7 +816,7 @@ footer .main-footer .subscribe .btn-subscribe:hover {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 50%;
-  height: 350px;
+  min-height: 350px;
   -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
   margin: 10px 5px;
@@ -1096,6 +1098,69 @@ footer .main-footer .subscribe .btn-subscribe:hover {
 @media only screen and (max-width: 1300px) {
   .latest-products .items .item, .sale-items .items .item {
     width: 270px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .admin-body .hamburger {
+    display: block;
+  }
+  .admin-body .hamburger.show {
+    display: none;
+  }
+  .admin-body .admin-nav {
+    width: 0px;
+    left: -400px;
+  }
+  .admin-body .admin-nav .navigation-admin {
+    width: 300px;
+    position: fixed;
+  }
+  .admin-body .admin-nav.hide-nav {
+    width: 400px;
+    left: 0px;
+  }
+  .admin-body .admin-main .dtHorizontalVerticalExampleWrapper {
+    max-width: 1200px;
+  }
+  .admin-body .admin-main .dtHorizontalVerticalExampleWrapper.max-view {
+    max-width: 900px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .dashboard-top {
+    margin-top: 20px;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .dashboard-top .dashboard-box-sm {
+    width: 50%;
+  }
+  .dashboard-top .dashboard-box-sm:nth-of-type(2) {
+    border-right: 0px !important;
+  }
+  .dashboard-main {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .dashboard-main .dashboard-box-md {
+    width: 100% !important;
+    padding: 20px;
+  }
+  .dashboard-main .dashboard-box-md .title-container {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .dashboard-top {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .dashboard-top .dashboard-box-sm {
+    width: 100%;
+    border-right: 0px !important;
   }
 }
 /*# sourceMappingURL=style.css.map */

@@ -7,7 +7,7 @@ $otherColor3: rgb(61, 27, 216);
 $shadowColor: rgba(0,0,0,0.2);
 $navBackground: rgb(22, 22, 22);
 $navSelected: rgb(32, 32, 32);
-$fa: rgb(250, 3, 77);
+$navWidth: 400px; 
 
 //Mixins
 @mixin flexCenter {
@@ -243,15 +243,15 @@ nav{
         margin: 10px 20px;
         // background: $primaryColor;
     }
-    .view-item-details{
+    // .view-item-details{
         
-    }
-    .view-item-image{
+    // }
+    // .view-item-image{
 
-    }
-    .view-item-tools{
+    // }
+    // .view-item-tools{
         
-    }
+    // }
 }
 
 footer{
@@ -342,7 +342,6 @@ footer{
 //Admin Pages Styles
 
 .admin-body{
-    $navWidth: 400px; 
     display: flex;
     width: 100%;
     overflow-y: hidden;
@@ -369,7 +368,7 @@ footer{
             flex-direction: column;
             background: $navBackground;
             height: 100vh;
-            // width: $navWidth;
+            // width: $navWidth - 100px;
             overflow-y: auto;
             // position: fixed;
             a{
@@ -504,12 +503,12 @@ footer{
         .dashboard-top{
             @include flexCenter();
             width: 90%;
-            height: 100px;
+            min-height: 100px;
             box-shadow: 0 4px 8px 0 $shadowColor;
             border-radius: 5px;
             .dashboard-box-sm{
                 @include flexCenterCenter(row);
-                width: 100%;
+                flex-grow: 1;
                 height: 100px;
                 border-right: 1px solid $shadowColor;
                 .icon-container{
@@ -553,7 +552,7 @@ footer{
             .dashboard-box-md{
                 @include flexCenterCenter(column);
                 width: 50%;
-                height: 350px;
+                min-height: 350px;
                 box-shadow: 0 3px 6px 0 $shadowColor;
                 margin: 10px 5px;
                 .title-container{
@@ -796,5 +795,70 @@ footer{
             }
         }
     }
-  }
+}
+
+@media only screen and (max-width: 1200px){
+    .admin-body{
+        .hamburger{
+            display: block;
+        }
+        .hamburger.show{
+            display: none;
+        }
+        .admin-nav{
+            width: 0px;
+            left: -$navWidth;
+            .navigation-admin{
+                width: $navWidth - 100px;
+                position: fixed;
+            }
+        }
+        .admin-nav.hide-nav{
+            width: $navWidth;
+            left: 0px;
+        }
+        .admin-main{
+            .dtHorizontalVerticalExampleWrapper{
+                max-width: 1200px;
+            }
+            .dtHorizontalVerticalExampleWrapper.max-view{
+                max-width: 900px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .dashboard-top{
+        margin-top: 20px;
+        flex-wrap: wrap;
+        .dashboard-box-sm{
+            width: 50%;
+        }
+        .dashboard-box-sm:nth-of-type(2){
+            border-right: 0px !important;
+        }
+    }
+
+    .dashboard-main{
+        flex-wrap: wrap;
+        .dashboard-box-md{
+            width: 100% !important;
+            padding: 20px;
+            .title-container{
+                margin-bottom: 20px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .dashboard-top{
+        flex-wrap: wrap;
+        .dashboard-box-sm{
+            width: 100%;
+            border-right: 0px !important;
+        }
+    }
+}
 
